@@ -1,0 +1,327 @@
+.navbar {
+  background: none repeat scroll 0 0 @navbar-primary;
+  border: none;
+  border-radius: 0;
+  margin: 0 0 1px 225px;
+  height: 50px;
+  .dropdown-toggle {
+    color: #69CC30;
+    i {
+      color: #69CC30;
+      font-size: 17px;
+      margin-right: 0;
+    }
+    .badge {
+      background-color: @badge-red;
+      border-radius: 99px !important;
+      font-size: 12px !important;
+      font-weight: 300;
+      height: 18px;
+      padding: 3px 6px;
+      position: absolute;
+      right: 7px;
+      text-align: center;
+      text-shadow: none !important;
+      top: 6px;
+    }
+    .username {
+      font-weight: 600;
+    }
+  }
+  .header-icon {
+    text-align: center;
+    border: 0;
+    border-radius: 0;
+    color: #FFFFFF;
+    width: 60px;
+    height: 100%;
+    font-size: 46px;
+    > a {
+      padding-top: 8px;
+      padding-bottom: 13px;
+      &:hover, &:focus {
+        background-color: transparent;
+      }
+    }
+    .dropdown-toggle {
+      i {
+        color: #FFFFFF;
+        font-size: 30px;
+      }
+    }
+  }
+  .header-notifications {
+    background: -webkit-linear-gradient(left top, #E8F95A, #9FDC01); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #E8F95A, #9FDC01); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #E8F95A, #9FDC01); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, #E8F95A, #9FDC01);
+    &:hover,
+    &:focus {
+      background: -webkit-linear-gradient(left top, #9FDC01, #E8F95A ); /* For Safari 5.1 to 6.0 */
+      background: -o-linear-gradient(bottom right, #9FDC01, #E8F95A); /* For Opera 11.1 to 12.0 */
+      background: -moz-linear-gradient(bottom right, #9FDC01, #E8F95A); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(to bottom right, #9FDC01, #E8F95A);
+    }
+  }
+  .header-quit {
+    background: -webkit-linear-gradient(left top, #20FD83, #02CFAB); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #20FD83, #02CFAB); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #20FD83, #02CFAB); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, #20FD83, #02CFAB);
+    &:focus,
+    &:hover {
+      background: -webkit-linear-gradient(left top, #02CFAB, #20FD83 ); /* For Safari 5.1 to 6.0 */
+      background: -o-linear-gradient(bottom right, #02CFAB, #20FD83); /* For Opera 11.1 to 12.0 */
+      background: -moz-linear-gradient(bottom right, #02CFAB, #20FD83); /* For Firefox 3.6 to 15 */
+      background: linear-gradient(to bottom right, #02CFAB, #20FD83);
+    }
+  }
+  #navbar-left {
+    height: 50px;
+    li.dropdown {
+      background-color: lighten(@navbar-primary, 5%);
+      border-right: 1px solid darken(@navbar-primary, 5%);
+      font-weight: 400;
+    }
+    li.dropdown:first-child {
+      border-left: 1px solid darken(@navbar-primary, 5%);
+    }
+    i {
+      margin-right: 5px;
+      color: #FFFFFF;
+    }
+    .header-search {
+      float: left;
+      input {
+        border: none;
+        padding-top: 15px;
+        color: #999999;
+      }
+      .input-group .icon-addon .form-control {
+        border-radius: 0;
+        &:focus {
+          padding: 0 10px 1px 0;
+          border-bottom: 1px solid #02CFAB;
+        }
+      }
+
+      .icon-addon {
+        position: relative;
+        color: #999999;
+        display: block;
+      }
+
+      .icon-addon:after,
+      .icon-addon:before {
+        display: table;
+        content: " ";
+      }
+
+      .icon-addon:after {
+        clear: both;
+      }
+      .icon-addon.addon-md .glyphicon,
+      .icon-addon .glyphicon,
+      .icon-addon.addon-md .fa,
+      .icon-addon .fa {
+        position: absolute;
+        z-index: 2;
+        left: 10px;
+        font-size: 14px;
+        width: 20px;
+        margin-left: -2.5px;
+        text-align: center;
+        padding: 10px 0;
+        top: 1px
+      }
+      .icon-addon.addon-lg .fa,
+      .icon-addon.addon-lg .glyphicon {
+        font-size: 18px;
+        margin-left: 0;
+        left: 11px;
+        top: 6px;
+      }
+      .icon-addon.addon-lg .form-control {
+        line-height: 1.33;
+        height: 50px;
+        font-size: 18px;
+      }
+      .icon-addon label {
+        padding-top: 12px;
+      }
+      .icon-addon input {
+        border: none;
+        border-radius: 0;
+        padding: 10px 16px 10px 40px;
+        height: 50px;
+        &:focus {
+          padding: 13px 16px 11px 40px;
+          border-bottom: 1px solid #02CFAB;
+        }
+      }
+    }
+  }
+  .nav.navbar-nav.pull-right {
+    li > .dropdown-menu {
+      left: auto;
+      right: 0;
+      a:hover, a:focus {
+        background-color: transparent;
+      }
+    }
+  }
+}
+.navbar.mini-menu-open {
+  margin: 0 0 0 60px;
+}
+
+/* Navbar Dropdown */
+.dropdown-menu {
+  border: none;
+  display: none;
+  float: left;
+  left: 0;
+  font-size: 14px;
+  list-style: none outside none;
+  margin: 0;
+  max-width: 330px;
+  min-width: 166px;
+  padding: 0;
+  position: absolute;
+  text-shadow: none;
+  top: 100%;
+  z-index: 1000;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+  .dropdown-title {
+    background: none repeat scroll 0 0 transparent;
+    color: @sidebar-primary;
+    display: block;
+    line-height: 30px;
+    padding: 5px 10px;
+    font-size: 16px;
+    text-align: center;
+    i {
+      margin-right: 5px;
+    }
+    &:hover {
+      background-color: transparent;
+    }
+  }
+  .footer {
+    display: block;
+    a {
+      background-color: @sidebar-active !important;
+      font-weight: 600;
+      line-height: 30px;
+      text-align: center;
+      border-bottom: none !important;
+      border-top: none !important;
+      i {
+        margin-left: 5px;
+        font-size: 16px;
+      }
+    }
+  }
+  ul {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+/* Navbar Right Menu */
+.navbar-nav .dropdown-menu{
+  background-color: #D4FFF5;
+  li {
+    > a {
+      border-top: 1px solid #97FFE6;
+      display: block;
+      line-height: 40px;
+      padding: 0 10px;
+    }
+    > a:hover {
+      color: #333333;
+      background-color: #F3F3F3;
+    }
+  }
+  &.context { /* For smaller menus */
+    li {
+      a {
+        line-height: 30px;
+      }
+    }
+  }
+  .divider {
+    height: 1px;
+    border-bottom: 0 !important;
+    border-top: 1px solid darken(#E7E7E7, 10%) !important;
+    color: #555555 !important;
+    margin: 0 !important;
+  }
+}
+
+/* Recent activity */
+.header-notifications .dropdown-menu{
+  border-top: 1px solid #97FFE6;
+  width: 330px;
+  li {
+    > a {
+      padding: 15px;
+    }
+    &:hover {
+      background-color: #E2FFF8;
+    }
+  }
+  .dropdown-title:hover {
+    background-color: transparent;
+  }
+  img {
+    border-radius: 50%;
+    height: 50px;
+    margin-right: 10px;
+    width: 50px;
+  }
+  .body {
+    position: relative;
+    display: inline-block;
+    line-height: 20px;
+    max-width: 255px;
+    vertical-align: middle;
+    white-space: normal;
+  }
+  .message {
+    line-height: 16px;
+    display: block;
+    margin-bottom: 0px;
+  }
+  .time {
+    color: #777777;
+    display: block;
+    font-size: 11px;
+  }
+  .compose {
+    display: block;
+    :hover {
+      cursor: pointer;
+    }
+  }
+}
+
+/* User Menu */
+.dropdown.user {
+  a.dropdown-toggle {
+    padding: 10px 10px 11px;
+  }
+  .dropdown-menu {
+    border-top: none;
+  }
+  img {
+    margin-right: 5px;
+    border-radius: 99px;
+    height: 29px;
+    width: 29px;
+    /* filter: url("data:image/svg+xml;filter: gray;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); */
+  }
+  a:hover img, a:focus img{
+    filter: none;
+  }
+}

@@ -1,0 +1,226 @@
+#!/usr/bin/env bash
+#set -x
+######################################################
+#                           README
+#
+#   Description: Simple script to build or deploy the project to production,staging etc
+#   command: ./easybuild -h                 :-for help
+#            ./easybuild                    :-for local build
+#            ./easybuild --env production   :-to deploy project in production
+#
+#   Author: Veera Marni
+#   Version: 1.0.0
+#
+#   TODO: Add option for identity as SSH_OPT for AWS etc
+######################################################
+
+#
+# Global variables.
+#
+
+APP="../app"
+CONFIG="../config"
+BUILD="../build"
+BIN="../bin"
+TMP="/tmp"
+
+BUNDLE="$BUILD/bundle"
+BUILDTAR="build.tar.gz"
+
+if [ -z "$METEOR_SRC" ]; then
+  METEOR_SRC="$HOME/src/meteor"
+fi
+
+#
+# Help and usage info.
+#
+display_help() {
+  cat <<-EOF
+  A utility for building your Meteor applications.
+  Usage: easybuild [options]
+  Options:
+    --help             Display help
+    --checkout         Use a Meteor git checkout
+    --env <env>        Set the environment (development, test, production)
+    --packages <path>  Tell Meteor about another packages folder
+EOF
+  exit 0
+}
+
+#
+# Build or Deploy your application.
+#
+build() {
+  if [ -z "$NODE_ENV" ]; then
+    NODE_ENV="development"
+  fi
+
+  local env_file="$CONFIG/$NODE_ENV/env.sh";
+  local settings_file="$CONFIG/$NODE_ENV/settings.json";
+
+  if [ -f "$env_file" ]; then source "$env_file"; fi
+
+  if [ -f "$settings_file" ]; then
+    export METEOR_SETTINGS="$(cat $settings_file)"
+  fi
+
+  # set environment
+  if [ -z "$ARCHITECTURE" ]; then
+    ARCHOPT=""
+  else
+    ARCHOPT="--architecture=$ARCHITECTURE"
+  fi
+  if [ "$CHECKOUT" = true ]; then
+
+    if [ ! -d "$METEOR_SRC" ]; then
+      echo "Error: To run from a git checkout of meteor, please set the METEOR_SRC env variable to a valid meteor source folder."
+      exit 1;
+    fi
+
+    echo "Using a Meteor git checkout."
+    METEOR="$METEOR_SRC/meteor"
+  else
+    METEOR="meteor"
+  fi
+
+  if [ "$NODE_ENV" == "production" ]; then
+    if [ -z "$ROOT_URL" ]; then
+      echo "Error: To build for production, please set the ROOT_URL env variable."
+      exit 1;
+    fi
+
+    if [ -z "$ARCHOPT" ]; then
+      echo "Warn: target ARCHITECTURE env variable is not set, setting to os.linux.x86_64 as default"
+      ARCHOPT="--architecture=os.linux.x86_64"
+    fi
+
+    echo "Info: Validating environment variables"
+    : "${APP_NAME?Need to set APP_NAME}"
+    : "${APP_BASE_DIR?Need to set APP_BASE_DIR -directory location of app location in $NODE_ENV}"
+    : "${SSH_HOST?Need to set SSH_HOST}"
+    : "${SSH_USER?Need to set SSH_USER}"
+    : "${APP_USER?Need to set APP_USER -owner of the app in $NODE_ENV}"
+
+
+    #Set default values for optional variables
+    #Optional variables are APP_USER, SSH_PORT
+    if [ -z "$SSH_PORT" ]; then
+        SSH_PORT=22
+    fi
+    if [ -z "$APP_GROUP" ]; then
+        APP_GROUP=APP_USER
+    fi
+
+    SCP_OPT="-P $SSH_PORT"
+    SSH_OPT="-p $SSH_PORT"
+    APP_PATH="$APP_BASE_DIR"/"$APP_NAME"
+
+    echo "Info: Building your app in $NODE_ENV on port $PORT"
+    cd "$APP"
+    local CMD="$METEOR build $BUILD --directory --server=$ROOT_URL $ARCHOPT"
+    echo "$CMD"
+    eval $CMD
+
+    if [ $? -ne 0 ]; then
+        echo "Error: Build failed."
+        cd "$BIN"
+        exit 1
+    fi
+    cd "$BIN"
+
+    tar -zcf $BUILD/$BUILDTAR $BUNDLE $settings_file
+
+    if [ $? -ne 0 ]; then
+        echo "Error: Build failed when tarring bundle and settings file"
+        exit 1
+    fi
+
+    #copy the file to remote location and start
+    echo "Info: Deploying your app in server $SSH_HOST."
+
+    local envforward="APP_USER=$APP_USER TMP=$TMP APP_GROUP=$APP_GROUP
+    APP_PATH=$APP_PATH APP_NAME=$APP_NAME BUILDTAR=$BUILDTAR NODE_ENV=$NODE_ENV
+    APP_LOG=$APP_LOG"
+    scp $SCP_OPT $BUILD/$BUILDTAR $SSH_USER@$SSH_HOST:$TMP/ > /dev/null 2>&1 &&
+    ssh $SSH_OPT $SSH_USER@$SSH_HOST $envforward 'sudo -E bash -s' <<'ENDSSH'
+    if [ ! -d "$APP_PATH" ]; then
+       sudo mkdir -p $APP_PATH
+       sudo chown -R $APP_USER:$APP_GROUP $APP_PATH
+    fi
+    #stop the existing application
+    echo "Info: Stopping app $APP_NAME..."
+    sudo stop $APP_NAME
+    sleep 10
+    runprocs=$(ps -ef | grep $APP_NAME/build/bundle/main.js | grep -v grep)
+    if [ "$runprocs" != null ]; then
+       echo "Info: Some more processors stil running, killing them forcefully."
+       ps -ef | grep $APP_NAME/build/bundle/main.js | grep -v grep | awk '{print $2}' | xargs sudo kill
+       sleep 5
+    fi
+    #take backup
+    sudo rm -rf ${APP_PATH}/build_bk
+    sudo mv $APP_PATH/build/ ${APP_PATH}/build_bk
+    sudo -HE -u $APP_USER bash -c 'tar xfz $TMP/$BUILDTAR -C $APP_PATH'
+    if [ $? -ne 0 ]; then
+       exit 1
+    fi
+    echo "Info: Installing server npm packages..."
+    sudo -HE -u $APP_USER bash -c '(cd ${APP_PATH}/build/bundle/programs/server && ~/n/bin/npm install)'
+    rm $TMP/$BUILDTAR
+    #start
+    sudo start $APP_NAME
+    if [ $? -ne 0 ]; then
+       exit 1
+    fi
+    #check the taillog
+    echo "Info: Your app is successfully started in $NODE_ENV"
+    if [ -z $APP_LOG ]; then
+        exit 0
+    else
+        echo "Info: getting the latest log"
+        sudo tail -f $APP_LOG
+    fi
+ENDSSH
+    local reval=$?
+    if [ "$reval" -ne 0 ]; then
+        if [ "$reval" -eq 255 ]; then
+           echo "Warn: App deployment is intentionally terminated"
+           exit 0
+        fi
+        echo "Error: App deployment is failed."
+        exit "$reval"
+    fi
+  else
+    cd "$APP"
+    echo "Info: Building your app in $NODE_ENV."
+    if [ -z "$ROOT_URL" ]; then
+        ROOT_URL="localhost:3000"
+    fi
+    local CMD="$METEOR build $BUILD  --server=$ROOT_URL $ARCHOPT"
+    echo "$CMD"
+    eval $CMD
+  fi
+}
+
+
+
+#
+# Handle arguments.
+#
+
+if [ $# -eq 0 ]; then
+  build
+else
+  while [ $# -ne 0 ]; do
+    case $1 in
+      -h|--help|help)       display_help ;;
+      -e|--env)             export NODE_ENV="$2"; shift ;;
+      --checkout)           CHECKOUT=true ;;
+      --packages)           export PACKAGE_DIRS="$2:$PACKAGE_DIRS"; shift ;;
+      *)                    display_help ;;
+    esac
+    shift
+  done
+
+  build $1
+fi
