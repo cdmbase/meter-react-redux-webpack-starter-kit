@@ -33,3 +33,5 @@ accounts-github@1.0.10
 service-configuration@1.0.10
 fourseven:scss
 std:accounts-basic
+webpack:json
+webpack:html

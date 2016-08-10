@@ -111,6 +111,7 @@ webapp-hashing@1.0.9
 webpack:assets@1.0.1
 webpack:core-config@1.0.1
 webpack:css@1.1.2
+webpack:html@1.0.2
 webpack:json@1.0.1
 webpack:less@1.1.2
 webpack:npmworkaround@1.0.0
