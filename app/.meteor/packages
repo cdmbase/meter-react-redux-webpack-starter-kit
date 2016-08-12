@@ -26,11 +26,9 @@ reactrouter:react-router-ssr
 aldeed:simple-schema
 aldeed:collection2
 webpack:assets
-std:accounts-ui
 webpack:less
 accounts-github@1.0.10
 service-configuration@1.0.10
 fourseven:scss
-std:accounts-basic
 webpack:json
 webpack:html
