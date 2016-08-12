@@ -49,7 +49,6 @@ http@1.2.8
 id-map@1.0.8
 insecure@1.0.7
 jquery@1.11.9
-jsx@0.2.4
 launch-screen@1.0.12
 less@2.7.4
 livedata@1.0.18
@@ -100,7 +99,6 @@ std:accounts-basic@1.1.12
 std:accounts-ui@1.2.6
 templating@1.2.13
 templating-tools@1.0.4
-thereactivestack:blazetoreact@1.0.2
 tmeasday:check-npm-versions@0.3.1
 tracker@1.1.0
 ui@1.0.11
