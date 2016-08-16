@@ -6,9 +6,11 @@
   "devtool": "eval",
   "debug": true,
   "resolve": {
-    "alias": {
-      "react": "./node_modules/react",
-      "react-dom": "./node_modules/react-dom"
-    }
+
+  },
+  "externals": {
+    "react": "React",
+    "react-dom": "ReactDOM",
+    "react-router": "ReactRouter"
   }
 }

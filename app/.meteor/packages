@@ -39,3 +39,4 @@ meteorhacks:picker
 std:accounts-ui
 reactrouter:react-router-ssr
 react-runtime
+veeramarni:react-runtime-additional

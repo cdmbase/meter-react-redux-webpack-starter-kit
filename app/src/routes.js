@@ -1,6 +1,5 @@
 import { Route } from 'react-router';
-//import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
-import ReactRouterSSR from './modules/meteor-react-router-ssr/server';
+import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import ReactHelmet from 'react-helmet';
