@@ -1,5 +1,6 @@
 import { Route } from 'react-router';
-import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
+//import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
+import ReactRouterSSR from './modules/meteor-react-router-ssr/server';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import ReactHelmet from 'react-helmet';
@@ -8,7 +9,6 @@ import createStore from 'IDEApp/common/store/createStore';
 import configureStore from 'IDEApp/common/configureStore';
 import createInitialState from 'IDEApp/server/frontend/createInitialState';
 import config from 'IDEApp/server/frontend/config';
-
 
 let store;
 let history;

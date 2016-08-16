@@ -22,7 +22,6 @@ webpack:webpack
 webpack:react
 accounts-ui@1.1.9
 accounts-password@1.2.12
-reactrouter:react-router-ssr
 aldeed:simple-schema
 aldeed:collection2
 webpack:assets
@@ -32,3 +31,11 @@ service-configuration@1.0.10
 fourseven:scss
 webpack:json
 webpack:html
+chuangbo:cookie
+meteorhacks:fast-render
+meteorhacks:inject-data
+meteorhacks:meteorx
+meteorhacks:picker
+std:accounts-ui
+reactrouter:react-router-ssr
+react-runtime

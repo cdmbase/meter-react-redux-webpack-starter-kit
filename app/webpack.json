@@ -3,6 +3,7 @@
   "devServer": {
     "host": "localhost"
   },
+  "devtool": "eval",
   "debug": true,
   "resolve": {
     "alias": {

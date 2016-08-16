@@ -1,4 +1,5 @@
-import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
+//import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
+import ReactRouterSSR from './modules/meteor-react-router-ssr/server';
 import 'IDEApp/server';
 
 // Do server-rendering only in production

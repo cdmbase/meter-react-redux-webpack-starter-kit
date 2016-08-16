@@ -5,10 +5,6 @@ function dependencies() {
     dependencies: {
 
     },
-    peerDependecies: {
-      'react': '^15.0.0',
-      'react-dom': '^15.0.0'
-    },
     devDependencies: {
       'babel': '^6.3.26',
       'babel-core': '^6.3.26',
@@ -114,7 +110,7 @@ function config(settings, require) {
   var usingMeteorReact = settings.packages.indexOf('react-runtime') >= 0;
   var extensions = ['.js', '.jsx'];
   var loaders = [
-    { test: /\/node_modules\/react\/react\.js$/, loader: 'expose?React' },
+    //{ test: /\/node_modules\/react\/react\.js$/, loader: 'expose?React' },
     { test: /\.jsx?$/, loader: 'babel', query: babelSettings, exclude: /\.meteor|node_modules/ }
   ];
 
@@ -123,7 +119,11 @@ function config(settings, require) {
     extensions.push('.tsx');
   }
 
-  var externals = {};
+  var externals = {
+     'react': 'React'
+      , 'react-dom': 'ReactDOM'
+      , 'react-dom/server': 'ReactDOMServer'
+  };
 
   if (settings.isTest || settings.isAppTest) {
     // Support for Enzyme
