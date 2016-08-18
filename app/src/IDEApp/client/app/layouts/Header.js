@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import linksMessages from '../../../common/app/linksMessages';
 import { LinkContainer } from 'react-router-bootstrap';
+import { Accounts, STATES } from 'meteor/std:accounts-bootstrap';
+import { Meteor } from 'meteor/meteor';
 
 
 const Header = () => {
@@ -12,23 +14,34 @@ const Header = () => {
     //    viewer: PropTypes.object,
     //};
 
-        //const { viewer } = this.props;
-
-        return (
-            <div id="nav_header">
-                <Navbar>
-                    <Navbar.Header>
-                        <Navbar.Brand>
-                            <a href="#">React-Bootstrap</a>
-                        </Navbar.Brand>
-                    </Navbar.Header>
-                    <Nav>
-                        <NavItem eventKey={1} href="#">Link</NavItem>
-                        <NavItem eventKey={2} href="#">Link</NavItem>
-                    </Nav>
-                </Navbar>
-            </div>
-        )
+    //const { viewer } = this.props;
+    const loginPath =  Meteor.user() ? "/signout" : "/signin"
+    return (
+        <Navbar>
+            <Navbar.Header>
+                <Navbar.Brand>
+                    <a href="#">AdminIDE</a>
+                </Navbar.Brand>
+            </Navbar.Header>
+            <Nav pullRight>
+                <LinkContainer to="/">
+                    <NavItem eventKey={1}>
+                        <FormattedMessage {...linksMessages.home} />
+                    </NavItem>
+                </LinkContainer>
+                <LinkContainer to="/pricing">
+                    <NavItem eventKey={2}>
+                        <FormattedMessage {...linksMessages.pricing} />
+                    </NavItem>
+                </LinkContainer>
+                <LinkContainer to={loginPath}>
+                    <NavItem eventKey={3}>
+                        { Meteor.user() ? <FormattedMessage {...linksMessages.signOut } /> : <FormattedMessage {...linksMessages.signIn } /> }
+                    </NavItem>
+                </LinkContainer>
+            </Nav>
+        </Navbar>
+    )
 }
 
 export default Header;

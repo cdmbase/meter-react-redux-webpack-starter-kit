@@ -1,10 +1,11 @@
+import { Meteor } from 'meteor/meteor';
 
 const services = Meteor.settings.private.oAuth;
 
 const configureService = () => {
-    if ( services ) {
-        for( let service in services ){
-            ServiceConfiguration.configurations.upsert( { service: service }, {
+    if (services) {
+        for (let service in services) {
+            ServiceConfiguration.configurations.upsert({service: service}, {
                 $set: services[service]
             });
         }

@@ -40,3 +40,5 @@ std:accounts-ui
 reactrouter:react-router-ssr
 react-runtime
 veeramarni:react-runtime-additional
+std:accounts-bootstrap
+fortawesome:fontawesome

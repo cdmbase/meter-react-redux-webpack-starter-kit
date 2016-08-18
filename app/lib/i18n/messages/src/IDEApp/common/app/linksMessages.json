@@ -12,6 +12,10 @@
     "defaultMessage": "Sign in"
   },
   {
+    "id": "app.links.signOut",
+    "defaultMessage": "Sign out"
+  },
+  {
     "id": "app.links.pricing",
     "defaultMessage": "Pricing"
   },

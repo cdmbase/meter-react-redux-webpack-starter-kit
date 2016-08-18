@@ -1,32 +1,33 @@
 import React, { Component } from 'react';
-//import Tracker from 'npm';
-import {  push } from 'react-router-redux'
+import Tracker from 'tracker-component';
+import {  push } from 'react-router-redux';
 import { Meteor } from 'meteor/meteor';
 import { browserHistory } from 'react-router';
+import Home from 'Home';
 
-const AdminPage = () => (
-    <h3>Admin</h3>
-);
 
-export default class Index extends Component {
-    constructor(props){
+export default class Index extends Tracker.Component {
+    constructor(props) {
         super(props);
+        this.autorun(() => {
+            this.setState({
+                isAuthenticated: Meteor.user()
+            });
+        });
 
     }
 
     componentWillMount() {
         // Check that the user is logged in before the component mounts
-            console.log("push to /signin before compount mount");
-           // browserHistory.push('/hello');
+      //  browserHistory.push('/');
     }
 
     componentDidUpdate() {
         // Navigate to a sign in page if the user isn't authenticated with data changes
-            console.log("push to /signin on compount update");
-         //   browserHistory.push('/hello');
+       // browserHistory.push('/');
     }
 
     render() {
-        return <AdminPage {...this.state} />;
+        return <Home {...this.state} />;
     }
 }

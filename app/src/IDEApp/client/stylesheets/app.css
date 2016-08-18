@@ -6941,7 +6941,7 @@ button.create-branch,button.add-remote {
     font-size: 2.2em;
     font-weight: 300;
     background: #EDEDED;
-    background-image: url("../js/packages/welcomescreen/assets/img/sl-bg-2.91f060e340bd.jpg");
+    background-image: url("/imgs/welcomescreen/sl-bg-2.jpg");
     background-position: 50% 70%;
     color: white;
     text-shadow: 0 1px 5px rgba(0,0,0,1);
@@ -7231,7 +7231,7 @@ button.create-branch,button.add-remote {
         -webkit-transform: scale(1);
     }
 }
-}
+
 
 @-ms-keyframes notice_me_senpai {
     0% {
@@ -7740,7 +7740,7 @@ button.create-branch,button.add-remote {
     width: 194px;
     height: 110px;
     margin: 0 auto;
-    background-image: url("../js/packages/tutorials/assets/img/tutorial_gif.c03c1ecd83a9.gif")
+   /* background-image: url("../js/packages/tutorials/assets/img/tutorial_gif.c03c1ecd83a9.gif") */
 }
 
 .detacher {
@@ -8130,49 +8130,49 @@ input.creation-modal__text-field,input.creation-modal__text-field:focus,input.cr
 }
 
 [data-name="HTML"] {
-    background-image: url("../js/packages/creationscreen/img/cs-html.1c040219d323.png");
+    background-image: url("/imgs/creationscreen/cs-html.png");
 }
 
 [data-name="Django"] {
-    background-image: url("../js/packages/creationscreen/img/cs-django.67fb7fa8aa92.png");
+    background-image: url("/imgs/creationscreen/cs-django.png");
 }
 
 [data-name="Node.js"] {
-    background-image: url("../js/packages/creationscreen/img/cs-node.cdfabc6127ac.png");
+    background-image: url("/imgs/creationscreen/cs-node.png");
 }
 
 [data-name="PHP"] {
-    background-image: url("../js/packages/creationscreen/img/cs-php.0e1ba2d12fe7.png");
+    background-image: url("/imgs/creationscreen/cs-php.png");
 }
 
 [data-name="Generic"] {
-    background-image: url("../js/packages/creationscreen/img/cs-other.795045db8d09.png");
+    background-image: url("/imgs/creationscreen/cs-other.png");
 }
 
 [data-name="Python"] {
-    background-image: url("../js/packages/creationscreen/img/cs-python.8678bef6dda9.png");
+    background-image: url("/imgs/creationscreen/cs-python.png");
 }
 
 [data-name="MySQL"] {
-    background-image: url("../js/packages/creationscreen/img/cs-sql.f17b191f3485.png");
+    background-image: url("/imgs/creationscreen/cs-sql.png");
 }
 
 [data-name="PostgreSQL"] {
-    background-image: url("../js/packages/creationscreen/img/cs-postgre.ab1b1dfe0240.png");
+    background-image: url("/imgs/creationscreen/cs-postgre.png");
 }
 
 [data-name="MongoDB"] {
-    background-image: url("../js/packages/creationscreen/img/cs-mongo.ce1427b7896b.png");
+    background-image: url("/imgs/creationscreen/cs-mongo.png");
 }
 
 [data-name="None"] {
-    background-image: url("../js/packages/creationscreen/img/cs-none.b2df9d8aa13d.png");
+    background-image: url("/imgs/creationscreen/cs-none.png");
 }
 
 .creation-modal .octocat {
     width: 16px;
     height: 16px;
-    background-image: url("../js/packages/creationscreen/img/GitHub-Mark-Light-32px.87ad1bc9517c.png");
+    background-image: url("/imgs/creationscreen/GitHub-Mark-Light-32px.87ad1bc9517c.png");
     display: inline-block;
     background-size: contain;
     margin: 0 .5em 0 0;

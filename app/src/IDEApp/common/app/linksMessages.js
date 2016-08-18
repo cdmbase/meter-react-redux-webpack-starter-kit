@@ -13,6 +13,10 @@ export default defineMessages({
         defaultMessage: 'Sign in',
         id: 'app.links.signIn'
     },
+    signOut: {
+        defaultMessage: 'Sign out',
+        id: 'app.links.signOut'
+    },
     pricing: {
         defaultMessage: 'Pricing',
         id: 'app.links.pricing'

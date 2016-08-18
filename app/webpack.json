@@ -6,7 +6,16 @@
   "devtool": "eval",
   "debug": true,
   "resolve": {
-
+    "alias": {
+      "App": "src/IDEApp/client/app"
+    },
+    "modules": [
+      "app",
+      "components",
+      "screens",
+      "shared",
+      "node_modules"
+    ]
   },
   "externals": {
     "react": "React",

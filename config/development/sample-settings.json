@@ -1,0 +1,14 @@
+{
+  "public": {
+    "sentryUrl": "xxxxxx",
+    "googleAnalyticsId": "UA-XXXXXXX-X"
+  },
+  "private": {
+    "oAuth": {
+      "github": {
+        "clientId": "xxxxxxxxx",
+        "secret": "xxxxxxxxx"
+      }
+    }
+  }
+}
