@@ -441,7 +441,8 @@ hr {
 }
 
 body #ide {
-    display: none;
+    /*Sri*/
+ /*   display: none; */
 }
 
 body.ready #ide {

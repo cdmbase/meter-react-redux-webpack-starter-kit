@@ -3,11 +3,11 @@ import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import ReactHelmet from 'react-helmet';
-import AppRoutes from 'IDEApp/client/routes';
-import createStore from 'IDEApp/common/store/createStore';
-import configureStore from 'IDEApp/common/configureStore';
-import createInitialState from 'IDEApp/server/frontend/createInitialState';
-import config from 'IDEApp/server/frontend/config';
+import AppRoutes from 'MainApp/client/routes';
+import createStore from 'MainApp/common/store/createStore';
+import configureStore from 'MainApp/common/configureStore';
+import createInitialState from 'MainApp/server/frontend/createInitialState';
+import config from 'MainApp/server/frontend/config';
 
 let store;
 let history;

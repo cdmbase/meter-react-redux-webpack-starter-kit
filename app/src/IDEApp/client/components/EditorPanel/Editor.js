@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Codemirror from '../third_party/Codemirror';
+//import Codemirror from '../third_party/Codemirror';
+import Codemirror from 'react-codemirror';
 import 'codemirror/addon/comment/comment';
 import 'codemirror/addon/comment/continuecomment';
 import 'codemirror/addon/display/rulers';

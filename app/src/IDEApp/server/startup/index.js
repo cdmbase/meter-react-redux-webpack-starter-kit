@@ -4,5 +4,3 @@ import { Meteor } from 'meteor/meteor';
 let startup = () => {
     configureService();
 };
-
-startup();

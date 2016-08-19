@@ -3,7 +3,8 @@ import { Accounts, STATES } from 'meteor/std:accounts-bootstrap';
 import { browserHistory } from 'react-router';
 import { Meteor } from 'meteor/meteor';
 
-export default class signup extends Component {
+
+export default class SignIn extends Component {
 
     componentWillMount() {
         if( Meteor.user()){
@@ -15,12 +16,12 @@ export default class signup extends Component {
             browserHistory.push('/');
         }
     }
-    render () {
-        return (
-            <div className="container">
-                <Accounts.ui.LoginForm fromState={ STATES.SIGN_UP } />
-            </div>
-        )
-    }
+   render () {
+       return (
+           <div className="container">
+               <Accounts.ui.LoginForm  fromState={ STATES.SIGN_IN }/>
+           </div>
+       )
+   }
 
 };

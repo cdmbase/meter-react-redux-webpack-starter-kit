@@ -1,5 +1,4 @@
 import { Accounts } from 'meteor/std:accounts-ui';
-import 'IDEApp/methods/methods';
 import {  push } from 'react-router-redux';
 import { browserHistory } from 'react-router';
 

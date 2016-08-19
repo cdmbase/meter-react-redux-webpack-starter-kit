@@ -1,33 +1,49 @@
-import React, { Component } from 'react';
-import Tracker from 'tracker-component';
-import {  push } from 'react-router-redux';
-import { Meteor } from 'meteor/meteor';
-import { browserHistory } from 'react-router';
-import Home from 'Home';
+import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
+import MainMenu from './MainMenu';
+import Helmet from 'react-helmet';
+import {Grid, Row, Col} from 'react-bootstrap';
+import start from 'MainApp/common/app/start';
+import Sidebar from 'IDEApp/client/components/Sidebar';
+import Ide from 'IDEApp/client/components/Ide';
+import createSidebarButtons from 'IDEApp/client/lib/createSidebarMenuButtons';
+
+// methods
+import 'IDEApp/methods/methods';
 
 
-export default class Index extends Tracker.Component {
-    constructor(props) {
-        super(props);
-        this.autorun(() => {
-            this.setState({
-                isAuthenticated: Meteor.user()
-            });
-        });
+// Styles
+import '../stylesheets/app.import.css';
 
-    }
 
-    componentWillMount() {
-        // Check that the user is logged in before the component mounts
-      //  browserHistory.push('/');
-    }
+@connect((state)=> state, null)
+export default class App extends Component {
 
-    componentDidUpdate() {
-        // Navigate to a sign in page if the user isn't authenticated with data changes
-       // browserHistory.push('/');
+    static propTypes = {
+        children: PropTypes.object.isRequired,
+        currentLocale: PropTypes.string.isRequired,
+    };
+
+    create(menu) {
+        return createSidebarButtons(menu);
     }
 
     render() {
-        return <Home {...this.state} />;
+        const { ui, children, currentLocale, location } = this.props;
+        return (
+            <div >
+                <Sidebar ui={ui} mainMenu={this.create(MainMenu)}/>
+                <Ide />
+
+            </div>
+        )
     }
+
 }
+
+App = start(App);
+
+export default connect(state => ({
+    currentLocale: state.intl.currentLocale,
+    ui: state.ui
+}))(App);

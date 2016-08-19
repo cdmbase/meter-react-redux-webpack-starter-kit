@@ -9,7 +9,7 @@ import Footer from './layouts/Footer';
 
 
 // Styles
-//import '../stylesheets/app.css';
+import '../stylesheets/app.import.css';
 
 
 @connect((state)=> state, null)

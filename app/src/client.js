@@ -1,3 +1,3 @@
-import 'IDEApp/client';
+import 'MainApp/client';
 
 import './routes';

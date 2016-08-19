@@ -4,10 +4,11 @@
     "host": "localhost"
   },
   "devtool": "eval",
-  "debug": true,
   "resolve": {
     "alias": {
-      "App": "src/IDEApp/client/app"
+      "App": "src/IDEApp/client/app",
+      "Main": "src/MainApp/client/app",
+      "react$": "./node_modules/react"
     },
     "modules": [
       "app",
@@ -18,7 +19,7 @@
     ]
   },
   "externals": {
-    "react": "React",
+    "react": true,
     "react-dom": "ReactDOM",
     "react-router": "ReactRouter"
   }
