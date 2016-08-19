@@ -5,6 +5,7 @@
   "browser": "src/client.js",
   "author": "Admin Developers",
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "bluebird": "^3.4.1",
     "bootstrap": "^3.3.7",
     "cheerio": "^0.20.0",

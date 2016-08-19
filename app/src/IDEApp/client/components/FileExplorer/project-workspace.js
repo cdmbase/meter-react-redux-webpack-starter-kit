@@ -1,10 +1,11 @@
 import React from 'react';
-//import FileTree from './FileTree';
+import FileTree from './FileTree';
 
 const ProjectWorkspace = () => {
 
     return (
         <div className="project-workspace workspace">
+            <FileTree />
         </div>
     )
 };

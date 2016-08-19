@@ -19,8 +19,10 @@
     ]
   },
   "externals": {
-    "react": true,
+    "react": "React",
     "react-dom": "ReactDOM",
-    "react-router": "ReactRouter"
+    "react-router": "ReactRouter",
+    "react/lib/ReactTransitionGroup": "React.addons.TransitionGroup",
+    "react/lib/ReactCSSTransitionGroup": "React.addons.CSSTransitionGroup"
   }
 }
