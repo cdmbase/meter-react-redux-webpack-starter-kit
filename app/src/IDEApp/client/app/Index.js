@@ -20,7 +20,7 @@ import '../stylesheets/app.import.css';
 export default class App extends Component {
 
     static propTypes = {
-        children: PropTypes.object.isRequired,
+        //children: PropTypes.object.isRequired,
         currentLocale: PropTypes.string.isRequired,
     };
 

@@ -6,7 +6,6 @@ import Index from 'Main/Index';
 import NotFound from 'Main/NotFound';
 import SignIn from 'Main/SignIn';
 import SignUp from 'Main/SignUp';
-import Workspace from 'App/workspace';
 import SignOut from 'Main/SignOut';
 
 const getWorkspace = (nextState, cb) => {
@@ -29,7 +28,6 @@ export default (
             <Route path="/signout" component={ SignOut }/>
         </Route>
         <Route path="/workspace" getComponents={ getWorkspace }>
-            <IndexRoute component={ Workspace }/>
         </Route>
         <Route path="*" component={ NotFound } />
     </Route>
