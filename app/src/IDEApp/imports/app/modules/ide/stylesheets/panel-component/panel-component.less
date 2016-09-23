@@ -1,0 +1,56 @@
+@import "./controls-bar";
+@import "./editor-panel";
+@import "./terminal-panel";
+
+.panel-components {
+  //position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 5;
+  overflow: hidden;
+  background-color: whitesmoke;
+
+  &.no-explorer {
+    left: 0 !important;
+    z-index: 7
+  }
+  .pin-button {
+    width: 34px;
+    height: 34px;
+    z-index: 10;
+  }
+}
+
+.panel-components .pin-button:active,.panel-components .pin-button.active,.panel-components .pin-button.pressed {
+  background-color: rgba(255,255,255,.15);
+}
+
+.CodeMirror-gutters {
+  min-width: 40px;
+}
+
+.panel   {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.contents {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+
+.panel .split, .panel .resizer {
+  position: absolute;
+}
+
+.panel .split {
+  background: whitesmoke;
+}
+
+.vertical-split > * {
+  position: absolute;
+  height: 100%;
+}

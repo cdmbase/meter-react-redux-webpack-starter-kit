@@ -1,28 +1,16 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import MainMenu from './MainMenu';
+import MainMenu from './main-menu';
 import Helmet from 'react-helmet';
-import {Grid, Row, Col} from 'react-bootstrap';
 import start from 'MainApp/common/app/start';
-import Sidebar from 'IDEApp/client/components/Sidebar';
-import Ide from 'IDEApp/client/components/Ide';
-import createSidebarButtons from 'IDEApp/client/lib/createSidebarMenuButtons';
 
-// methods
-import 'IDEApp/methods/methods';
-
-
+import Dashboard from '../../imports/app/modules/application/components/dashboard';
 // Styles
-import '../stylesheets/app.import.css';
+import '../stylesheets/main.less';
 
 
-@connect((state)=> state, null)
 export default class App extends Component {
 
-    static propTypes = {
-        //children: PropTypes.object.isRequired,
-        currentLocale: PropTypes.string.isRequired,
-    };
 
     create(menu) {
         return createSidebarButtons(menu);
@@ -32,9 +20,7 @@ export default class App extends Component {
         const { ui, children, currentLocale, location } = this.props;
         return (
             <div >
-                <Sidebar ui={ui} mainMenu={this.create(MainMenu)}/>
-                <Ide />
-
+                {this.props.children || <Dashboard /> }
             </div>
         )
     }
@@ -44,6 +30,5 @@ export default class App extends Component {
 App = start(App);
 
 export default connect(state => ({
-    currentLocale: state.intl.currentLocale,
     ui: state.ui
 }))(App);

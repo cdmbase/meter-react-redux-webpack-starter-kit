@@ -7,8 +7,8 @@ Accounts.ui.config({
         github: ['user', 'repo']
     },
     passwordSignupFields: 'USERNAME_AND_EMAIL',
-    homeRoutePath: '/workspace',
-    onSignedInHook: () =>  browserHistory.push('/workspace'),
+    homeRoutePath: '/app',
+    onSignedInHook: () =>  browserHistory.push('/app'),
     onSignedOutHook: () => browserHistory.push('/signin'),
     loginPath: '/signin',
     signUpPath: '/signup',

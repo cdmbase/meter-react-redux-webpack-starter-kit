@@ -1,0 +1,41 @@
+.project-header {
+
+  line-height: 32px;
+  height: 64px;
+  position: relative;
+  text-align: center;
+  background-color: rgb(246,246,246);
+  background-color: rgb(240,240,236);
+  z-index: 10;
+
+
+  .icon-img-container {
+    left: -32px;
+
+    &::before {
+      left: -16px;
+    }
+  }
+  .new-file {
+    .icon-img-container {
+      top: 0;
+    }
+    .icon-img-container::before {
+      top: -16px;
+    }
+  }
+
+  .project-settings {
+    .icon-img-container {
+      top: -32px;
+    }
+  }
+
+  #upload-file-button {
+    .icon-img-container {
+      top: -16px;
+      left: -64px;
+    }
+  }
+
+}

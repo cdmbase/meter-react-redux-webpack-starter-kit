@@ -1,18 +1,24 @@
+/* @flow */
 import configureReducer from './configureReducer';
-import { applyMiddleware, createStore, compose, combineReducers } from 'redux';
-import { routerMiddleware, routerReducer, syncHistoryWithStore } from 'react-router-redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import { routerMiddleware } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 
-
-export default function configureStore(options){
+type Options = {
+    initialState: Object,
+    platformDeps?: Object,
+    platformMiddleware?: Array<Function>,
+};
+const configureStore = (options: Options) => {
     const {
         initialState,
         history,
-        platformReducers = {}
+        platformDeps = {},
+        platformMiddleware = [],
         } = options;
 
-    const reducer = configureReducer(initialState, platformReducers);
+    const reducer = configureReducer(initialState);
 
     // ======================================================
     // Middleware Configuration
@@ -40,10 +46,15 @@ export default function configureStore(options){
         )
     );
 
+    // to inject reducers in future
+    store.asyncReducers = {};
+
+
+
     // Enable hot reload where available.
     if (module.hot) {
         const replaceReducer = configureReducer =>
-            store.replaceReducer(configureReducer(initialState, platformReducers));
+            store.replaceReducer(configureReducer(initialState));
 
         if (initialState.device.isReactNative) {
             module.hot.accept(() => {
@@ -57,4 +68,6 @@ export default function configureStore(options){
     }
 
     return store;
-}
+};
+
+export default configureStore;
