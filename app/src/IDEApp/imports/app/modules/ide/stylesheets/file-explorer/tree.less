@@ -1,43 +1,18 @@
-@import "../../../../../../../../node_modules/react-ui-tree/lib/react-ui-tree";
-
-.tree-view {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
+.tree-view-node {
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  background-color: #21252B;
-}
-
-.tree-view {
-  .collapse {
-    display: block;
-  }
-}
-
-//theme
-.m-node {
-  &.placeholder {
-    border: 1px dashed #1385e5;
-  }
-
-  .inner {
-    color: #9DA5B4;
+  .name {
+    padding: 3px 5px;
     font-size: 12px;
-    font-family: Menlo;
-  }
+    color: #fff !important;
+    cursor: pointer;
 
-  .node {
-    display: inline-block;
-    width: 100%;
-    padding: 4px 5px;
+    &:before {
+      margin: 0 4px 0 0;
+    }
 
-    &.is-active {
-     // background-color: #31363F;
+    &.active {
+      background: red;
     }
   }
 }
-
 

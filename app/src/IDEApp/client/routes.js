@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { Route, IndexRoute } from 'react-router';
+import React from 'react';
+import { Route } from 'react-router';
 import { injectReducer } from 'MainApp/common/configureReducer';
-import { combineReducers } from 'redux';
 
 
 let checkAuth = (fn, to) => {
@@ -27,15 +26,10 @@ export const getRoutes = (store) => {
             // https://github.com/mxstbr/react-boilerplate/blob/master/app/routes.js
             require.ensure([], function (require) {
                 let ui = require('MainApp/common/ui/ui-reducer');
-                let { jobs } = require('IDEApp/imports/app/modules/application/reducers/job-reducer');
-                let { list, files, editor, settings } = require('IDEApp/imports/app/modules/ide/reducers/boxes-reducer');
-                let { selected } = require('IDEApp/imports/app/modules/ide/reducers/ide-reducers');
-                let { trees, flist } = require('IDEApp/imports/app/modules/ide/reducers/filesystems-reducers');
+                let reducers = require('IDEApp/imports/app/reducers');
                 injectReducer(store(), {
                     ui,
-                    jobs,
-                    boxes: combineReducers({list, selected, files, editor, settings, flist}),
-                    filesystem: combineReducers({trees})
+                    ...reducers
                 });
                 cb(null, require('IDEApp/client/app'));
             })
@@ -44,12 +38,25 @@ export const getRoutes = (store) => {
 
     const getChildRoutes = [
         require('IDEApp/imports/app/modules/application/routes'),
-        require('IDEApp/imports/app/modules/ide/routes')
+        require('IDEApp/imports/app/modules/ide/routes'),
+        require('IDEApp/imports/app/modules/servers/routes')
     ];
 
+    const getBindTracker = (nextState, cb) => {
+        if (Meteor.isServer) {
+            cb(null, required('../imports/app/modules/application/containers/bind-tracker'))
+        } else {
+            require.ensure([], function (required) {
+                cb(null, require('../imports/app/modules/application/containers/bind-tracker'));
+            })
+        }
+    };
+
     return (
-        <Route path="/app" onEnter={checkAuth(authenticated, '/signin')} getComponents={ getApp }
-               childRoutes={getChildRoutes}/>
+        <Route getComponents={ getBindTracker }>
+            <Route path="/app" onEnter={checkAuth(authenticated, '/signin')} getComponents={ getApp }
+                   childRoutes={getChildRoutes}/>
+        </Route>
     )
 
 };

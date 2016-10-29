@@ -1,0 +1,54 @@
+.terminal-container {
+  flex-grow: 0;
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .terminal-header {
+    background: #303941;
+    padding: 10px 15px;
+    color: #fff;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    .name {
+      flex-grow: 2;
+    }
+
+    .action-btns {
+      flex-grow: 0;
+
+      i {
+        cursor: pointer;
+        padding: 0 5px;
+      }
+    }
+  }
+
+  .terminal-body {
+    color: #fff;
+    -webkit-transition: height .5s ease-out 0s;
+    -moz-transition: height .5s ease-out 0s;
+    -o-transition: height .5s ease-out 0s;
+    transition: height .5s ease-out 0s;
+
+    &.terminal-closed {
+      height: 0;
+      display: none;
+    }
+
+    &.terminal-opened {
+      height: 20%;
+      display: block;
+    }
+
+    iframe {
+      width: 100%;
+      border: none;
+      height: 100%;
+    }
+  }
+}

@@ -1,37 +1,28 @@
 import React, { Component, PropTypes } from 'react';
-import FileExplorer from '../components/FileExplorer';
-import PanelComponents from './panel-components';
-import { bindActionCreators } from 'redux';
 import { Link, withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { select, box } from '../actions/boxes-actions';
 import  SplitPane from 'react-split-pane';
-import { JOB_STATUS_IN_PROGRESS, JOB_STATUS_REJECTED, JOB_STATUS_DONE } from '../../application/action-types';
+import FileExplorerContainer from './FileExplorerContainer';
+import PanelComponents from './PanelComponents';
 
+import { select, box } from '../actions/box-action';
 
-const fsActions = (dispatch) => (event) => {
-    dispatch(event);
-};
+import "../stylesheets/ide.less";
 
 class Ide extends Component {
-    componentDidMount() {
-        this.props.select(this.props.params.id);
-        this.props.fsLoad(this.props.params.id);
-    }
-
-    getChildContext() {
-        return {box: this.props.selected};
+    constructor() {
+        super(...arguments);
     }
 
     render() {
 
-        let { selected, job = false } = this.props;
+        let { workspace, params: { id } } = this.props;
         return (
-            selected ? (
+            workspace ? (
                 <div id="ide" className="workspace active logged workspace-folder workspace-other">
                     <SplitPane split="vertical" minSize={150} maxSize={-600} defaultSize={406}>
-                        <FileExplorer />
-                        <PanelComponents />
+                        <FileExplorerContainer workspaceId={id}/>
+                        <PanelComponents workspace={workspace[id]} workspaceId={id} />
                     </SplitPane>
                 </div>
             ) : (
@@ -44,19 +35,10 @@ class Ide extends Component {
     }
 }
 
-Ide.childContextTypes = {
-    box: React.PropTypes.object
-};
 
 
-const mapStateToProps = ({jobs, boxes: {list, selected}}) => ({
-    boxes: Object.keys(list).map(id => list[id], selected),
-    job: jobs[selected],
-    selected: list[selected],
-});
-const mapDispatchToProps = dispatch => ({
-    fsActions: fsActions(dispatch),
-    ...bindActionCreators({select, ...box}, dispatch)
+const mapStateToProps = ({jobs, editor, workspaces: {list, selected, settings, files, trees }}) => ({
+    workspace: list,
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Ide));
+export default connect(mapStateToProps, null)(Ide);

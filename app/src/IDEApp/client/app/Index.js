@@ -9,7 +9,7 @@ import Dashboard from '../../imports/app/modules/application/components/dashboar
 import '../stylesheets/main.less';
 
 
-export default class App extends Component {
+class App extends Component {
 
 
     create(menu) {

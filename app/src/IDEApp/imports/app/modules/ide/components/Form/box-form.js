@@ -34,11 +34,11 @@ export default class BoxForm extends Component {
     }
 
     render() {
-        let { box={}, close, onHide, show } = this.props;
+        let { box={}, close, ...rest } = this.props;
         let { name = '', lang = '', description = '' } = box;
         let { error } = this.state;
         return (
-            <Modal show={show} close={close} onHide={onHide}>
+            <Modal {...rest} >
                 <form onSubmit={this.submit()} action="">
                     <Modal.Header closeButton>
                         <Modal.Title>Box</Modal.Title>
@@ -77,6 +77,5 @@ export default class BoxForm extends Component {
 }
 
 BoxForm.propTypes = {
-    show: React.PropTypes.bool,
-    close: React.PropTypes.func.required
+    show: React.PropTypes.bool
 };

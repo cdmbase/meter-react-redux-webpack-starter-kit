@@ -1,4 +1,3 @@
-import { Route } from 'react-router';
 import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
@@ -6,7 +5,6 @@ import ReactHelmet from 'react-helmet';
 import Routes from 'MainApp/client/routes';
 import configureStore from 'MainApp/common/configureStore';
 import createInitialState from 'MainApp/server/frontend/createInitialState';
-import config from 'MainApp/server/frontend/config';
 
 let store;
 let history;
@@ -47,8 +45,6 @@ const clientProps = {
 
 // Create a redux store and pass into the redux Provider wrapper
 const wrapperHook = app => {
-    console.log("Store data in wrapperHook");
-    console.log(store);
     routes.injectStore(store);
     return (<Provider store={store}>{app}</Provider>)
 };

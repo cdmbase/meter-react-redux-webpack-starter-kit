@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { push } from 'react-router-redux';
 import { Button, Grid, Panel, Col, Row, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { load, sync, box } from '../../ide/actions/boxes-actions';
 import { bindActionCreators } from 'redux';
 import Box from '../../ide/components/box';
 import BoxForm from '../../ide/components/Form/box-form';
@@ -13,30 +13,28 @@ class Dashboard extends Component {
 
     constructor() {
         super(...arguments);
+
         this.state = {}
     }
 
-    componentDidMount() {
-        //this.props.sync();
-        this.props.load();
-
+    close() {
+        this.setState({ modal: false })
     }
 
     render() {
-        let { boxes } = this.props;
-        let close = () =>  this.setState({ modal: false });
+        let { workspaces } = this.props;
         return (
             <div>
                 <Panel className="page-toolbar">
                     <div className="page-title pull-left">Dashboard</div>
-                    <Button onClick={e => this.setState({ modal: MODAL_CREATION })} bsStyle="primary" bsSize="xsmall"
+                    <Button style={{ margin: 0 }} onClick={e => this.setState({ modal: MODAL_CREATION })} bsStyle="primary" bsSize="xsmall"
                             className="pull-right">Create Workspace
                     </Button>
                 </Panel>
                 <div className="container boxes-list">
-                    {boxes.map((box, index) => <Box key={index} box={box} />)}
+                    {workspaces.map((box, index) => <Box key={index} box={box} />)}
                 </div>
-                <BoxForm onHide={close} close={ close}
+                <BoxForm onHide={this.close.bind(this)} close={this.close.bind(this)}
                          show={[MODAL_CREATION].includes(this.state.modal)} box={this.state.box || {}}/>
             </div>
         );
@@ -49,11 +47,10 @@ Dashboard.contextTypes = {
     router: React.PropTypes.object
 };
 
-const mapStateToProps = ({ boxes: { list, files }}) => ({
-    boxes: Object.keys(list).map(id => list[id]),
-    files
+const mapStateToProps = ({ workspaces: { list }}) => ({
+    workspaces: Object.keys(list).map(id => list[id])
 });
 
-const mapDispatchToActions = dispatch => bindActionCreators({load, sync}, dispatch);
+const mapDispatchToActions = dispatch => bindActionCreators({push}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToActions)(Dashboard);

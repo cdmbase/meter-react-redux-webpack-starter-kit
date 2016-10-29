@@ -14,7 +14,7 @@ import '../stylesheets/initial.less';
 
 
 @connect((state)=> state, null)
-export default class Main extends Component {
+class Main extends Component {
 
     static propTypes = {
         children: PropTypes.object.isRequired,

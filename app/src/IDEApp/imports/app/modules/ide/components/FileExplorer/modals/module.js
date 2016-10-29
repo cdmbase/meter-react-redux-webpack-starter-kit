@@ -1,38 +1,39 @@
-import React, { Component } from 'react';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import randomstring from 'randomstring';
-import { findDOMNode } from 'react-dom';
-import { Modal, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { JOB_ACTION_CREATION, JOB_ACTION_RENAME } from '../../../action-types';
-import { TARGET_DIR, TARGET_FILE } from '../../../action-types';
-import { box } from '../../../actions/boxes-actions';
+import {findDOMNode} from 'react-dom';
+
+import {Modal, Button, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
+import {bindActionCreators} from 'redux';
+import {JOB_ACTION_CREATION, JOB_ACTION_RENAME} from '../../../action-types';
+import {TARGET_DIR, TARGET_FILE} from '../../../action-types';
+import {fs} from '../../../actions/fs-action';
 
 
 class Module extends Component {
     onCloseModal() {
         return e => {
-            let { triggerClose } = this.props;
+            let {triggerClose} = this.props;
             triggerClose && triggerClose(this.props.job);
         }
     }
 
     onSave() {
         return e => {
-            let { box } = this.context;
+            let { workspace } = this.context;
             let { job } = this.props;
-            let { data: { type, module, target }} = job;
+            let { data: {type, module, target} } = job;
 
             let name = findDOMNode(this.refs.name).value;
 
             if (type == JOB_ACTION_CREATION) {
                 if (target == TARGET_DIR) {
-                    this.props.box.mkdir(box._id, module.relativePath, name);
+                    this.props.fs.mkdir(workspace._id, module.relativePath, name);
                 } else {
-                    this.props.box.touch(box._id, module.relativePath, name);
+                    this.props.fs.touch(workspace._id, module.relativePath, name);
                 }
             } else {
-                Meteor.call('fs.rename', box._id, module.module, name);
+                this.props.fs.rename(workspace._id, module.relativePath, name);
             }
             this.onCloseModal()(e);
         }
@@ -40,7 +41,7 @@ class Module extends Component {
 
     render() {
         let { job } = this.props;
-        let { data: { type, module }} : job;
+        let { data: { type, module } } = job;
 
         return (
             <Modal {...this.props}>
@@ -61,10 +62,17 @@ class Module extends Component {
     }
 }
 
+Module.proptypes = {
+    job: PropTypes.object.required
+}
+
 const mapDispatchToProps = dispatch => ({
-    box: bindActionCreators(box, dispatch)
+    fs: bindActionCreators(fs, dispatch)
 });
 
-Module.contextTypes = { box: React.PropTypes.object };
+Module.contextTypes = {
+    workspace: React.PropTypes.object
+};
+
 
 export default connect(undefined, mapDispatchToProps)(Module);

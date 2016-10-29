@@ -7,8 +7,7 @@
   "resolve": {
     "alias": {
       "App": "src/IDEApp/client/app",
-      "Main": "src/MainApp/client/app",
-      "react$": "./node_modules/react"
+      "Main": "src/MainApp/client/app"
     },
     "modules": [
       "app",

@@ -1,9 +1,9 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const Boxes = new Mongo.Collection('boxes');
+const Box = new Mongo.Collection('boxes');
 
-Boxes.schema = new SimpleSchema({
+Box.schema = new SimpleSchema({
     _id: {
         type: String
     },
@@ -40,11 +40,12 @@ Boxes.schema = new SimpleSchema({
     }
 });
 
-//Boxes.attachSchema(Boxes.schema);
+//Box.attachSchema(Box.schema);
 
-Boxes.consts = {
+Box.consts = {
     STATUS_SHUTDOWN: "STATUS_SHUTDOWN",
-    STATUS_ACTIVE: "STATUS_ACTIVE"
+    STATUS_ACTIVE: "STATUS_ACTIVE",
+    STATUS_PROCESS: "STATUS_PROCESS"
 };
 
-export default Boxes;
+export default Box;
