@@ -5,6 +5,7 @@ import ReactHelmet from 'react-helmet';
 import Routes from 'MainApp/client/routes';
 import configureStore from 'MainApp/common/configureStore';
 import createInitialState from 'MainApp/server/frontend/createInitialState';
+import logger from 'cdm-logger';
 
 let store;
 let history;
@@ -15,8 +16,7 @@ let routes = new Routes();
 
 let generateAppsRoute = () => () => {
 
-    console.log("Store data in generateAppsRoute");
-    console.log(store);
+    logger.debug("Store data in generateAppsRoute :", store);
     return appRoutes(store);
 };
 

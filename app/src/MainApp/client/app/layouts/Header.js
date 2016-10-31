@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import linksMessages from '../../../common/app/linksMessages';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Accounts, STATES } from 'meteor/std:accounts-bootstrap';
 import { Meteor } from 'meteor/meteor';
 
 
@@ -29,9 +28,9 @@ const Header = () => {
                         <FormattedMessage {...linksMessages.home} />
                     </NavItem>
                 </LinkContainer>
-                <LinkContainer to="/pricing">
+                <LinkContainer to="/docs">
                     <NavItem eventKey={2}>
-                        <FormattedMessage {...linksMessages.pricing} />
+                        <FormattedMessage {...linksMessages.docs} />
                     </NavItem>
                 </LinkContainer>
                 <LinkContainer to={loginPath}>

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import {Grid, Row, Col} from 'react-bootstrap';
 import start from '../../common/app/start';
-import Header from './layouts/header';
-import Footer from './layouts/footer';
+import Header from './layouts/Header';
+import Footer from './layouts/Footer';
 
 
 

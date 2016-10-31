@@ -4,7 +4,7 @@ import MainMenu from './main-menu';
 import Helmet from 'react-helmet';
 import start from 'MainApp/common/app/start';
 
-import Dashboard from '../../imports/app/modules/application/components/dashboard';
+import Dashboard from '../../imports/ui/modules/application/containers/DashboardContainer';
 // Styles
 import '../stylesheets/main.less';
 

@@ -1,1 +1,1 @@
-import '../imports/methods';
+import '../imports/api/methods';

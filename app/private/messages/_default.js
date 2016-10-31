@@ -88,6 +88,14 @@ export default [
         "defaultMessage": "Sign in",
     },
     {
+        "id": "app.links.docs",
+        "defaultMessage": "Documents",
+    },
+    {
+        "id": "app.links.apps",
+        "defaultMessage": "Apps",
+    },
+    {
         "id": "app.links.todos",
         "defaultMessage": "Todos",
     },

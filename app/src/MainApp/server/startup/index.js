@@ -1,10 +1,13 @@
-import configureService from '../lib/configure-service';
+import configureService from '../lib/configureService';
 import { Meteor } from 'meteor/meteor';
-import cdmLogger from 'cdm-logger';
+import logger from 'cdm-logger';
 
 let startup = () => {
-    console.log("configuring services");
+    logger.info("configuring login services");
     configureService();
 };
 
 startup();
+
+logger.info(" =====> Meteor App restarted " + new Date(Date.now()) + " <=====");
+

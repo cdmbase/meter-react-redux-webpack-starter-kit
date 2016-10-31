@@ -21,6 +21,14 @@ export default defineMessages({
         defaultMessage: 'Pricing',
         id: 'app.links.pricing'
     },
+    docs: {
+        defaultMessage: 'Documents',
+        id: 'app.links.docs'
+    },
+    apps: {
+        defaultMessage: 'Apps',
+        id: 'app.links.apps'
+    },
     features: {
         defaultMessage: 'Features',
         id: 'app.links.features'

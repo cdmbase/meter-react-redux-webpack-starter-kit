@@ -26,7 +26,7 @@ export const getRoutes = (store) => {
             // https://github.com/mxstbr/react-boilerplate/blob/master/app/routes.js
             require.ensure([], function (require) {
                 let ui = require('MainApp/common/ui/ui-reducer');
-                let reducers = require('IDEApp/imports/app/reducers');
+                let reducers = require('IDEApp/imports/ui/reducers');
                 injectReducer(store(), {
                     ui,
                     ...reducers
@@ -37,17 +37,17 @@ export const getRoutes = (store) => {
     };
 
     const getChildRoutes = [
-        require('IDEApp/imports/app/modules/application/routes'),
-        require('IDEApp/imports/app/modules/ide/routes'),
-        require('IDEApp/imports/app/modules/servers/routes')
+        require('IDEApp/imports/ui/modules/application/routes'),
+        require('IDEApp/imports/ui/modules/ide/routes'),
+        require('IDEApp/imports/ui/modules/servers/routes')
     ];
 
     const getBindTracker = (nextState, cb) => {
         if (Meteor.isServer) {
-            cb(null, required('../imports/app/modules/application/containers/bind-tracker'))
+            cb(null, required('../imports/ui/modules/application/containers/BindTracker'))
         } else {
             require.ensure([], function (required) {
-                cb(null, require('../imports/app/modules/application/containers/bind-tracker'));
+                cb(null, require('../imports/ui/modules/application/containers/BindTracker'));
             })
         }
     };

@@ -3,10 +3,11 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts, STATES } from 'meteor/std:accounts-ui';
 import Main from 'Main/main';
 import Index from 'Main/main-index';
-import NotFound from 'Main/not-found';
-import SignIn from 'Main/sign-in';
-import SignUp from 'Main/sign-up';
-import SignOut from 'Main/sign-out';
+import NotFound from 'Main/NotFound';
+import SignIn from 'Main/SignIn';
+import SignUp from 'Main/SignUp';
+import SignOut from 'Main/SignOut';
+import Docs from 'Main/Docs';
 import { Store } from 'redux';
 
 import { getRoutes } from 'IDEApp/client/routes';
@@ -32,6 +33,7 @@ export default class routes {
                 <Route path="/signin" component={ SignIn }/>
                 <Route path="/signup" component={ SignUp }/>
                 <Route path="/signout" component={ SignOut }/>
+                <Route path="/docs" component={ Docs }/>
             </Route>
             { getRoutes(this.lazyLoadStore) }
             <Route path="*" component={ NotFound }/>
