@@ -1,10 +1,10 @@
-import { Server } from '../collections';
+import { Servers } from '../collections';
 import { STATUS_CONNECTED, STATUS_DISCONNECTED } from '../collections/servers';
 
 
 Meteor.methods({
     'server.create': ({ name, url }) => {
-        let workspaceId = Server.insert({
+        let workspaceId = Servers.insert({
             name: name || "Untitled Server",
             url,
             info: {},
@@ -12,9 +12,11 @@ Meteor.methods({
         });
     },
     'server.update': ({ _id, name, url }) => {
-        Server.update(_id, {
+        Servers.update(_id, {
             $set: { name, url }
         });
-    }
+    },
+    'server.find': (id) => Servers.find({ _id: id }).fetch()
+
 });
 

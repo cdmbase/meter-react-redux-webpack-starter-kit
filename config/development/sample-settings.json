@@ -1,7 +1,8 @@
 {
   "public": {
     "sentryUrl": "xxxxxx",
-    "googleAnalyticsId": "UA-XXXXXXX-X"
+    "googleAnalyticsId": "UA-XXXXXXX-X",
+    "logDebug": "debug"
   },
   "private": {
     "oAuth": {

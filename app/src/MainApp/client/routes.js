@@ -9,6 +9,7 @@ import SignUp from 'Main/SignUp';
 import SignOut from 'Main/SignOut';
 import Docs from 'Main/Docs';
 import { Store } from 'redux';
+import logger from 'cdm-logger';
 
 import { getRoutes } from 'IDEApp/client/routes';
 
@@ -18,6 +19,7 @@ export default class routes {
      * Only need to inject this on the CLIENT side for lazy loading
      */
     injectStore(store) {
+        logger.debug("Injecting Store", store);
         this.store = store;
     }
 

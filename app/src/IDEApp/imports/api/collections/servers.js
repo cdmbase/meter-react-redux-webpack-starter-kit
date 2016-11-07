@@ -1,9 +1,9 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const Server = new Mongo.Collection('servers');
+const Servers = new Mongo.Collection('servers');
 
-Server.schema = new SimpleSchema({
+Servers.schema = new SimpleSchema({
     _id: {
         type: String
     },
@@ -32,9 +32,21 @@ Server.schema = new SimpleSchema({
     }
 });
 
-Server.attachSchema(Server.schema);
+Servers.attachSchema(Servers.schema);
 
 export const STATUS_DISCONNECTED = "STATUS_DISCONNECTED";
 export const STATUS_CONNECTED = "STATUS_CONNECTED";
 
-export default Server;
+Servers.allow({
+    insert: () => false,
+    update: () => false,
+    remove: () => false,
+});
+
+Servers.deny({
+    insert: () => false,
+    update: () => false,
+    remove: () => false,
+});
+
+export default Servers;

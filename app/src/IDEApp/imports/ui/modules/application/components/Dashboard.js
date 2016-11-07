@@ -20,7 +20,7 @@ export default class Dashboard extends Component {
     }
 
     render() {
-        let { workspaces } = this.props;
+        let { workspaces, start, create, shutdown, remove , routeTo } = this.props;
         return (
             <div>
                 <Panel className="page-toolbar">
@@ -30,10 +30,10 @@ export default class Dashboard extends Component {
                     </Button>
                 </Panel>
                 <div className="container boxes-list">
-                    {workspaces.map((box, index) => <Box key={index} box={box} />)}
+                    {workspaces.map((box, index) => <Box key={index} box={box} start={start} shutdown={shutdown} remove={remove} routeTo={routeTo} />)}
                 </div>
                 <BoxForm onHide={this.close.bind(this)} close={this.close.bind(this)}
-                         show={[MODAL_CREATION].includes(this.state.modal)} box={this.state.box || {}}/>
+                         show={[MODAL_CREATION].includes(this.state.modal)} create={create} box={this.state.box || {}}/>
             </div>
         );
 

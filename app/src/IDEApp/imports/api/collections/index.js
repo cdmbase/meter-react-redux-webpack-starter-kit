@@ -1,2 +1,2 @@
-export Box  from './boxes';
-export Server from './servers';
+export Boxes  from './boxes';
+export Servers from './servers';

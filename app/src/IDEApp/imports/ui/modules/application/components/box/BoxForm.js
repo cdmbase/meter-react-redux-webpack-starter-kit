@@ -11,7 +11,7 @@ export default class BoxForm extends Component {
     }
 
     submit() {
-        let { close } = this.props;
+        let { close, create } = this.props;
         return e => {
             e.preventDefault();
             this.setState({error: false});
@@ -21,20 +21,17 @@ export default class BoxForm extends Component {
                 description: findDOMNode(this.refs.description).value
             };
 
-            // Validation
-            Meteor.call('box.create', data, (data, error) => {
-                if (error) {
-                    this.setState({error})
-                } else {
-                    close();
-                }
-            });
+            try {
+                create(data, close);
+            } catch(error) {
+                this.setState({error});
+            }
         };
 
     }
 
     render() {
-        let { box={}, close, ...rest } = this.props;
+        let { box={}, close, create, ...rest } = this.props;
         let { name = '', lang = '', description = '' } = box;
         let { error } = this.state;
         return (

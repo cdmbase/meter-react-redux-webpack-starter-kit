@@ -1,11 +1,12 @@
 import React from 'react';
 import { Route } from 'react-router';
 import { injectReducer } from 'MainApp/common/configureReducer';
+import logger from 'cdm-logger';
 
-
-let checkAuth = (fn, to) => {
+let checkAuth = (to) => {
     return (nextState, transition) => {
-        if (!fn(Meteor.user(), Meteor.userId())) {
+        if (!Meteor.loggingIn() && !Meteor.userId()) {
+            logger.debug("User not authenticated: ", Meteor.user());
             transition({
                 pathname: to,
                 state: {nextPathname: nextState.location.pathname}
@@ -14,7 +15,6 @@ let checkAuth = (fn, to) => {
     }
 };
 const authenticated = (user, id) => user;
-const unauthenticated = (user, id) => !user;
 
 export const getRoutes = (store) => {
 
@@ -54,7 +54,7 @@ export const getRoutes = (store) => {
 
     return (
         <Route getComponents={ getBindTracker }>
-            <Route path="/app" onEnter={checkAuth(authenticated, '/signin')} getComponents={ getApp }
+            <Route path="/app" onEnter={checkAuth('/signin')} getComponents={ getApp }
                    childRoutes={getChildRoutes}/>
         </Route>
     )
