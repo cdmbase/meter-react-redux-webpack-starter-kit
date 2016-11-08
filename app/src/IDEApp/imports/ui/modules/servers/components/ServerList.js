@@ -2,14 +2,12 @@ import _ from 'lodash';
 import React, {Component} from 'react';
 import {Grid, Col, Row, Panel, Button} from 'react-bootstrap';
 import ServerElement from './Server';
-import { createContainer } from 'meteor/react-meteor-data';
-import { Server } from '../../../../api/collections';
 import ServerForm from './forms/Server';
 
 
 const MODAL_SERVER = 'MODAL_SERVER';
 
-class List extends Component {
+export default class ServerList extends Component {
     constructor() {
         super(...arguments);
 
@@ -52,6 +50,5 @@ class List extends Component {
     }
 }
 
-export default createContainer(({ params }) => ({
-    servers: Server.find().fetch()
-}), List);
+
+

@@ -42,21 +42,9 @@ export const getRoutes = (store) => {
         require('IDEApp/imports/ui/modules/servers/routes')
     ];
 
-    const getBindTracker = (nextState, cb) => {
-        if (Meteor.isServer) {
-            cb(null, required('../imports/ui/modules/application/containers/BindTracker'))
-        } else {
-            require.ensure([], function (required) {
-                cb(null, require('../imports/ui/modules/application/containers/BindTracker'));
-            })
-        }
-    };
-
     return (
-        <Route getComponents={ getBindTracker }>
             <Route path="/app" onEnter={checkAuth('/signin')} getComponents={ getApp }
                    childRoutes={getChildRoutes}/>
-        </Route>
     )
 
 };
