@@ -3,7 +3,7 @@ import {ACTION_WORKSPACES_METEOR_SYNC, ACTION_DELETE_WORKSPACE} from '../action-
 
 export const list = concatEventReducers({
         [ACTION_WORKSPACES_METEOR_SYNC]: (state, {workspaces}) => ({
-            ...state, ...(workspaces.reduce((acc, workspace) => ({
+            ...(workspaces.reduce((acc, workspace) => ({
                 ...acc,
                 [workspace._id]: workspace
             }), {}))

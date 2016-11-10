@@ -1,12 +1,14 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { composeWithTracker, compose } from 'react-komposer';
+import { compose } from 'react-komposer';
 import logger from 'cdm-logger';
 
+import composeWithTracker from 'IDEApp/imports/common/helpers/composeWithTracker';
 import { Servers } from '../../../../api/collections';
 import ServerList from '../components/ServerList';
 
-const composer = (props, onData) => {
+
+const loadServers = (props, onData) => {
     if(Meteor.subscribe('servers.list').ready()){
         const servers = Servers.find().fetch();
         logger.debug("Servers data: ", servers);
@@ -16,4 +18,4 @@ const composer = (props, onData) => {
     }
 };
 
-export default composeWithTracker(composer)(ServerList);
+export default composeWithTracker(loadServers)(ServerList);

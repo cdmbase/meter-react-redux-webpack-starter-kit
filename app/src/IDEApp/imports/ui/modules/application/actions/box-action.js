@@ -12,10 +12,11 @@ import logger from 'cdm-logger'
  * creates socket connection with FServer
  *
  */
-export const sync = () => dispatch => {
+export const sync = (boxes) => dispatch => {
     logger.debug("Syncing Workispace");
-    Meteor.call('boxes.list', (error, boxes) => {
-        boxes.forEach(workspace => {
+    // Meteor.call('boxes.list', (error, boxes) => {
+    let boxes = Boxes.find().fetch();
+    boxes.forEach(workspace => {
             if (!ConnectionsMap.has(workspace._id)) {
                 Meteor.call('server.find', workspace.server, (error, server) => {
                     ConnectionsMap.set(workspace._id, {
@@ -38,9 +39,9 @@ export const sync = () => dispatch => {
                     ConnectionsMap.delete(workspace._id);
                 }
             }
-        });
-        dispatch({type: ACTION_WORKSPACES_METEOR_SYNC, workspaces: boxes})
+        // });
     });
+    dispatch({type: ACTION_WORKSPACES_METEOR_SYNC, workspaces: boxes || {}})
 
 };
 
@@ -54,21 +55,21 @@ export const box = ({
             logger.error("Box Start got failed!");
             return
         }
-        sync()(dispatch);
+ //       sync()(dispatch);
     }),
     shutdown: _id => dispatch => Meteor.call('box.shutdown', _id, (error, result) => {
         if(error) {
             logger.error("Box Shutdown got failed!");
             return;
         }
-        sync()(dispatch);
+  //      sync()(dispatch);
     }),
     remove: id => dispatch => Meteor.call('box.remove', id, (error, result) => {
         if(error){
             logger.error("Box Remove got failed!");
             return;
         }
-        dispatch({type: ACTION_DELETE_WORKSPACE, workspaceId: id});
+ //       dispatch({type: ACTION_DELETE_WORKSPACE, workspaceId: id});
     }),
     create: (data, callback) => dispatch => {
         Meteor.call('box.create', data, (error, result) => {
@@ -77,7 +78,7 @@ export const box = ({
                 throw new Meteor.Error(555, error);
             } else {
                 callback();
-                sync()(dispatch);
+//                sync()(dispatch);
             }
         });
     }

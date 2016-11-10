@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { push as routeTo } from 'react-router-redux';
 import logger from 'cdm-logger';
+import { Meteor } from 'meteor/meteor';
+import { Tracker } from 'meteor/tracker';
+import composeWithTracker from 'IDEApp/imports/common/helpers/composeWithTracker';
+
+import { Boxes } from '../../../../api/collections';
+
 import { box as boxAction } from '../actions/box-action';
 import { bindActionCreators } from 'redux';
 import  Dashboard  from '../components/Dashboard'
@@ -15,16 +21,28 @@ const mapStateToProps = ({ workspaces: { list }}) => ({
 
 const mapDispatchToActions = dispatch => bindActionCreators({routeTo, ...boxAction, syncBoxes}, dispatch);
 
-//export default connect(mapStateToProps, mapDispatchToActions)(Dashboard)
 
 const enhance = compose(
     connect(mapStateToProps, mapDispatchToActions),
     lifecycle({
         componentDidMount: function() {
-            logger.debug("Component mounted");
-            this.props.syncBoxes()
+            logger.debug("Component mounted", this.props);
+            Tracker.autorun(() => {
+                if(Meteor.subscribe('boxes.list').ready())
+                this.props.syncBoxes()
+            })
+        },
+        componentWillUnMount: function() {
+
         }
     })
 )
+
+const loadBoxes = (props, onData) => {
+    if(Meteor.subscribe('boxes.list').ready()){
+        const boxes = Boxes.find().fetch();
+        logger.debug("Boxes data udpated", props);
+    }
+};
 
 export default enhance(Dashboard)
