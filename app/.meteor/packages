@@ -45,3 +45,4 @@ practicalmeteor:chai
 react-meteor-data
 std:accounts-ui
 veeramarni:accounts-bootstrap
+browser-policy

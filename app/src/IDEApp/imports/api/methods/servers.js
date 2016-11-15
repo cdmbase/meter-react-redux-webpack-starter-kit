@@ -16,7 +16,7 @@ Meteor.methods({
             $set: { name, url }
         });
     },
-    'server.find': (id) => Servers.find({ _id: id }).fetch()
+    'server.find': (id) => Servers.findOne({ _id: id })
 
 });
 

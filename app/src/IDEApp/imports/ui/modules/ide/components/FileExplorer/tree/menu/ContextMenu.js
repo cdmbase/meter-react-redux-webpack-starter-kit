@@ -71,7 +71,7 @@ export default class ContextMenu extends Component {
                     ]: null}
                     { type === TYPE_DIR ? [
                         <MenuItem key={Math.random()} onClick={this.click} data={{module: item, act: ACT_NEW_FOLDER}}>New Folder</MenuItem>,
-                        <MenuItem key={Math.random()} onClick={this.clicl} data={{module: item, act: ACT_NEW_FILE}}>New File</MenuItem>
+                        <MenuItem key={Math.random()} onClick={this.click} data={{module: item, act: ACT_NEW_FILE}}>New File</MenuItem>
                     ]: null}
                     <MenuItem key={Math.random()} onClick={this.click} data={{module: item, act: ACT_RENAME, target: type === TYPE_FILE ? 'file' : 'dir'}}>Rename</MenuItem>
                     <MenuItem key={Math.random()} onClick={this.click} data={{module: item, act: ACT_REMOVE}}>Delete</MenuItem>

@@ -1,6 +1,7 @@
 import { concatEventReducers } from 'MainApp/common/utils/concatEventReducers';
 import { ACTION_FS_INIT } from '../action-types';
 import { ACTION_FS_CAT, FSEvents } from '../action-types';
+import logger from 'cdm-logger'
 
 
 const treeToList = (node = {}, list = {}, fn = ({ children, leaf }) => (children || [])) => {

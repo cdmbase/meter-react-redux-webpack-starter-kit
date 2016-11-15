@@ -5,6 +5,7 @@
   "browser": "src/client.js",
   "author": "Admin Developers",
   "dependencies": {
+    "babel-runtime": "^6.18.0",
     "bcrypt": "^0.8.7",
     "bluebird": "^3.4.1",
     "bootstrap": "^3.3.7",
@@ -85,7 +86,7 @@
     "transit-immutable-js": "^0.6.0",
     "transit-js": "^0.8.846",
     "validator": "^5.5.0",
-    "xterm": "^1.1.3"
+    "xterm": "^2.1.0"
   },
   "devDependencies": {
     "babel": "^6.3.26",

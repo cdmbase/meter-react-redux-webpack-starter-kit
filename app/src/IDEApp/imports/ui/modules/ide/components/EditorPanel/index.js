@@ -1,2 +1,1 @@
-export TabsBar from './TabsBar';
-export EditorWorkspace from './EditorWorkspace'
+export EditorPanel from './EditorPanel';

@@ -1,32 +1,27 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import { Modal, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
-import { JOB_ACTION_REMOVE } from '../../../action-types';
-import { fs } from '../../../actions/fs-action';
+import { Modal, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { JOB_ACTION_REMOVE } from '../../../action-types'
 
+export default class RemoveModule extends Component {
 
-class ModuleRemove extends Component {
     onCloseModal() {
         return e => {
-            let { triggerClose } = this.props;
-            triggerClose && triggerClose(this.props.job);
+            let {onHide} = this.props;
+            onHide && onHide();
         }
     }
 
     onSave() {
         return e => {
-            let { box } = this.context;
-            let { job } = this.props;
-            let { data: { module, target }} = job;
-
-            this.props.actions.unlink(workspace._id, module.relativePath, module.type);
+            let {options: { action, module }, unlink} = this.props;
+            unlink(module.relativePath, module.type);
             this.onCloseModal()(e);
         }
     }
 
     render() {
-        let { job = {} } = this.props;
-        let { data: { type, module }} = job;
+        let { options: {action,module}, unlink} = this.props;
+
         return (
             <Modal {...this.props}>
                 <Modal.Header>Remove</Modal.Header>
@@ -41,13 +36,3 @@ class ModuleRemove extends Component {
         )
     }
 }
-
-const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators(fs, dispatch)
-});
-ModuleRemove.contextTypes = {
-    workspace: React.PropTypes.object
-};
-
-export default connect(undefined, mapDispatchToProps)(ModuleRemove);
-

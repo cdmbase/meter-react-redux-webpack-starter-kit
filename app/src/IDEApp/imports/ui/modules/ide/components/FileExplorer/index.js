@@ -1,2 +1,1 @@
-export ProjectHeader from './ProjectHeader';
-export ProjectFiles from './ProjectFiles';
+export FileExplorer from './FileExplorer';

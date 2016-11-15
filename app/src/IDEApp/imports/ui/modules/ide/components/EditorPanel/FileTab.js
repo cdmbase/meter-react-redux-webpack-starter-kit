@@ -15,7 +15,7 @@ export default class FileTab extends Component {
     return (
       <OverlayTrigger placement='top' trigger={['hover', 'focus']}
         overlay={<Tooltip id={relativePath}>{ relativePath }</Tooltip>}>
-        <div onClick={e => onActivate(file)} className={`toolbar-tab-file ${active && 'tab-active'}`}>
+        <div onClick={e => onActivate(file)} className={`tab ${active && 'tab-active'}`}>
           <span>{ module }</span><i className='glyphicon glyphicon-remove' onClick={this.close.bind(this)} />
         </div>
       </OverlayTrigger>

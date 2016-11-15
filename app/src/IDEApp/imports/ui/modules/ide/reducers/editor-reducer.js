@@ -14,7 +14,7 @@ export const editor = concatEventReducers({
             active = opened[index -1] ? opened[index - 1] : false
         }
 
-        _.remove(opened, id => _id);
+        _.remove(opened, _id => id == _id);
 
         return { ...state, [workspace] : { ...editor, opened: [...opened], active}}
     },

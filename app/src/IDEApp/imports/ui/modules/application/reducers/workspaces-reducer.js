@@ -19,7 +19,7 @@ export const list = concatEventReducers({
 
 export const settings = concatEventReducers({
     [ACTION_WORKSPACES_METEOR_SYNC]: (state, {workspaces}) => ({
-        ...state, ...(workspaces.reduce((acc, {settings = {}, _id}) => ({
+        ...(workspaces.reduce((acc, {settings = {}, _id}) => ({
             ...acc,
             [_id]: settings
         }), {}))

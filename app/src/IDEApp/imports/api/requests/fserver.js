@@ -1,6 +1,4 @@
 import { ConnectionsMap } from '../socket-map';
-import { Meteor } from 'meteor/meteor';
-import Workspace from '../collections/boxes';
 import Url from 'url';
 
 import { FS_CAT, FS_INFO, FS_LS, FS_MKDIR, FS_RENAME, FS_TOUCH, FS_UNLINK, FS_UPDATE } from './fs-requests';
@@ -17,6 +15,7 @@ const FSRequest = request(getBaseFsUrl);
 const XTermRequest = request(getBaseXtermUrl);
 
 const setQuery = (url, params = {} ) => {
+    //todo: replace url with stable one
     //url = Url.parse(url);
     url = new URL(url);
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));

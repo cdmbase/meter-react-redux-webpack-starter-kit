@@ -28,26 +28,25 @@ export default class TreeView extends Component {
 
     openFile(node) {
         if(node.type === 'file') {
-            let {workspaceId} = this.props;
             if(this.props.opened.findIndex(el => el.relativePath === node.relativePath) === -1) {
-                this.props.actions.fs.cat(workspaceId, node.relativePath);
-                this.props.actions.file.open(workspaceId, node.relativePath);
+                this.props.actions.fs.cat( node.relativePath);
+                this.props.actions.file.open( node.relativePath);
             }
-            this.props.actions.file.activate(workspaceId, node.relativePath);
+            this.props.actions.file.activate( node.relativePath);
         }
     }
 
     componentDidMount() {
         Emitter.on(SHOW_CONTEXT_MODAL, ({ options, type }) => {
-            console.log("[LOG][TreeView]", { options, type });
             this.setState({ modal: { type, options}})
         })
     }
 
     render() {
-        let { hidden, tree } = this.props;
-        logger.debug("TreeView", this.props);
-        let { modal } = this.state
+        let { hidden, tree, actions: {fs} } = this.props;
+        let { modal } = this.state;
+
+        logger.debug("Actions trace", fs);
         return (
             <div onFocus={e => console.log("Focussed")} tabIndex={-1} className={`sidebar-tree-view ${ hidden && 'hidden'}`}>
                 <Tree
@@ -57,8 +56,8 @@ export default class TreeView extends Component {
                     />
                 <ContextMenu identifier={FILE_EXPLORER_CONTEXT} />
                 { !!modal ? [
-                    <ModuleModal onHide={this.close} options={modal.options} show={ modal.type === MODULE_MODAL } />,
-                    <RemoveModule onHide={this.close} options={modal.options} show={modal.type === REMOVE_MODAL}/>
+                    <ModuleModal key={1}   onHide={this.close} mkdir={fs.mkdir} touch={fs.touch} rename={fs.rename} options={modal.options} show={ modal.type === MODULE_MODAL } />,
+                    <RemoveModule key={2}  onHide={this.close} unlink={fs.unlink} options={modal.options} show={modal.type === REMOVE_MODAL}/>
                 ] : null }
             </div>
         )
@@ -68,5 +67,4 @@ export default class TreeView extends Component {
 TreeView.propTypes = {
     tree: PropTypes.object.isRequired,
     opened: PropTypes.array.isRequired,
-    workspaceId: PropTypes.string.isRequired
 }

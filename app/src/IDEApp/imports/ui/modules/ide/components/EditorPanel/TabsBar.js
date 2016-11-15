@@ -4,42 +4,41 @@ import logger from 'cdm-logger'
 
 export default class TabsBar extends Component {
 
-  constructor () {
-    super(...arguments)
+    constructor() {
+        super(...arguments)
 
-    this.onClose = this.onClose.bind(this)
-    this.onActivate = this.onActivate.bind(this)
-  }
+        this.onClose = this.onClose.bind(this)
+        this.onActivate = this.onActivate.bind(this)
+    }
 
-  onClose (file) {
-    this.props.actions.close(this.props.workspaceId, file.relativePath)
-  }
+    onClose(file) {
+        this.props.actions.close(file.relativePath)
+    }
 
-  onActivate (file) {
-    this.props.actions.activate(this.props.workspaceId, file.relativePath)
-  }
+    onActivate(file) {
+        this.props.actions.activate(file.relativePath)
+    }
 
-  render () {
-    let {opened, active } = this.props;
-    logger.debug("[TabsBar] opened list:", opened);
+    render() {
+        let {opened, active} = this.props;
+        logger.debug("[TabsBar] opened count:", opened.length);
 
-    return (
-      <div className='tabs-bar'>
-        { opened.map(file => <FileTab
-          active={active === file.relativePath}
-          onActivate={this.onActivate}
-          onClose={this.onClose}
-          file={file}
+        return (
+            <div className='tabs-bar'>
+                { opened.map((file, index) => <FileTab key={index}
+                    active={active === file.relativePath}
+                    onActivate={this.onActivate}
+                    onClose={this.onClose}
+                    file={file}
                 />)
                 }
-      </div>
+            </div>
         )
-  }
+    }
 }
 
 TabsBar.propTypes = {
-    workspaceId: PropTypes.string.isRequired,
     opened: PropTypes.array.isRequired,
-    active: PropTypes.string.isRequired,
+    active: PropTypes.string,
     actions: PropTypes.object.isRequired
 };

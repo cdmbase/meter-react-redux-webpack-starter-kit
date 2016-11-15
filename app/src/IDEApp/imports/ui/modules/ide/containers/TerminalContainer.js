@@ -1,38 +1,24 @@
 import React, {Component} from 'react';
-import {Terminal} from '../components/TerminalPanel';
-import {bindActionCreators} from 'redux';
+import {TerminalPanel} from '../components/TerminalPanel';
 import {connect} from 'react-redux';
-import {toggleTerminal} from '../actions/terminal-action';
+import {toggleTerminal, init} from '../actions/terminal-action';
 import {getServerUrl, getPort} from '../../../../api/requests/fserver';
 
-const TerminalContainer = (props) => {
 
-    let toggle = (workspace, fn) => (status) => {
-        return fn(workspace, status);
-    };
+const mapStateToProps = ({editor}, {workspaceId}) => ({
+    terminal: (editor[workspaceId] || {}).terminal
+});
 
-    let getUrl = () => {
-        const {workspace: {_id}} = props;
-        return `${getServerUrl(_id)}:${getPort(_id)}/static/`
-    };
 
-    let { toggleTerminal, workspace: { _id }, editor: { terminal } } = props;
-    let newProps = { terminal  , url: getUrl(), toggle: toggle(_id, toggleTerminal)};
+const mergeProps = (stateProps, dispatchProps, {workspaceId}) => ({
+    ...stateProps,
+    toggle: (status)  => dispatchProps.toggleTerminal(workspaceId, status),
+    init: () => dispatchProps.init(workspaceId),
+    url: getUrl(workspaceId)
+});
 
-    return (
-        <div className="terminal-container">
-            <Terminal {...newProps} />
-        </div>
-    )
+const getUrl = (_id) => {
+    return `${getServerUrl(_id)}:${getPort(_id)}/static/`
 };
 
-const mapStateToProps = ({editor, workspaces: { list }}, { workspaceId }) => ({
-    editor: editor[workspaceId] || {},
-    workspace: list[workspaceId] || {}
-});
-
-const mapDispatchToProps = dispatch => ({
-    ...bindActionCreators({toggleTerminal}, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TerminalContainer);
+export default connect(mapStateToProps, { toggleTerminal, init }, mergeProps)(TerminalPanel)

@@ -13,25 +13,27 @@ import logger from 'cdm-logger'
  *
  */
 export const sync = (boxes) => dispatch => {
-    logger.debug("Syncing Workispace");
-    // Meteor.call('boxes.list', (error, boxes) => {
+    logger.debug("Syncing Workspaces");
     let boxes = Boxes.find().fetch();
     boxes.forEach(workspace => {
             if (!ConnectionsMap.has(workspace._id)) {
                 Meteor.call('server.find', workspace.server, (error, server) => {
+                    logger.debug("Server details: ", server.url);
                     ConnectionsMap.set(workspace._id, {
                         status: workspace.status == WORKSPACE_STATUS_ACTIVE,
                         server,
                         info: workspace.info,
                         ws: workspace.status == WORKSPACE_STATUS_ACTIVE ? (
                             bindFServer(
-                                workspace.server.url || "http://localhost",
+                                server.url || "http://localhost",
                                 workspace.info.ports.socket,
                                 workspace._id,
                                 dispatch)
                         ) : false
                     })
+                    logger.debug("Connection Map details : ", ConnectionsMap.get(workspace._id));
                 })
+
             } else {
                 let connection = ConnectionsMap.get(workspace._id);
                 if (workspace.status != WORKSPACE_STATUS_ACTIVE) {
@@ -39,7 +41,6 @@ export const sync = (boxes) => dispatch => {
                     ConnectionsMap.delete(workspace._id);
                 }
             }
-        // });
     });
     dispatch({type: ACTION_WORKSPACES_METEOR_SYNC, workspaces: boxes || {}})
 
@@ -55,21 +56,18 @@ export const box = ({
             logger.error("Box Start got failed!");
             return
         }
- //       sync()(dispatch);
     }),
     shutdown: _id => dispatch => Meteor.call('box.shutdown', _id, (error, result) => {
         if(error) {
             logger.error("Box Shutdown got failed!");
             return;
         }
-  //      sync()(dispatch);
     }),
     remove: id => dispatch => Meteor.call('box.remove', id, (error, result) => {
         if(error){
             logger.error("Box Remove got failed!");
             return;
         }
- //       dispatch({type: ACTION_DELETE_WORKSPACE, workspaceId: id});
     }),
     create: (data, callback) => dispatch => {
         Meteor.call('box.create', data, (error, result) => {
@@ -78,7 +76,6 @@ export const box = ({
                 throw new Meteor.Error(555, error);
             } else {
                 callback();
-//                sync()(dispatch);
             }
         });
     }

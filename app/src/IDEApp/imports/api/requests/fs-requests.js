@@ -7,5 +7,3 @@ export const FS_UNLINK = 'FS_UNLINK';
 export const FS_RENAME = 'FS_RENAME';
 export const FS_UPDATE = 'FS_UPDATE';
 
-export const XTERM_INIT = 'XTERM_INIT';
-export const XTERM_DESTROY = 'XTERM_DESTROY';

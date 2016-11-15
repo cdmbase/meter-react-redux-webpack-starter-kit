@@ -1,6 +1,6 @@
 import IO from 'socket.io-client';
 import { handler as FSHandler} from './requests/ws/fserver';
-
+import { handler as XtermHandler } from './requests/xterm/ws/xterm-ws'
 /**
  * Creates socket on specified port and path
  * @param url
@@ -33,3 +33,13 @@ export const bindIOActionCreator = (ws, workspace, handlers) => dispatch => {
  * @param dispatch
  */
 export const bindFServer = (url, port, workspace, dispatch) => bindIOActionCreator(create(url, port, 'fserver'), workspace, FSHandler)(dispatch);
+
+
+/**
+ * Triggers Xterm Server action
+ * @param url
+ * @param port
+ * @param workspace
+ * @param dispatch
+ */
+export const bindXtermServer = (url, port, workspace, dispatch) => bindIOActionCreator(create(url, port, 'xterm'), workspace, XtermHandler)(dispatch);

@@ -9,11 +9,11 @@ const act = (action, type, mod = (...args) => data => data) => (...args) => disp
 
 export const fs = {
     info: act(info, FS_INFO),
-    cat: act(cat, FS_CAT, (workspace, path) => data => ({...data, workspace, path})),
     ls: act(ls, FS_LS),
+    cat: act(cat, FS_CAT, (workspace, path) => data => ({...data, workspace, path})),
     mkdir: act(mkdir, FS_MKDIR),
-    rename: act(rename, FS_RENAME),
     touch: act(touch, FS_TOUCH),
     unlink: act(unlink, FS_UNLINK),
+    rename: act(rename, FS_RENAME),
     update: act(update, FS_UPDATE),
 };
