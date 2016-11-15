@@ -1,7 +1,7 @@
-import { ConnectionsMap } from '../socket-map';
+import { ConnectionsMap } from '../../socket-map';
 import Url from 'url';
 
-import { FS_CAT, FS_INFO, FS_LS, FS_MKDIR, FS_RENAME, FS_TOUCH, FS_UNLINK, FS_UPDATE } from './fs-requests';
+import { FS_CAT, FS_INFO, FS_LS, FS_MKDIR, FS_RENAME, FS_TOUCH, FS_UNLINK, FS_UPDATE } from '../fs-requests';
 
 export const getPort = workspace => ConnectionsMap.has(workspace) ? ConnectionsMap.get(workspace).info.ports.socket : false;
 export const getServerUrl = workspace => ConnectionsMap.has(workspace) ? ConnectionsMap.get(workspace).server.url : "http://localhost";

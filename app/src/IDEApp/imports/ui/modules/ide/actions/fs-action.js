@@ -1,4 +1,4 @@
-import {cat, info, ls, mkdir, rename, touch, unlink, update, terminal} from '../../../../api/requests/fserver';
+import {cat, info, ls, mkdir, rename, touch, unlink, update, terminal} from '../../../../api/requests/fserver/fserver-api';
 import {FS_UPDATE, FS_CAT, FS_INFO, FS_LS, FS_MKDIR, FS_RENAME, FS_TOUCH, FS_UNLINK} from '../../../../api/requests/fs-requests';
 
 const rejected = action => `${action}_FAIL`;

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {TerminalPanel} from '../components/TerminalPanel';
 import {connect} from 'react-redux';
-import {toggleTerminal, init} from '../actions/terminal-action';
-import {getServerUrl, getPort} from '../../../../api/requests/fserver';
+import {toggleTerminal, term} from '../actions/terminal-action';
+import {getServerUrl, getPort} from '../../../../api/requests/fserver/fserver-api';
 
 
 const mapStateToProps = ({editor}, {workspaceId}) => ({
@@ -21,4 +21,4 @@ const getUrl = (_id) => {
     return `${getServerUrl(_id)}:${getPort(_id)}/static/`
 };
 
-export default connect(mapStateToProps, { toggleTerminal, init }, mergeProps)(TerminalPanel)
+export default connect(mapStateToProps, { toggleTerminal, ...term }, mergeProps)(TerminalPanel)

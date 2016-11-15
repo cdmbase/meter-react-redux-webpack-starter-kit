@@ -1,4 +1,4 @@
-import { XTermRequest } from '../request-api'
+import { XTermRequest, json } from '../request-api'
 
 
 export const info = (workspace) => XTermRequest(workspace, 'info/', { method: 'GET'}).then(json);

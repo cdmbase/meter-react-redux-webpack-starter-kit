@@ -1,5 +1,5 @@
 import IO from 'socket.io-client';
-import { handler as FSHandler} from './requests/ws/fserver';
+import { handler as FSHandler} from './requests/fserver/ws/fserver';
 import { handler as XtermHandler } from './requests/xterm/ws/xterm-ws'
 /**
  * Creates socket on specified port and path
