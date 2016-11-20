@@ -44,5 +44,5 @@ practicalmeteor:mocha
 practicalmeteor:chai
 react-meteor-data
 std:accounts-ui
-veeramarni:accounts-bootstrap
+std:accounts-bootstrap
 browser-policy
