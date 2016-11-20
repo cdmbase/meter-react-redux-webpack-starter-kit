@@ -2,6 +2,8 @@ import React from 'react';
 import { Route } from 'react-router';
 import { injectReducer } from 'MainApp/common/configureReducer';
 import logger from 'cdm-logger';
+import 'IDEApp/server';
+
 
 let checkAuth = (to) => {
     return (nextState, transition) => {

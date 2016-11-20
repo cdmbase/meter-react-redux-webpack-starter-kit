@@ -1,6 +1,5 @@
 import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
 import 'MainApp/server';
-import 'IDEApp/server';
 
 
 // Do server-rendering only in production
