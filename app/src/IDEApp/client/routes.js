@@ -20,6 +20,12 @@ export const getRoutes = (store) => {
 
     const getApp = (nextState, cb) => {
         if (Meteor.isServer) {
+            let ui = require('MainApp/common/ui/ui-reducer');
+            let reducers = require('IDEApp/imports/ui/reducers');
+            injectReducer(store(), {
+                ui,
+                ...reducers
+            });
             cb(null, require('IDEApp/client/app'));
         } else {
             // TODO: Need to find out whether we should using System.imports as shown in
@@ -35,6 +41,9 @@ export const getRoutes = (store) => {
             })
         }
     };
+
+    // If need to inject reducer dynamically then follow the below link
+    // https://github.com/davezuko/react-redux-starter-kit/blob/5758b2cc5be4fd064e91f1e9e1cea5e794aec72f/src/routes/Counter/index.js
 
     const getChildRoutes = [
         require('IDEApp/imports/ui/modules/application/routes'),

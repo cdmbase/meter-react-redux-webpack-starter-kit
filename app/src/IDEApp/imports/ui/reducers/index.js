@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 
-import { jobs } from '../modules/application/reducers/job-reducer';
 import { editor } from '../modules/ide/reducers/editor-reducer';
 import { list as fileList, content as filesContent } from '../modules/ide/reducers/filesystems-reducer';
 import { list as treeList } from '../modules/ide/reducers/trees-reducer';
@@ -24,7 +23,6 @@ const  workspaces= combineReducers({
 });
 
 export {
-    jobs,
-    editor,
-    workspaces
+    workspaces,
+    editor
 };

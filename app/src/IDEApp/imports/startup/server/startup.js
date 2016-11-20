@@ -27,4 +27,6 @@ if (Meteor.isServer && process.env.NODE_ENV == 'development') {
     logger.debug("Tracing  browser policy: " + BrowserPolicy.content._constructCsp())
 
 
+} else  {
+    BrowserPolicy.content.allowEval('localhost');
 }

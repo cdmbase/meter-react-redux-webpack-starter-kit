@@ -17,7 +17,7 @@ module.exports = {
             } else {
                 require.ensure([], function(require) {
                     cb(null, require('IDEApp/imports/ui/modules/ide/containers/Ide'));
-                })
+                }, 'editor')
             }
         } },
         { path: 'settings', getComponent(nextState, cb) {
@@ -26,7 +26,7 @@ module.exports = {
             } else {
                 require.ensure([], function(require) {
                     cb(null, require('IDEApp/imports/ui/modules/ide/components/Settings'));
-                })
+                }, 'settings')
             }
         } }
     ]

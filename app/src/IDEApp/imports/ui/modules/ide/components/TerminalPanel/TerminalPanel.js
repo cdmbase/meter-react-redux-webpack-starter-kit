@@ -34,7 +34,7 @@ class TerminalPanel extends Component {
         //     store.dispatch(screenResize(window.innerWidth));
         // });
 
-
+        this.props.init();
         const toJson = res => res.json();
         const getPid = () => this.props.init();
         //const getPid = () => init()
