@@ -27,7 +27,7 @@ export default class routes {
 
     get appRoutes() {
         try {
-            getRoutes(this.lazyLoadStore)
+            return getRoutes(this.lazyLoadStore)
         } catch(e) {
             logger.warn("App routes were not added");
         }
