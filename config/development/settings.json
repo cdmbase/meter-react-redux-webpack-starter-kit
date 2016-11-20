@@ -1,0 +1,10 @@
+{
+  "public": {
+    "sentryUrl": "https://0121f514fb4141eb8377845fb686d266@app.getsentry.com/90886",
+    "googleAnalyticsId": "UA-XXXXXXX-X",
+    "logLevel": "debug"
+  },
+  "private": {
+
+  }
+}

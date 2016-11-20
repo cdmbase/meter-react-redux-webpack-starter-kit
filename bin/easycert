@@ -1,0 +1,143 @@
+#!/usr/bin/env bash
+#set -x
+######################################################
+#                           README
+#
+#   Description: Simple script to create or test certificates for ios pushapn
+#   command: ./easycert -h                                  :-for help
+#            ./easycert --pushapn -C                        :-to create new pem certificates for push apn
+#            ./easybuild --pushapn -T --env production      :-to test production pem certificates
+#
+#   Author: Veera Marni
+#   Version: 1.0.0
+#
+#   TODO: Provide steps for android keystore as well
+######################################################
+
+#
+# Global variables.
+#
+
+APP="../app"
+CONFIG="../config"
+BUILD="../build"
+BIN="../bin"
+TMP="/tmp"
+
+# Initiate variables
+TEST=false
+PUSHAPN=false
+CREATE=false
+IOS_GATEWAY="gateway.push.apple.com:2195"
+IOS_GATEWAY_SANDBOX="gateway.sandbox.push.apple.com:2195"
+INTERMIDATE_CERT="entrust_2048_ca.cer"
+
+#
+# Help and usage info.
+#
+display_help() {
+  cat <<-EOF
+  A utility for building your Meteor applications.
+  Usage: easycert --pushapn [options]
+  Options:
+    --help                              Display help
+    --pushapn                           Create or Test pushapn certificate
+    -C|--create                         Create certificate
+    -T|--test                           Test certificate
+    --env <env>                         Set the environment (development, test, production)
+    --push-certificate-cer <path>       Path for push certificate cer generated from Apple Developer Member Center
+    --push-keyname-p12 <path>           Path for private key used to generate push certificate
+
+EOF
+  exit 0
+}
+
+# Certify
+certify() {
+  if [ -z "$NODE_ENV" ]; then
+    NODE_ENV="development"
+  fi
+
+  local env_file="$CONFIG/$NODE_ENV/env.sh";
+  if [ -f "$env_file" ]; then source "$env_file"; fi
+
+  if [ "$PUSHAPN" = false ]; then
+    echo "Error: Missing --pushapn."
+    exit 1
+  fi
+
+  if [ "$CREATE" =  false ] && [ "$TEST" = false ]; then
+    TEST=true
+  fi
+
+  # override environment variables if needed
+  if [ ! -z "$push_certificate_cer" ]; then
+    PUSH_CERTIFICATE_CER="$push_certificate_cer"
+  fi
+
+  if [ ! -z "$push_keyname_p12" ]; then
+    PUSH_KEYNAME_P12="$push_keyname_p12"
+  fi
+
+  if [ ! -z "$push_certificate_pem" ]; then
+    PUSH_CERTIFICATE_PEM="$push_certificate_pem"
+  fi
+
+  if [ ! -z "$push_keyname_pem" ]; then
+    PUSH_KEYNAME_PEM="$push_keyname_pem"
+  fi
+
+  # logic
+  if [ "$PUSHAPN" = true ]; then
+    #make sure below two arguments are set
+    : "${PUSH_CERTIFICATE_PEM?Need to set PUSH_CERTIFICATE_PEM}"
+    : "${PUSH_KEYNAME_PEM?Need to set PUSH_KEYNAME_PEM}"
+
+    if [ "$CREATE" = true ]; then
+        #make sure below two arguments are set
+        : "${PUSH_CERTIFICATE_CER?Need to set PUSH_CERTIFICATE_CER}"
+        : "${PUSH_KEYNAME_P12?Need to set PUSH_KEYNAME_P12}"
+        openssl x509 -in "$PUSH_CERTIFICATE_CER" -inform der -out "$PUSH_CERTIFICATE_PEM"
+        openssl pkcs12 -nocerts -out "$PUSH_KEYNAME_PEM" -in "$PUSH_KEYNAME_P12"
+    fi
+
+    if [ "$TEST" = true ]; then
+        if [ ! -f "$INTERMIDATE_CERT" ]; then
+            echo "Error: Need entrust_2048_ca.cer to test the certificates."
+            exit 1
+        fi
+        if [ "$NODE_ENV" == "production" ]; then
+            openssl s_client -connect "$IOS_GATEWAY" -cert "$PUSH_CERTIFICATE_PEM" -key "$PUSH_KEYNAME_PEM" -CAfile "$INTERMIDATE_CERT"
+        fi
+        if [ "$NODE_ENV" == "development" ]; then
+            openssl s_client -connect "$IOS_GATEWAY_SANDBOX" -cert "$PUSH_CERTIFICATE_PEM" -key "$PUSH_KEYNAME_PEM" -CAfile "$INTERMIDATE_CERT"
+        fi
+    fi
+  fi
+}
+
+#
+# Handle arguments.
+#
+
+if [ $# -eq 0 ]; then
+  certify
+else
+  while [ $# -ne 0 ]; do
+    case $1 in
+      -h|--help|help)                   display_help ;;
+      -e|--env)                         export NODE_ENV="$2"; shift ;;
+      --pushapn)                        PUSHAPN=true ;;
+      -C|--create)                      CREATE=true ;;
+      -T|--test)                        TEST=true ;;
+      --push-certificate-cer)           push_certificate_cer="$2"; shift ;;
+      --push-keyname-p12)               push_keyname_p12="$2"; shift ;;
+      --push-certificate-pem)           push_certificate_pem="$2"; shift ;;
+      --push_keyname-p12)               push_keyname_pem="$2"; shift ;;
+      *)                                display_help ;;
+    esac
+    shift
+  done
+
+  certify $1
+fi

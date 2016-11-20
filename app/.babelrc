@@ -1,0 +1,9 @@
+{
+ "presets": ["es2015", "stage-0", "react"],
+ "plugins": [
+ "transform-runtime",
+ ["react-intl", {
+ "messagesDir": "./lib/i18n/messages/",
+ "enforceDescriptions": false
+ }]]
+}

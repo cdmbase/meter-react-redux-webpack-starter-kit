@@ -1,0 +1,30 @@
+{
+  "root": "src",
+  "devServer": {
+    "host": "localhost"
+  },
+  "devtool": "eval",
+  "resolve": {
+    "alias": {
+      "App": "src/IDEApp/client/app",
+      "Main": "src/MainApp/client/app",
+      "dtrace-provider": "empty-shim.js",
+      "fs": "empty-shim.js",
+      "safe-json-stringify": "empty-shim.js",
+      "mv": "empty-shim.js",
+      "source-map-support": "empty-shim.js"
+    },
+    "modules": [
+      "app",
+      "components",
+      "node_modules"
+    ]
+  },
+  "externals": {
+    "react": "React",
+    "react-dom": "ReactDOM",
+    "react-router": "ReactRouter",
+    "react/lib/ReactTransitionGroup": "React.addons.TransitionGroup",
+    "react/lib/ReactCSSTransitionGroup": "React.addons.CSSTransitionGroup"
+  }
+}
