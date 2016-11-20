@@ -1,7 +1,7 @@
 accounts-base@1.2.14
 accounts-github@1.0.11
 accounts-oauth@1.1.14
-accounts-password@1.3.1
+accounts-password@1.3.3
 accounts-ui@1.1.9
 accounts-ui-unstyled@1.1.13
 aldeed:collection2@2.10.0
@@ -12,7 +12,7 @@ aldeed:simple-schema@1.5.3
 allow-deny@1.0.5
 autoupdate@1.3.12
 babel-compiler@6.13.0
-babel-runtime@0.1.12
+babel-runtime@1.0.1
 base64@1.0.10
 binary-heap@1.0.10
 blaze@2.1.9
@@ -23,12 +23,13 @@ browser-policy@1.0.9
 browser-policy-common@1.0.11
 browser-policy-content@1.0.12
 browser-policy-framing@1.0.12
-caching-compiler@1.1.8
+caching-compiler@1.1.9
 caching-html-compiler@1.0.7
 callback-hook@1.0.10
+cdmbase:react-runtime-additional@15.0.1
 check@1.2.4
 chuangbo:cookie@1.1.0
-coffeescript@1.2.6
+coffeescript@1.11.1_3
 ddp@1.2.5
 ddp-client@1.3.2
 ddp-common@1.2.7
@@ -36,7 +37,7 @@ ddp-rate-limiter@1.0.6
 ddp-server@1.3.11
 deps@1.0.12
 diff-sequence@1.0.7
-ecmascript@0.5.9
+ecmascript@0.6.1
 ecmascript-runtime@0.3.15
 ejson@1.0.13
 email@1.1.18
@@ -107,7 +108,8 @@ spacebars-compiler@1.0.13
 srp@1.0.10
 standard-minifier-css@1.3.2
 standard-minifier-js@1.2.1
-std:accounts-ui@1.2.8
+std:accounts-bootstrap@1.2.0
+std:accounts-ui@1.2.9
 templating@1.2.15
 templating-compiler@1.2.15
 templating-runtime@1.2.15
@@ -118,8 +120,6 @@ tracker@1.1.1
 ui@1.0.12
 underscore@1.0.10
 url@1.0.11
-veeramarni:accounts-bootstrap@1.2.8
-veeramarni:react-runtime-additional@15.0.1
 webapp@1.3.12
 webapp-hashing@1.0.9
 webpack:assets@1.0.1

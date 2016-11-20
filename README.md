@@ -6,6 +6,7 @@ This part - front-end side of IDE that incapsulates all external services - Cont
 
 ## Installation and start
 
+
 ### Installation
 
 - Install NPM modules
@@ -14,6 +15,7 @@ cd app && npm install
 ```
 
 - Add config file - "***settings.json***" to development or prodction environment (./config/development or ./config/production).
+
 ```json
     {
       "public": {
@@ -44,3 +46,4 @@ Before application run check *start* script in ***./app/package.json*** file.
 ```bash
 cd app && npm start
 ```
+

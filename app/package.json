@@ -62,8 +62,6 @@
     "react-router-bootstrap": "^0.23.1",
     "react-router-redux": "^4.0.5",
     "react-split-pane": "^0.1.44",
-    "react-treebeard": "veeramarni/react-treebeard",
-    "react-ui-tree": "veeramarni/react-ui-tree",
     "readdir-plus": "^0.4.1",
     "recompose": "^0.20.2",
     "redux": "^3.5.2",
