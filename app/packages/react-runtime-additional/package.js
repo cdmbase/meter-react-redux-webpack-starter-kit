@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'veeramarni:react-runtime-additional',
+  name: 'cdmbase:react-runtime-additional',
   version: '15.0.1',
   // Brief, one-line summary of the package.
   summary: "All other React library that will be imported in meteor bundle",
