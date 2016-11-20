@@ -1,0 +1,11 @@
+form.accounts button, form.accounts .btn, form.accounts a {
+  margin-right: 6px;
+}
+form.accounts .social-buttons .btn {
+  margin-bottom: 0.75em;
+}
+form.accounts .form-group.required .form-control-label:after {
+  content: " *";
+  color: red;
+}
+
