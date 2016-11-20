@@ -1,9 +1,7 @@
 import React from 'react';
-import { Route } from 'react-router';
-import { injectReducer } from 'MainApp/common/configureReducer';
+import {Route} from 'react-router';
+import {injectReducer} from 'MainApp/common/configureReducer';
 import logger from 'cdm-logger';
-import 'IDEApp/server';
-
 
 let checkAuth = (to) => {
     return (nextState, transition) => {
@@ -54,8 +52,8 @@ export const getRoutes = (store) => {
     ];
 
     return (
-            <Route path="/app" onEnter={checkAuth('/signin')} getComponents={ getApp }
-                   childRoutes={getChildRoutes}/>
+        <Route path="/app" onEnter={checkAuth('/signin')} getComponents={ getApp }
+               childRoutes={getChildRoutes}/>
     )
 
 };
