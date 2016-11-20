@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accounts, STATES } from 'meteor/veeramarni:accounts-bootstrap';
+import { Accounts, STATES } from 'meteor/std:accounts-bootstrap';
 
 const SignOut = () => {
 

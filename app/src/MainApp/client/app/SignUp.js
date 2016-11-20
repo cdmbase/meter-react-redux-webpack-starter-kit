@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Accounts, STATES } from 'meteor/veeramarni:accounts-bootstrap';
+import { Accounts, STATES } from 'meteor/std:accounts-bootstrap';
 import { browserHistory } from 'react-router';
 import { Meteor } from 'meteor/meteor';
 

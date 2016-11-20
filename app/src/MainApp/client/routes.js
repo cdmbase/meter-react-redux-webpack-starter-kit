@@ -11,7 +11,7 @@ import Docs from 'Main/Docs';
 import { Store } from 'redux';
 import logger from 'cdm-logger';
 
-import { getRoutes } from 'IDEApp/client/routes';
+//import { getRoutes } from 'IDEApp/client/routes';
 
 export default class routes {
 
@@ -25,6 +25,13 @@ export default class routes {
 
     lazyLoadStore = () => this.store;
 
+    get appRoutes() {
+        try {
+            getRoutes(this.lazyLoadStore)
+        } catch(e) {
+            logger.warn("App routes were not added");
+        }
+    }
 
 
     configure() {
@@ -37,7 +44,7 @@ export default class routes {
                 <Route path="/signout" component={ SignOut }/>
                 <Route path="/docs" component={ Docs }/>
             </Route>
-            { getRoutes(this.lazyLoadStore) }
+             { this.appRoutes }
             <Route path="*" component={ NotFound }/>
         </Route>
         );

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "app.links.intl",
+    "defaultMessage": "Intl"
+  },
+  {
+    "id": "app.links.home",
+    "defaultMessage": "Home"
+  },
+  {
+    "id": "app.links.signIn",
+    "defaultMessage": "Sign in"
+  },
+  {
+    "id": "app.links.signOut",
+    "defaultMessage": "Sign out"
+  },
+  {
+    "id": "app.links.pricing",
+    "defaultMessage": "Pricing"
+  },
+  {
+    "id": "app.links.docs",
+    "defaultMessage": "Documents"
+  },
+  {
+    "id": "app.links.apps",
+    "defaultMessage": "Apps"
+  },
+  {
+    "id": "app.links.features",
+    "defaultMessage": "Features"
+  },
+  {
+    "id": "app.links.blog",
+    "defaultMessage": "Blog"
+  }
+]
