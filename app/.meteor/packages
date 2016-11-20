@@ -37,7 +37,7 @@ meteorhacks:meteorx
 meteorhacks:picker
 reactrouter:react-router-ssr
 fortawesome:fontawesome
-veeramarni:react-runtime-additional
+cdmbase:react-runtime-additional
 react-runtime
 shell-server@0.2.1
 practicalmeteor:mocha
