@@ -13,7 +13,7 @@ Accounts.ui.config({
     loginPath: '/signin',
     signUpPath: '/signup',
     resetPasswordPath: '/reset-password',
-    profilePath: '/',
+    profilePath: '/profile',
     minimumPasswordLength: 4
 });
 

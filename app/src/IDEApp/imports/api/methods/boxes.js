@@ -51,9 +51,8 @@ Meteor.methods({
             status: Boxes.consts.STATUS_SHUTDOWN,
             createdAt: new Date()
         });
-
-        IOClient.emit(ACTION_WORKSPACE_CREATE, { workspace: Boxes.findOne({ workspaceId }), creator: Meteor.user() });
-        IOClient.emit(ACTION_ASSIGN_USER, { user: Meteor.user(), workspace: Boxes.findOne({ workspaceId }) });
+        IOClient.emit(ACTION_WORKSPACE_CREATE, { workspace: Boxes.findOne(workspaceId), creator: Meteor.user() });
+        IOClient.emit(ACTION_ASSIGN_USER, { user: Meteor.user(), workspace: Boxes.findOne(workspaceId) });
     },
     'box.remove': (boxId) => {
         Boxes.remove(boxId);

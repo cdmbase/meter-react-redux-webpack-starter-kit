@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import MainMenu from './main-menu';
 import Helmet from 'react-helmet';
 import start from 'MainApp/common/app/start';
 

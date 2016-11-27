@@ -3,19 +3,6 @@ import {Route} from 'react-router';
 import {injectReducer} from 'MainApp/common/configureReducer';
 import logger from 'cdm-logger';
 
-let checkAuth = (to) => {
-    return (nextState, transition) => {
-        if (!Meteor.loggingIn() && !Meteor.userId()) {
-            logger.debug("User not authenticated: ", Meteor.user());
-            transition({
-                pathname: to,
-                state: {nextPathname: nextState.location.pathname}
-            });
-        }
-    }
-};
-const authenticated = (user, id) => user;
-
 export const getRoutes = (store) => {
 
     const getApp = (nextState, cb) => {
@@ -52,7 +39,7 @@ export const getRoutes = (store) => {
     ];
 
     return (
-        <Route path="/app" onEnter={checkAuth('/signin')} getComponents={ getApp }
+        <Route path="/app"  getComponents={ getApp }
                childRoutes={getChildRoutes}/>
     )
 
