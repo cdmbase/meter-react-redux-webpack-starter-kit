@@ -53,6 +53,7 @@ htmljs@1.0.11
 http@1.2.10
 id-map@1.0.9
 insecure@1.0.7
+jakobloekke:rabbitmq@0.1.2
 jquery@1.11.10
 launch-screen@1.0.12
 less@2.7.6

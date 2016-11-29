@@ -77,7 +77,14 @@ export default class Server extends Component {
                         </FormGroup>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button type="button" onClick={e => onHide() } className="btn-flat">Cancel</Button>
+                        <div className="pull-left">
+                            <Button type="button" onClick={e => onHide() }>Cancel</Button>
+                            {
+                              server._id && (
+                                <Button type="button" onClick={e => { onHide(); Meteor.call('server.remove', server._id) }} bsStyle="danger">Remove</Button>
+                              )
+                            }
+                        </div>
                         <Button type="submit" bsStyle="primary">Save</Button>
                     </Modal.Footer>
                 </form>

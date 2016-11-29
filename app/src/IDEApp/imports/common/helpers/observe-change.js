@@ -1,7 +1,6 @@
 export const MODE_STATE = 'MODE_STATE';
 export const MODE_PROPS = 'MODE_PROPS';
 
-
 export function observeChange(fields:Array<string>, mode = MODE_STATE):Function {
     return Component => (
         class ObservableComponent extends Component {
@@ -26,7 +25,6 @@ export function observeChange(fields:Array<string>, mode = MODE_STATE):Function 
                 fields.forEach(key => {
                     if(this._checkModification(prevState, prevProps, key)) {
                         const methodName = 'on' + key.replace(/^([\w])/, _ => _.toUpperCase()) + 'Change';
-                        console.log("Method", methodName);
                         if(this[methodName]) {
                             this[methodName](this.fetchCurrent(prevState, prevProps, key), this.fetchPrev(prevState, prevProps, key))
                         }
