@@ -1,4 +1,4 @@
-import {ACTION_EDITOR_TOGGLE_TERM, ACTION_FS_REQUEST_UPDATE} from '../action-types';
+import {ACTION_EDITOR_TOGGLE_TERM} from '../action-types';
 import {XTERM_INIT,XTERM_DESTROY} from '../xterm-requests'
 import {act} from 'MainApp/common/utils/reducer-actions-utils'
 import {init} from '../../../../api/requests/xterm/xterm-api';

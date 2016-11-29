@@ -8,7 +8,7 @@ import { FileExplorer} from '../components/FileExplorer';
 
 const mapStateToProps = ({ editor, workspaces: { files, list, trees, settings }}, { workspaceId } ) => ({
     tree: trees.list[workspaceId],
-    opened: ((editor[workspaceId] || {}).opened || []).map(id => (files[workspaceId] || {})[id] || false).filter(file => !!file ) || []
+    opened: ((editor[workspaceId] || {}).opened || []).map(id => (files.list[workspaceId] || {})[id] || false).filter(file => !!file ) || []
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -11,10 +11,10 @@ const mapStateToProps = ({ editor, workspaces: { files, list, trees, settings }}
     files: files.list[workspaceId] || {},
     contents: files.content[workspaceId],
     active: (editor[workspaceId] || {}).active,
-    opened: (editor[workspaceId] || {}).opened || []
+    opened: ((editor[workspaceId] || {}).opened || []).map(id => (files.list[workspaceId] || {})[id] || false).filter(file => !!file ) || []
 });
 
-const mergeProps = ({files, opened, ...restStateProps}, dispatchProps, {workspaceId}) => ({
+const mergeProps = ({files, ...restStateProps}, dispatchProps, {workspaceId}) => ({
     ...restStateProps,
     file: {
         open: (id) =>  dispatchProps.open(workspaceId, id),
@@ -30,8 +30,7 @@ const mergeProps = ({files, opened, ...restStateProps}, dispatchProps, {workspac
         unlink: (path, type) => dispatchProps.unlink(workspaceId, path, type),
         rename: (path, name) => dispatchProps.rename(workspaceId, path, name),
         update: (path, content) => dispatchProps.update(workspaceId, path, content)
-    },
-    opened: opened.map(id => files[id])
+    }
 });
 
 export default connect(mapStateToProps, {...file, ...fs }, mergeProps)(EditorPanel);
