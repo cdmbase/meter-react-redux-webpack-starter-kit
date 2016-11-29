@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Servers } from '../collections';
 import { STATUS_CONNECTED, STATUS_DISCONNECTED } from '../collections/servers';
 
@@ -16,7 +17,7 @@ Meteor.methods({
             $set: { name, url }
         });
     },
-    'server.find': (id) => Servers.findOne({ _id: id })
-
+    'server.find': (id) => Servers.findOne({ _id: id }),
+    'server.remove': (id) => Servers.remove(id),
 });
 

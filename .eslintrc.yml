@@ -1,0 +1,13 @@
+extends: [ "airbnb", "plugin:meteor/recommended" ]
+installedESLint: true
+plugins:
+  - react
+  - jsx-a11y
+  - import
+  - meteor
+rules:
+  react/jsx-filename-extension:
+    - 1
+    - extensions:
+      - .js
+      - .jsx
