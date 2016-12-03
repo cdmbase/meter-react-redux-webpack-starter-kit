@@ -13,10 +13,10 @@ const loadMessages = (options) => {
   const isDictionary = fileName =>
         path.extname(fileName) === '.js' &&
         (includeDefault || !fileName.startsWith('_'));
-  return fs.readdirSync(`${process.env.PWD}/messages`)
+  return fs.readdirSync(`${process.env.PWD}/public/messages`)
     .filter(isDictionary)
     .map(fileName => ({
-      descriptors: require(`../../../../messages/${fileName}`), // eslint-disable-line import/no-dynamic-require
+      descriptors: require(`../../../../public/messages/${fileName}`), // eslint-disable-line import/no-dynamic-require
       locale: fileName.split('.')[0],
     }))
     .reduce((previous, { descriptors, locale }) => ({

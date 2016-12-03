@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { Row, Col, Nav, Navbar, NavbarBrand, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import linksMessages from '../../../common/app/linksMessages';
+import linksMessages from '../../../../common/app/linksMessages';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Meteor } from 'meteor/meteor';
 

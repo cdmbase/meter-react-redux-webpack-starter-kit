@@ -1,7 +1,7 @@
 import config from './config';
-import configReducer from '../../common/config/reducer';
-import deviceReducer from '../../common/device/reducer';
-import intlReducer from '../../common/intl/reducer';
+import configReducer from '../../../common/config/reducer';
+import deviceReducer from '../../../common/device/reducer';
+import intlReducer from '../../../common/intl/reducer';
 import loadMessages from '../intl/loadMessages';
 
 let messages;
@@ -16,7 +16,7 @@ if (Meteor.isServer) {
   messages = loadMessages();
 } else {
   const en = [{
-    descriptors: require('../../../../messages/_default'), // eslint-disable-line import/no-dynamic-require
+    descriptors: require('../../../../public/messages/_default'), // eslint-disable-line import/no-dynamic-require
     locale: 'en',
   }];
   messages = en.reduce((previous, { descriptors, locale }) => ({

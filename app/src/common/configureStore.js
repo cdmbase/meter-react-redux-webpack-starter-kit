@@ -10,7 +10,7 @@ import createLogger from 'redux-logger';
 
 /*
   Removed .defualt from require('..').default
-  Still using routerMiddleware and history but it was removed in source
+  Still using routerMiddleware but it was removed in source
  */
 type Options = {
     initialState: Object,
@@ -20,7 +20,6 @@ type Options = {
 const configureStore = (options: Options) => {
   const {
         initialState,
-        history,
         platformDeps = {},
         platformMiddleware = [],
         } = options;
@@ -35,13 +34,12 @@ const configureStore = (options: Options) => {
     initialState,
     platformDeps,
     platformMiddleware,
-    routerMiddleware(history),
   );
     // ======================================================
     // Store Enhancers
     // ======================================================
   const enhancers = [];
-  if (process.env.NODE_ENV !== 'production' && window.devToolsExtension) {
+  if ((process.env.NODE_ENV !== 'production' || (Meteor.settings.public.logLevel === 'debug' && Meteor.isClient)) && window.devToolsExtension) {
     const devToolsExtension = window.devToolsExtension;
     if (typeof devToolsExtension === 'function') {
       enhancers.push(devToolsExtension());

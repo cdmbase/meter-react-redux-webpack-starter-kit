@@ -28,7 +28,7 @@ const configureMiddleware = (initialState, platformDeps, platformMiddleware) => 
   ];
 
   const enableLogger = process.env.NODE_ENV !== 'production' && (
-      process.env.IS_BROWSER || initialState.device.isReactNative
+      Meteor.isClient || initialState.device.isReactNative
     );
 
   // Logger must be the last middleware in chain.

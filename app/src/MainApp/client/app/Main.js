@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Grid, Row, Col } from 'react-bootstrap';
 
-import start from '../../common/app/start';
+import start from '../../../common/app/start';
 import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 

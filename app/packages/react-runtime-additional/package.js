@@ -1,6 +1,6 @@
 Package.describe({
   name: 'cdmbase:react-runtime-additional',
-  version: '15.0.1',
+  version: '0.0.2',
   // Brief, one-line summary of the package.
   summary: "All other React library that will be imported in meteor bundle",
   // URL to the Git repository containing the source code for this package.
