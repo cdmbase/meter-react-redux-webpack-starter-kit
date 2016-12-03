@@ -1,25 +1,32 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Boxes, Servers } from '../collections';
+import IOClient from '../io-client';
 
 Meteor.methods({
-  'box.start': _id => {
+  'box.start': (_id) => {
     check(_id, String);
 
     return new Promise((resolve, reject) => {
       const workspace = Boxes.findOne({ _id });
-
       if (workspace) {
         Boxes.update(_id, {
           $set: {
             status: Boxes.consts.STATUS_PROCESS,
           },
         });
+        IOClient.emit('msg', {
+          target: `ws.${workspace.server}`,
+          payload: { type: 'WS_RUN',
+            workspace: workspace.workspace || workspace._id,
+            info: workspace.info || {}
+          },
+        });
         resolve({ ok: true, workspace: _id });
       } else {
         reject({ ok: false, workspace: _id });
       }
-    })
+    });
   },
   'box.shutdown': _id => {
     check(_id, String);
@@ -31,6 +38,14 @@ Meteor.methods({
         Boxes.update(_id, {
           $set: {
             status: Boxes.consts.STATUS_PROCESS,
+          },
+        });
+
+        IOClient.emit('msg', {
+          target: `ws.${workspace.server}`,
+          payload: { type: 'WS_STOP',
+            workspace: workspace.workspace || workspace._id,
+            info: workspace.info || {},
           },
         });
 
@@ -55,7 +70,7 @@ Meteor.methods({
       throw new Meteor.Error('no server registered');
     }
 
-    Boxes.insert({
+    const id = Boxes.insert({
       name,
       description,
       lang,
@@ -66,18 +81,26 @@ Meteor.methods({
       status: Boxes.consts.STATUS_SHUTDOWN,
       createdAt: new Date(),
     });
+    const workspace = Boxes.findOne(id);
+
+    IOClient.emit('msg', {
+      target: `ws.${workspace.server}`,
+      payload: { type: 'WS_CREATE',
+        workspace: workspace.workspace || workspace._id,
+      },
+    });
   },
   'box.remove': (_id) => {
     check(_id, String);
     Boxes.remove(_id);
   },
-  'box.find': id => {
+  'box.find': (id) => {
     check(id, String);
     Boxes.findOne(id);
   },
-  'boxes.list': () => {
-    return Boxes.find({
+  'boxes.list': () => (
+    Boxes.find({
       creator: Meteor.userId(),
-    }).fetch();
-  },
+    }).fetch()
+  ),
 });
