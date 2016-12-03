@@ -46,3 +46,4 @@ react-meteor-data
 std:accounts-ui
 std:accounts-bootstrap
 browser-policy@1.0.9
+random

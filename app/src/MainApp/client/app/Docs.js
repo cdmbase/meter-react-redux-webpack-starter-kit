@@ -1,10 +1,8 @@
 import React from 'react';
 
 
-const Docs = () => {
-    return (
+const Docs = () => (
         <h1>Documents</h1>
-    )
-};
+    );
 
 export default Docs;

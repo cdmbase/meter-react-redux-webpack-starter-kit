@@ -1,0 +1,9 @@
+{
+  "firebase": {
+    "apiKey": "...",
+    "authDomain": "...",
+    "databaseURL": "...",
+    "storageBucket": "..."
+  },
+  "remoteHotReload": true
+}

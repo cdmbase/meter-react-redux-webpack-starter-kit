@@ -1,4 +1,4 @@
-import * as actions from './ui-actions';
+import * as actions from './actions';
 import { Record } from 'immutable';
 
 const InitialState = Record({

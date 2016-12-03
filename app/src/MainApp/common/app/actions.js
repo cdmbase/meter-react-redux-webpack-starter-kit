@@ -1,21 +1,50 @@
+/* @flow */
+import type { Action, Deps } from '../types';
+import { Observable } from 'rxjs/Observable';
+import { REHYDRATE } from 'redux-persist/constants';
 
-export const APP_OFFLINE = 'APP_OFFLINE';
-export const APP_ONLINE = 'APP_ONLINE';
-export const APP_START = 'APP_START';
-export const APP_STORAGE_LOAD = 'APP_STORAGE_LOAD';
 
-const loadStorage = async (dispatch, storageEngine) => {
-    const state = await storageEngine.load();
-    dispatch({ type: APP_STORAGE_LOAD, payload: state});
-};
+export const appError = (error: Object): Action => ({
+  type: 'APP_ERROR',
+  payload: { error },
+});
 
-export function start() {
-    return ({ dispatch, storageEngine }) => {
-        loadStorage(dispatch, storageEngine).finally(() => {
+export const appOnline = (online: boolean): Action => ({
+  type: 'APP_ONLINE',
+  payload: { online },
+});
 
-        });
-        return {
-            type: APP_START
-        };
-    };
-}
+export const appShowMenu = (menuShown: boolean): Action => ({
+  type: 'APP_SHOW_MENU',
+  payload: { menuShown },
+});
+
+// Called on componentDidMount aka only at the client (browser or native).
+export const appStart = (): Action => ({
+  type: 'APP_START',
+});
+
+export const appStarted = (): Action => ({
+  type: 'APP_STARTED',
+});
+
+export const appStop = (): Action => ({
+  type: 'APP_STOP',
+});
+
+export const appStorageLoaded = (state: Object): Action => ({
+  type: 'APP_STORAGE_LOADED',
+  payload: { state },
+});
+
+
+// TODO: Observable type.
+const appStartEpic = (action$: any) =>
+  action$.ofType(REHYDRATE)
+    .map(appStarted);
+
+
+export const epics = [
+  appStartEpic,
+];
+
