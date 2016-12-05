@@ -5,7 +5,6 @@
 // import 'firebase/database';
 // So we have to import everything.
 import validate from './validate';
-import { Random } from 'meteor/random';
 
 /*
   Removed firebase dependencies
@@ -14,7 +13,7 @@ import { Random } from 'meteor/random';
 
 const configureDeps = (initialState, platformDeps) => ({
   ...platformDeps,
-  getUid: () => Random.id,
+  getUid: () => platformDeps.uuid.v4(),
   now: () => Date.now(),
   validate,
 });

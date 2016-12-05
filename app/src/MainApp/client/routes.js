@@ -1,19 +1,28 @@
 import { Route, IndexRoute } from 'react-router';
 import { Meteor } from 'meteor/meteor';
 import { Accounts, STATES } from 'meteor/std:accounts-ui';
-import Main from 'Main/main';
-import Index from 'Main/main-index';
-import NotFound from 'Main/NotFound';
-import SignIn from 'Main/SignIn';
-import SignUp from 'Main/SignUp';
-import SignOut from 'Main/SignOut';
-import Docs from 'Main/Docs';
-import { Store } from 'redux';
+import Main from './app/Main';
+import Index from './app/Index';
+import NotFound from '../imports/ui/components/notfound/NotFoundPage';
+import SignIn from '../imports/ui/components/auth/SignIn';
+import SignUp from '../imports/ui/components/auth/SignUp';
+import SignOut from '../imports/ui/components/auth/SignOut';
+import Docs from '../imports/ui/components/docs/Docs';
 import logger from 'cdm-logger';
 
-// import { getRoutes } from 'IDEApp/client/routes';
+import { getRoutes } from '../../AdminApp/client/routes';
 
-export default class routes {
+const checkAuth = to => (nextState, transition) => {
+  if (!Meteor.loggingIn() && !Meteor.userId()) {
+    logger.debug('User not authenticated: ', Meteor.user());
+    transition({
+      pathname: to,
+      state: { nextPathname: nextState.location.pathname },
+    });
+  }
+};
+
+class routes {
 
     /**
      * Only need to inject this on the CLIENT side for lazy loading
@@ -25,30 +34,36 @@ export default class routes {
 
   lazyLoadStore = () => this.store;
 
-  get appRoutes() {
+  appRoutes() {
     try {
-      getRoutes(this.lazyLoadStore);
+      return getRoutes(this.lazyLoadStore);
     } catch (e) {
       logger.warn('App routes were not added');
+      return null;
     }
   }
 
 
   configure() {
     return (
-        <Route>
-            <Route path="/" component={Main}>s
-                <IndexRoute component={Index} />
-                <Route path="/signin" component={SignIn} />
-                <Route path="/signup" component={SignUp} />
-                <Route path="/signout" component={SignOut} />
-                <Route path="/docs" component={Docs} />
+            <Route >
+                <Route path="/" component={Main}>
+                    <IndexRoute component={Index} />
+                    <Route path="/signin" component={SignIn} />
+                    <Route path="/signup" component={SignUp} />
+                    <Route path="/signout" component={SignOut} />
+                    <Route path="/docs" component={Docs} />
+
+                </Route>
+                {/* -- Protected Site here --*/}
+                <Route onEnter={checkAuth('/signin')}>
+                    { this.appRoutes() }
+                </Route>
+
             </Route>
-             { this.appRoutes }
-            <Route path="*" component={NotFound} />
-        </Route>
     );
   }
-
-
 }
+
+export default routes;
+

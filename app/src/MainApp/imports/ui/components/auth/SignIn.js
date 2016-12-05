@@ -6,22 +6,22 @@ import { Meteor } from 'meteor/meteor';
 
 export default class SignIn extends Component {
 
-    componentWillMount() {
-        if( Meteor.user()){
-            browserHistory.push('/');
-        }
+  componentWillMount() {
+    if (Meteor.user()) {
+      browserHistory.push('/');
     }
-    componentDidMount() {
-        if( Meteor.user()){
-            browserHistory.push('/');
-        }
+  }
+  componentDidMount() {
+    if (Meteor.user()) {
+      browserHistory.push('/');
     }
-   render () {
-       return (
+  }
+  render() {
+    return (
            <div className="container">
-               <Accounts.ui.LoginForm  fromState={ STATES.SIGN_IN }/>
+               <Accounts.ui.LoginForm fromState={STATES.SIGN_IN} />
            </div>
-       )
-   }
+    );
+  }
 
-};
+}

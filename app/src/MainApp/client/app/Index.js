@@ -3,7 +3,7 @@ import Tracker from 'tracker-component';
 import { push } from 'react-router-redux';
 import { Meteor } from 'meteor/meteor';
 import { browserHistory } from 'react-router';
-import Home from 'Home';
+import Home from '../../imports/ui/components/home/HomePage';
 
 
 export default class Index extends Tracker.Component {

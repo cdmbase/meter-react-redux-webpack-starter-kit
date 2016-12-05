@@ -1,28 +1,23 @@
-import React, { Component } from 'react';
-import { FormattedHTMLMessage, defineMessages } from 'react-intl';
+import React from 'react';
+import { Footer, Link } from '../components';
+import { FormattedMessage, defineMessages } from 'react-intl';
 
-
-
-// Messages collocation ftw.
-// https://github.com/yahoo/react-intl/wiki/API#definemessages
 const messages = defineMessages({
-    madeByHtml: {
-        defaultMessage: 'AdminIDE',
-        id: 'footer.madeByHtml',
-    }
+  madeByHtml: {
+    defaultMessage: 'Made with love by',
+    id: 'footer.madeByHtml',
+  },
 });
 
 
+const AppFooter = () => (
+  <Footer>
+    <FormattedMessage {...messages.madeByHtml} />
+    {'\u00a0'}
+    <Link to="https://github.com/cdmbase/meter-react-redux-webpack-starter-kit">
+      Meteork Kit
+    </Link>
+  </Footer>
+);
 
-export default class Footer extends Component {
-
-    render() {
-        return (
-            <footer>
-                <p>
-                    <FormattedHTMLMessage {...messages.madeByHtml} />
-                </p>
-            </footer>
-        )
-    }
-}
+export default AppFooter;

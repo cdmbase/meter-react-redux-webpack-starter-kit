@@ -1,0 +1,10 @@
+[
+  {
+    "id": "loading.loadingText",
+    "defaultMessage": "Loading"
+  },
+  {
+    "id": "loading.longLoadingText",
+    "defaultMessage": "Still loading, please check your connection"
+  }
+]

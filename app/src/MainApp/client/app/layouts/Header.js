@@ -8,6 +8,16 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Meteor } from 'meteor/meteor';
 
 
+
+const styles = {
+  toolbar: {
+    flexWrap: 'wrap',
+  },
+  prefetch: {
+    display: 'none',
+  },
+};
+
 const Header = () => {
     // static propTypes = {
     //    viewer: PropTypes.object,

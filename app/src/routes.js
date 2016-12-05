@@ -2,40 +2,52 @@ import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import ReactHelmet from 'react-helmet';
-import Routes from 'MainApp/client/routes';
+import Routes from './MainApp/client/routes';
 import configureStore from './common/configureStore';
-import createInitialState from 'MainApp/server/frontend/createInitialState';
+import createInitialState from './MainApp/server/frontend/createInitialState';
 import logger from 'cdm-logger';
-// import configureReporting from 'MainApp/common/configureReporting';
 import localforage from 'localforage';
 import { Random } from 'meteor/random';
 
 
-// const initialState = window.__INITIAL_STATE__; // eslint-disable-line no-underscore-dangle
-// let initialState
-// const reportingMiddleware = configureReporting({
-//   appVersion: initialState.config.appVersion,
-//   sentryUrl: initialState.config.sentryUrl,
-//   unhandledRejection: fn => window.addEventListener('unhandledrejection', fn),
-// });
+const routes = new Routes();
 
 // createInitialState loads files, so it must be called once.
 let initialState = createInitialState();
 let history;
 let store;
+let configureReporting;
 
-const routes = new Routes();
+const reportingMiddleware = () => configureReporting({
+  appVersion: initialState.config.appVersion,
+  sentryUrl: initialState.config.sentryUrl,
+  unhandledRejection: fn => window.addEventListener('unhandledrejection', fn),
+});
 
-
-// // Create an enhanced history that syncs navigation events with the store
-// const historyHook = (newHistory) => {
-//   store = configureStore({
-//     initialState,
-//     platformDeps: { uuid: Random.id, storageEngine: localforage },
-//     history: newHistory });
-//   history = syncHistoryWithStore(newHistory, store)
-//   return history;
-// };
+const getStore = () => {
+  if (Meteor.isClient) {
+    configureReporting = require('./common/configureReporting');
+    logger.debug("Executiing isBrowser code")
+    return configureStore({
+      initialState,
+      platformDeps: { uuid: Random, storageEngine: localforage },
+      platformMiddleware: [reportingMiddleware()],
+    });
+  } else if (Meteor.isServer) {
+    return configureStore({
+      initialState: {
+        ...initialState,
+        device: {
+          ...initialState.device,
+        },
+        intl: {
+          ...initialState.intl,
+          currentLocale: 'en',
+          initialNow: Date.now(),
+        },
+      } });
+  }
+};
 
 // Create an enhanced history that syncs navigation events with the store
 const historyHook = newHistory => history = newHistory;
@@ -46,7 +58,14 @@ const dehydrateHook = () => store.getState();
 
 
 // Take the rehydrated state and use it as initial state client side
-const rehydrateHook = state => initialState = state;
+const rehydrateHook = (state) => {
+  if (state) {
+    logger.debug('RehydrateHook state', state);
+    initialState = state;
+    return state;
+  }
+};
+
 
 // Pass additional props to give to the <Router /> component on the client
 const clientProps = {
@@ -58,18 +77,7 @@ const clientProps = {
 
 // Create a redux store and pass into the redux Provider wrapper
 const wrapperHook = (app) => {
-  store = configureStore({
-    initialState: {
-      ...initialState,
-      device: {
-        ...initialState.device,
-      },
-      intl: {
-        ...initialState.intl,
-        currentLocale: initialState.currentLocale,
-        initialNow: Date.now(),
-      },
-    } });
+  store = getStore();
   routes.injectStore(store);
   return (<Provider store={store}>{app}</Provider>);
 };

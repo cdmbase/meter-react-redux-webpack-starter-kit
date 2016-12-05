@@ -1,0 +1,14 @@
+[
+  {
+    "id": "notFound.h1",
+    "defaultMessage": "This page isn't available"
+  },
+  {
+    "id": "notFound.p",
+    "defaultMessage": "The link may be broken, or the page may have been removed."
+  },
+  {
+    "id": "notFound.continue",
+    "defaultMessage": "Continue here please."
+  }
+]

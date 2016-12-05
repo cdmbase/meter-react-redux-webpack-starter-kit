@@ -6,8 +6,7 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
 
-import createLogger from 'redux-logger';
-
+import logger from 'cdm-logger';
 /*
   Removed .defualt from require('..').default
   Still using routerMiddleware but it was removed in source
@@ -23,7 +22,6 @@ const configureStore = (options: Options) => {
         platformDeps = {},
         platformMiddleware = [],
         } = options;
-
   const reducer = configureReducer(initialState);
 
     // ======================================================
@@ -62,6 +60,7 @@ const configureStore = (options: Options) => {
       initialState.config.appName,
       platformDeps.storageEngine,
     );
+    logger.debug('Configuring Storage Engine', config);
     persistStore(store, config);
   }
 
