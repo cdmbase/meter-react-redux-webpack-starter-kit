@@ -1,6 +1,5 @@
 import { Route, IndexRoute } from 'react-router';
 import { Meteor } from 'meteor/meteor';
-import { Accounts, STATES } from 'meteor/std:accounts-ui';
 import Main from './app/Main';
 import Index from './app/Index';
 import NotFound from '../imports/ui/components/notfound/NotFoundPage';
@@ -53,7 +52,7 @@ class routes {
                     <Route path="/signup" component={SignUp} />
                     <Route path="/signout" component={SignOut} />
                     <Route path="/docs" component={Docs} />
-
+                    <Route path="*" component={NotFound} />
                 </Route>
                 {/* -- Protected Site here --*/}
                 <Route onEnter={checkAuth('/signin')}>
