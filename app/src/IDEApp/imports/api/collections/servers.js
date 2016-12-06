@@ -22,7 +22,7 @@ Servers.schema = new SimpleSchema({
   },
   createdAt: {
     type: Date,
-    autoValue: () => {
+    autoValue: function() {
       if (this.isInsert) {
         return new Date();
       }
