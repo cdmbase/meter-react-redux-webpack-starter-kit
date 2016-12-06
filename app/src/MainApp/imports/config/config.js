@@ -21,7 +21,7 @@ const config = {
   appVersion: process.env.appVersion,
   defaultLocale: 'en',
   googleAnalyticsId: Meteor.settings.public.googleAnalyticsId,
-  isProduction: Meteor.isProduction,
+  isProduction: process.env.NODE_ENV === 'production',
   locales: ['en'],
   // Enable hot reload on remote device. Note it prevents offline testing,
   // because it depends on ip.address(), which doesn't work with disabled wifi.

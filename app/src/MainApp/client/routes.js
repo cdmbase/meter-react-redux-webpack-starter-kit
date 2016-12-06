@@ -1,5 +1,6 @@
 import { Route, IndexRoute } from 'react-router';
 import { Meteor } from 'meteor/meteor';
+import App from './app/App';
 import Main from './app/Main';
 import Index from './app/Index';
 import NotFound from '../imports/ui/components/notfound/NotFoundPage';
@@ -23,9 +24,9 @@ const checkAuth = to => (nextState, transition) => {
 
 class routes {
 
-    /**
-     * Only need to inject this on the CLIENT side for lazy loading
-     */
+  /**
+   * Only need to inject this on the CLIENT side for lazy loading
+   */
   injectStore(store) {
     logger.debug('Injecting Store', store);
     this.store = store;
@@ -45,21 +46,20 @@ class routes {
 
   configure() {
     return (
-            <Route >
-                <Route path="/" component={Main}>
-                    <IndexRoute component={Index} />
-                    <Route path="/signin" component={SignIn} />
-                    <Route path="/signup" component={SignUp} />
-                    <Route path="/signout" component={SignOut} />
-                    <Route path="/docs" component={Docs} />
-                    <Route path="*" component={NotFound} />
-                </Route>
-                {/* -- Protected Site here --*/}
-                <Route onEnter={checkAuth('/signin')}>
-                    { this.appRoutes() }
-                </Route>
-
-            </Route>
+      <Route component={Main}>
+        <Route path="/" component={App}>
+          <IndexRoute component={Index} />
+          <Route path="/signin" component={SignIn} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/signout" component={SignOut} />
+          <Route path="/docs" component={Docs} />
+        </Route>
+        {/* -- Protected Site here --*/}
+        <Route onEnter={checkAuth('/signin')}>
+          { this.appRoutes() }
+        </Route>
+        <Route path="*" component={NotFound} />
+      </Route>
     );
   }
 }

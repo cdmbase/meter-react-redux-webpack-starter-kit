@@ -60,7 +60,7 @@ const configureStore = (options: Options) => {
       initialState.config.appName,
       platformDeps.storageEngine,
     );
-    logger.debug('Configuring Storage Engine', config);
+    logger.debug('Configuring Storage Engine for storing redux state in client.');
     persistStore(store, config);
   }
 

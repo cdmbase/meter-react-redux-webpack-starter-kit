@@ -10,7 +10,7 @@ import AdminPage from '../../imports/ui/components/AdminPage';
 class App extends Component {
 
   render() {
-    const { ui, children, currentLocale, location } = this.props;
+    const { ui, children } = this.props;
     return (
             <div >
                 {this.props.children || <AdminPage /> }
@@ -19,7 +19,11 @@ class App extends Component {
   }
 
 }
-App = start(App);
+
+App.propTypes = {
+  ui: React.PropTypes.object.isRequired,
+  children: PropTypes.object.isRequired,
+};
 
 export default connect(state => ({
   ui: state.ui,

@@ -4,19 +4,20 @@ import { Provider } from 'react-redux';
 import ReactHelmet from 'react-helmet';
 import Routes from './MainApp/client/routes';
 import configureStore from './common/configureStore';
-import createInitialState from './MainApp/server/frontend/createInitialState';
+import createInitialState from './MainApp/imports/config/createInitialState';
 import logger from 'cdm-logger';
 import localforage from 'localforage';
 import { Random } from 'meteor/random';
+import config from './MainApp/imports/config/config';
+import ReactGA from 'react-ga';
 
-
-const routes = new Routes();
 
 // createInitialState loads files, so it must be called once.
 let initialState = createInitialState();
 let history;
-let store;
 let configureReporting;
+
+const routes = new Routes();
 
 const reportingMiddleware = () => configureReporting({
   appVersion: initialState.config.appVersion,
@@ -24,10 +25,14 @@ const reportingMiddleware = () => configureReporting({
   unhandledRejection: fn => window.addEventListener('unhandledrejection', fn),
 });
 
+const getLocale = req => process.env.IS_SERVERLESS
+  ? config.defaultLocale
+  : req.acceptsLanguages(config.locales) || config.defaultLocale;
+// TODO: need to get the locale from browser
 const getStore = () => {
   if (Meteor.isClient) {
     configureReporting = require('./common/configureReporting');
-    logger.debug("Executiing isBrowser code")
+    logger.debug('Configuring store at client side.');
     return configureStore({
       initialState,
       platformDeps: { uuid: Random, storageEngine: localforage },
@@ -49,8 +54,23 @@ const getStore = () => {
   }
 };
 
+
+const store = getStore();
+
+
 // Create an enhanced history that syncs navigation events with the store
-const historyHook = newHistory => history = newHistory;
+const historyHook = (newHistory) => {
+  history = syncHistoryWithStore(newHistory, store);
+  // Setup Google Analytics page tracking
+  if (config.isProduction && config.googleAnalyticsId !== 'UA-XXXXXXX-X') {
+    ReactGA.initialize(config.googleAnalyticsId);
+    history.listen((location) => {
+      ReactGA.set({ page: location.pathname });
+      ReactGA.pageview(location.pathname);
+    });
+  }
+  return history;
+};
 
 
 // Pass the state of the store as the object to be dehydrated server side
@@ -77,13 +97,13 @@ const clientProps = {
 
 // Create a redux store and pass into the redux Provider wrapper
 const wrapperHook = (app) => {
-  store = getStore();
   routes.injectStore(store);
+
   return (<Provider store={store}>{app}</Provider>);
 };
 
 
-const clientOptions = { props: clientProps, rootElement: 'mainContainer', rehydrateHook, wrapperHook };
+const clientOptions = { props: clientProps, rootElement: 'mainContainer', historyHook, rehydrateHook, wrapperHook };
 const serverOptions = { historyHook, dehydrateHook,
   htmlHook(html) {
     const head = ReactHelmet.rewind();
