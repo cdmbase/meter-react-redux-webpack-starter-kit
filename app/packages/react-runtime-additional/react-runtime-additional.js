@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
 const requiredPackages = {
-  'react-router':  '^2.5.0'
+  'react-router':  '^3.0.0'
 };
 
 

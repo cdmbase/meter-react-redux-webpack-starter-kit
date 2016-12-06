@@ -1,42 +1,27 @@
+/* @flow */
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
-import {Grid, Row, Col} from 'react-bootstrap';
-import start from '../../common/app/start';
-import Header from './layouts/Header';
-import Footer from './layouts/Footer';
+import { ThemeProvider } from '../../../common/app/components';
+import start from '../../../common/app/start';
+import R from 'ramda';
+import * as themes from './themes';
 
 
+const Main = ({ currentTheme, children }) => (
+  <ThemeProvider key={currentTheme} theme={themes[currentTheme] || themes.initial}>
+    {children}
+  </ThemeProvider>
+);
+Main.propTypes = {
+  children: PropTypes.object.isRequired,
+  currentTheme: React.PropTypes.string,
+};
 
-// Styles
-import '../stylesheets/initial.less';
-
-
-
-@connect((state)=> state, null)
-class Main extends Component {
-
-    static propTypes = {
-        children: PropTypes.object.isRequired,
-        currentLocale: PropTypes.string.isRequired,
-    };
-    render() {
-        const { appReducer, children, currentLocale, location } = this.props;
-
-        return (
-            <div >
-                <Header />
-                {children}
-                <Footer />
-
-            </div>
-        )
-    }
-
-}
-
-Main = start(Main);
-
-export default connect(state => ({
-    currentLocale: state.intl.currentLocale,
-}))(Main);
+export default R.compose(
+  connect(
+    (state: State) => ({
+      currentTheme: state.themes.currentTheme,
+    }),
+  ),
+  start,
+)(Main);

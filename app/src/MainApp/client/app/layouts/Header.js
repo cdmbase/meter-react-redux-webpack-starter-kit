@@ -1,21 +1,31 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { Row, Col, Nav, Navbar, NavbarBrand, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
+import { Row, Col, Nav, Navbar, NavbarBrand, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import linksMessages from '../../../common/app/linksMessages';
+import linksMessages from '../../../../common/app/linksMessages';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Meteor } from 'meteor/meteor';
 
 
-const Header = () => {
-    //static propTypes = {
-    //    viewer: PropTypes.object,
-    //};
 
-    //const { viewer } = this.props;
-    const loginPath =  Meteor.user() ? "/signout" : "/signin"
-    return (
+const styles = {
+  toolbar: {
+    flexWrap: 'wrap',
+  },
+  prefetch: {
+    display: 'none',
+  },
+};
+
+const Header = () => {
+    // static propTypes = {
+    //    viewer: PropTypes.object,
+    // };
+
+    // const { viewer } = this.props;
+  const loginPath = Meteor.user() ? '/signout' : '/signin';
+  return (
         <Navbar>
             <Navbar.Header>
                 <Navbar.Brand>
@@ -35,12 +45,14 @@ const Header = () => {
                 </LinkContainer>
                 <LinkContainer to={loginPath}>
                     <NavItem eventKey={3}>
-                        { Meteor.user() ? <FormattedMessage {...linksMessages.signOut } /> : <FormattedMessage {...linksMessages.signIn } /> }
+                        { Meteor.user() ?
+                          <FormattedMessage {...linksMessages.signOut} />
+                          : <FormattedMessage {...linksMessages.signIn} /> }
                     </NavItem>
                 </LinkContainer>
             </Nav>
         </Navbar>
-    )
-}
+  );
+};
 
 export default Header;
