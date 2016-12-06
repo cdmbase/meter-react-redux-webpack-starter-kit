@@ -6,9 +6,6 @@
     "logLevel": "debug"
   },
   "private": {
-    "boxes": {
-      "path": "/Users/veeramarni/Documents/eclipse/workspace/phoneapps/development/projects/AdminsIDE/boxes"
-    },
     "oAuth": {
       "github": {
         "clientId": "b723f6f3285e6c3d7ee7",
