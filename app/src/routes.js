@@ -38,20 +38,19 @@ const getStore = () => {
       platformDeps: { uuid: Random, storageEngine: localforage },
       platformMiddleware: [reportingMiddleware()],
     });
-  } else if (Meteor.isServer) {
-    return configureStore({
-      initialState: {
-        ...initialState,
-        device: {
-          ...initialState.device,
-        },
-        intl: {
-          ...initialState.intl,
-          currentLocale: 'en',
-          initialNow: Date.now(),
-        },
-      } });
   }
+  return configureStore({
+    initialState: {
+      ...initialState,
+      device: {
+        ...initialState.device,
+      },
+      intl: {
+        ...initialState.intl,
+        currentLocale: 'en',
+        initialNow: Date.now(),
+      },
+    } });
 };
 
 
@@ -62,7 +61,7 @@ const store = getStore();
 const historyHook = (newHistory) => {
   history = syncHistoryWithStore(newHistory, store);
   // Setup Google Analytics page tracking
-  if (config.isProduction && config.googleAnalyticsId !== 'UA-XXXXXXX-X') {
+  if (config.isProduction && Meteor.isClient && config.googleAnalyticsId !== 'UA-XXXXXXX-X') {
     ReactGA.initialize(config.googleAnalyticsId);
     history.listen((location) => {
       ReactGA.set({ page: location.pathname });
@@ -80,10 +79,11 @@ const dehydrateHook = () => store.getState();
 // Take the rehydrated state and use it as initial state client side
 const rehydrateHook = (state) => {
   if (state) {
-    logger.debug('RehydrateHook state', state);
+    logger.debug('Rehydrate state from server state.');
     initialState = state;
     return state;
   }
+  return null;
 };
 
 
