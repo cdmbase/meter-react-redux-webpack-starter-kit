@@ -1,13 +1,13 @@
 import React from 'react';
 import {Route} from 'react-router';
-import {injectReducer} from 'MainApp/common/configureReducer';
+import {injectReducer} from '../../common/configureReducer';
 import logger from 'cdm-logger';
 
 export const getRoutes = (store) => {
 
     const getApp = (nextState, cb) => {
         if (Meteor.isServer) {
-            let ui = require('MainApp/common/ui/ui-reducer');
+            let ui = require('../../common/ui/reducer');
             let reducers = require('IDEApp/imports/ui/reducers');
             injectReducer(store(), {
                 ui,
@@ -18,7 +18,7 @@ export const getRoutes = (store) => {
             // TODO: Need to find out whether we should using System.imports as shown in
             // https://github.com/mxstbr/react-boilerplate/blob/master/app/routes.js
             require.ensure([], function (require) {
-                let ui = require('MainApp/common/ui/ui-reducer');
+                let ui = require('../../common/ui/reducer');
                 let reducers = require('IDEApp/imports/ui/reducers');
                 injectReducer(store(), {
                     ui,

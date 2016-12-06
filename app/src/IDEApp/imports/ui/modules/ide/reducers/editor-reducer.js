@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { concatEventReducers } from 'MainApp/common/utils/concatEventReducers';
+import { concatEventReducers } from '../../../../../../common/utils/concatEventReducers';
 import { ACTION_EDITOR_ACTIVATE_TAB, ACTION_EDITOR_TOGGLE_TERM, ACTION_EDITOR_OPEN_FILE, ACTION_EDITOR_CLOSE_FILE} from '../action-types';
 
 

@@ -1,4 +1,4 @@
-import { concatEventReducers } from 'MainApp/common/utils/concatEventReducers';
+import { concatEventReducers } from '../../../../../../common/utils/concatEventReducers';
 import { FSEvents } from '../action-types';
 import logger from 'cdm-logger'
 

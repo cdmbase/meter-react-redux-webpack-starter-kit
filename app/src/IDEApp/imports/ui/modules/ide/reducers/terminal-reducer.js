@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { concatEventReducers } from 'MainApp/common/utils/concatEventReducers'
+import { concatEventReducers } from '../../../../../../common/utils/concatEventReducers';
 import { ACTION_TERMINAL_INIT, ACTION_TERMINAL_ADD, ACTION_TERMINAL_REMOVE, ACTION_TERMINAL_ACTIVATE_TAB } from '../action-types'
 
 export const editor = concatEventReducers({

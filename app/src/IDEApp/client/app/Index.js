@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
-import start from 'MainApp/common/app/start';
 
 import Dashboard from '../../imports/ui/modules/application/containers/DashboardContainer';
 // Styles
@@ -22,8 +21,6 @@ class App extends Component {
   }
 
 }
-
-App = start(App);
 
 export default connect(state => ({
   ui: state.ui

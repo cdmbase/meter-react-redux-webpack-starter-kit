@@ -1,4 +1,4 @@
-import {concatEventReducers} from 'MainApp/common/utils/concatEventReducers';
+import {concatEventReducers} from '../../../../../../common/utils/concatEventReducers';
 import {ACTION_WORKSPACES_METEOR_SYNC, ACTION_DELETE_WORKSPACE} from '../action-types';
 
 export const list = concatEventReducers({
