@@ -1,5 +1,5 @@
 {
-  "MONGO_URL": "mongodb://igor:Ors2V0@ds047592.mlab.com:47592/ide",
+  "MONGO_URL": "mongodb://localhost:3001/meteor",
   "public": {
     "sentryUrl": "https://0121f514fb4141eb8377845fb686d266@app.getsentry.com/90886",
     "googleAnalyticsId": "UA-XXXXXXX-X",

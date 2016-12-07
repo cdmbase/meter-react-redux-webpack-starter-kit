@@ -16,7 +16,7 @@ import { create as connect, bindFServer } from '../../../../api/socket';
  * creates socket connection with FServer
  *
  */
-export const sync = (boxes) => dispatch => {
+export const sync = () => {
   logger.debug("Syncing Workspaces");
   let boxes = Boxes.find().fetch();
   boxes.forEach(workspace => {
@@ -45,7 +45,7 @@ export const sync = (boxes) => dispatch => {
       }
     }
   });
-  dispatch({type: ACTION_WORKSPACES_METEOR_SYNC, workspaces: boxes || {}})
+  return{type: ACTION_WORKSPACES_METEOR_SYNC, workspaces: boxes || {}}
 
 };
 
@@ -54,25 +54,28 @@ export const sync = (boxes) => dispatch => {
  * @type {{start: ((p1?:*)=>(p1:*)=>*), shutdown: ((p1?:*)=>(p1:*)=>*)}}
  */
 export const box = ({
-  start: _id => dispatch => Meteor.call('box.start', _id, (error, result) => {
+  start: _id => {
+    dispatch({type: "NOTHING"});
+    Meteor.call('box.start', _id, (error, result) => {
     if (error) {
+      dispatch({type: "NOTHING"});
       logger.error("Box Start got failed!");
       return
     }
-  }),
-  shutdown: _id => dispatch => Meteor.call('box.shutdown', _id, (error, result) => {
+  })},
+  shutdown: _id => Meteor.call('box.shutdown', _id, (error, result) => {
     if (error) {
       logger.error("Box Shutdown got failed!");
       return;
     }
   }),
-  remove: id => dispatch => Meteor.call('box.remove', id, (error, result) => {
+  remove: id =>  Meteor.call('box.remove', id, (error, result) => {
     if (error) {
       logger.error("Box Remove got failed!");
       return;
     }
   }),
-  create: (data, callback) => dispatch => {
+  create: (data, callback)=> {
     Meteor.call('box.create', data, (error, result) => {
       if (error) {
         logger.error("Box Start got failed!");
@@ -81,6 +84,7 @@ export const box = ({
         callback();
       }
     });
+    return { type: "BOX_CREATE"}
   },
 });
 
