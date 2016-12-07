@@ -55,14 +55,14 @@ export const sync = () => {
  */
 export const box = ({
   start: _id => {
-    dispatch({type: "NOTHING"});
     Meteor.call('box.start', _id, (error, result) => {
     if (error) {
-      dispatch({type: "NOTHING"});
       logger.error("Box Start got failed!");
       return
     }
-  })},
+  })
+  return { type: "BOX_START"}
+  },
   shutdown: _id => Meteor.call('box.shutdown', _id, (error, result) => {
     if (error) {
       logger.error("Box Shutdown got failed!");
