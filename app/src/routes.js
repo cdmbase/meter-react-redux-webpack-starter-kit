@@ -103,12 +103,21 @@ const wrapperHook = (app) => {
 };
 
 
-const clientOptions = { props: clientProps, rootElement: 'mainContainer', historyHook, rehydrateHook, wrapperHook };
-const serverOptions = { historyHook, dehydrateHook,
+const clientOptions = {
+  props: clientProps,
+  rootElement: 'mainContainer',
+  historyHook,
+  rehydrateHook,
+  wrapperHook };
+
+const serverOptions = {
+  historyHook,
+  dehydrateHook,
   htmlHook(html) {
     const head = ReactHelmet.rewind();
     return html.replace('<head>', `<head>${head.title}${head.base}${head.meta}${head.link}${head.script}`);
   } };
+
 
 ReactRouterSSR.Run(routes.configure(), clientOptions, serverOptions);
 
