@@ -26,5 +26,6 @@
     "react-router": "ReactRouter",
     "react/lib/ReactTransitionGroup": "React.addons.TransitionGroup",
     "react/lib/ReactCSSTransitionGroup": "React.addons.CSSTransitionGroup"
-  }
+  },
+  "noParse": ["node_modules/localforage/dist/localforage.js", "node_modules/xterm/dist/xterm.js"]
 }
