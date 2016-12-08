@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Boxes, Servers } from '../collections';
 import IOClient from '../io-client';
+import _ from 'lodash'
 
 Meteor.methods({
   'box.start': (_id) => {
@@ -78,6 +79,7 @@ Meteor.methods({
       completed: false,
       server: Servers.findOne()._id,
       info: {},
+      workspace: _.kebabCase(name),
       status: Boxes.consts.STATUS_SHUTDOWN,
       createdAt: new Date(),
     });

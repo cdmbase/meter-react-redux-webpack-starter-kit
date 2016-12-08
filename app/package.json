@@ -26,6 +26,7 @@
     "invariant": "^2.2.1",
     "keymaster": "^1.6.2",
     "localforage": "^1.4.3",
+    "lodash": "^4.17.2",
     "lodash.debounce": "^4.0.7",
     "make-error": "^1.2.1",
     "meteor-node-stubs": "^0.2.3",
