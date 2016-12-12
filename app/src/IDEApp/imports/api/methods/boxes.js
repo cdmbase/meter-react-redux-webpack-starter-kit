@@ -2,7 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Boxes, Servers } from '../collections';
 import IOClient from '../io-client';
-import _ from 'lodash'
+import _ from 'lodash';
+import logger from 'cdm-logger';
 
 Meteor.methods({
   'box.start': (_id) => {
@@ -20,7 +21,7 @@ Meteor.methods({
           target: `ws.${workspace.server}`,
           payload: { type: 'WS_RUN',
             workspace: workspace.workspace || workspace._id,
-            info: workspace.info || {}
+            info: workspace.info || {},
           },
         });
         resolve({ ok: true, workspace: _id });
@@ -29,7 +30,7 @@ Meteor.methods({
       }
     });
   },
-  'box.shutdown': _id => {
+  'box.shutdown': (_id) => {
     check(_id, String);
 
     return new Promise((resolve, reject) => {
@@ -70,19 +71,20 @@ Meteor.methods({
     if (!Servers.findOne()) {
       throw new Meteor.Error('no server registered');
     }
+    const id = Boxes
+      .collection
+      .insert({
+        name,
+        description,
+        lang,
+        creator: Meteor.userId() || 'guest',
+        completed: false,
+        server: Servers.findOne()._id,
+        info: {},
+        workspace: _.kebabCase(name),
+        status: Boxes.consts.STATUS_SHUTDOWN,
+      }, { validate: true });
 
-    const id = Boxes.insert({
-      name,
-      description,
-      lang,
-      creator: Meteor.userId() || 'guest',
-      completed: false,
-      server: Servers.findOne()._id,
-      info: {},
-      workspace: _.kebabCase(name),
-      status: Boxes.consts.STATUS_SHUTDOWN,
-      createdAt: new Date(),
-    });
     const workspace = Boxes.findOne(id);
 
     IOClient.emit('msg', {

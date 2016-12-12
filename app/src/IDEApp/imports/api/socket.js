@@ -1,6 +1,6 @@
 import IO from 'socket.io-client';
-import { handler as FSHandler} from './requests/fserver/ws/fserver';
-import { handler as XtermHandler } from './requests/xterm/ws/xterm-ws'
+import { handler as FSHandler } from './requests/fserver/ws/fserver';
+import { handler as XtermHandler } from './requests/xterm/ws/xterm-ws';
 /**
  * Creates socket on specified port and path
  * @param url
@@ -8,9 +8,7 @@ import { handler as XtermHandler } from './requests/xterm/ws/xterm-ws'
  * @param ns
  * @returns {*}
  */
-export const create = (url, port, ns = '') => {
-    return IO(`${url}:${port}/${ns}`);
-};
+export const create = (url, port, ns = '') => IO(`${url}:${port}/${ns}`);
 
 /**
  * Triggers IO Actions based on data return by websocket
@@ -18,11 +16,11 @@ export const create = (url, port, ns = '') => {
  * @param workspace
  * @param handlers
  */
-export const bindIOActionCreator = (ws, workspace, handlers) => dispatch => {
-    Object.keys(handlers).forEach(event => {
-        ws.on(event, data => (handlers[event] || function() {})(dispatch, workspace, data));
-    });
-    return ws;
+export const bindIOActionCreator = (ws, workspace, handlers) => (dispatch) => {
+  Object.keys(handlers).forEach((event) => {
+    ws.on(event, data => (handlers[event] || function () {})(dispatch, workspace, data));
+  });
+  return ws;
 };
 
 /**

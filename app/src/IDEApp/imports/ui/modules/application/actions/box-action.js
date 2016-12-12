@@ -7,86 +7,99 @@ import {
   WORKSPACE_STATUS_SHUTDOWN,
   ACTION_DELETE_WORKSPACE,
 } from '../action-types';
+import {
+  BOX_CREATE,
+  BOX_CREATE_PROGRESS,
+  BOX_CREATE_DONE,
+  BOX_CREATE_FAIL,
+  BOX_START,
+  BOX_START_PROGRESS,
+  BOX_START_DONE,
+  BOX_START_FAIL,
+  BOX_SHUTDOWN,
+  BOX_SHUTDOWN_PROGRESS,
+  BOX_SHUTDOWN_DONE,
+  BOX_SHUTDOWN_FAIL,
+  BOX_REMOVE,
+  BOX_REMOVE_PROGRESS,
+  BOX_REMOVE_DONE,
+  BOX_REMOVE_FAIL,
+} from '../action-types';
+
 import { Boxes, Servers } from '../../../../api/collections';
-import SocketMap, {ConnectionsMap} from '../../../../api/socket-map';
+import SocketMap, { ConnectionsMap } from '../../../../api/socket-map';
 import { create as connect, bindFServer } from '../../../../api/socket';
 
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/debounce';
+import { MeteorObservable } from 'meteor-rxjs';
 /**
  * Sync the client with current data from database and
  * creates socket connection with FServer
  *
  */
-export const sync = () => {
-  logger.debug("Syncing Workspaces");
-  let boxes = Boxes.find().fetch();
-  boxes.forEach(workspace => {
-    if (!ConnectionsMap.has(workspace._id)) {
-      Meteor.call('server.find', workspace.server, (error, server) => {
-        logger.debug("Server details: ", server.url);
-        ConnectionsMap.set(workspace._id, {
-          status: workspace.status == WORKSPACE_STATUS_ACTIVE,
-          server,
-          info: workspace.info,
-          ws: workspace.status == WORKSPACE_STATUS_ACTIVE ? (
-            bindFServer(
-              server.url || "http://localhost",
-              workspace.info.ports.socket,
-              workspace._id,
-              dispatch)
-          ) : false
-        })
-        logger.debug("Connection Map details : ", ConnectionsMap.get(workspace._id));
-      });
-    } else {
-      let connection = ConnectionsMap.get(workspace._id);
-      if (workspace.status != WORKSPACE_STATUS_ACTIVE) {
-        connection.ws && connection.ws.connected ? connection.ws.disconnect() : connection.ws;
-        ConnectionsMap.delete(workspace._id);
-      }
-    }
-  });
-  return{type: ACTION_WORKSPACES_METEOR_SYNC, workspaces: boxes || {}}
+export const sync = () => ({
+  type: ACTION_WORKSPACES_METEOR_SYNC,
+});
 
-};
 
 /**
  * Has start and shutdown actions
  * @type {{start: ((p1?:*)=>(p1:*)=>*), shutdown: ((p1?:*)=>(p1:*)=>*)}}
  */
 export const box = ({
-  start: _id => {
-    Meteor.call('box.start', _id, (error, result) => {
-    if (error) {
-      logger.error("Box Start got failed!");
-      return
-    }
-  })
-  return { type: "BOX_START"}
+  start: _id => ({ dispatch }) => {
+    MeteorObservable.call('box.start', _id).subscribe(result => dispatch({
+      type: BOX_START_DONE,
+      payload: { result },
+    }), error => dispatch({
+      type: BOX_START_FAIL,
+      payload: { error },
+    }),
+    );
+    return { type: BOX_START_PROGRESS };
   },
-  shutdown: _id => Meteor.call('box.shutdown', _id, (error, result) => {
-    if (error) {
-      logger.error("Box Shutdown got failed!");
-      return;
-    }
-  }),
-  remove: id =>  Meteor.call('box.remove', id, (error, result) => {
-    if (error) {
-      logger.error("Box Remove got failed!");
-      return;
-    }
-  }),
-  create: (data, callback)=> {
-    Meteor.call('box.create', data, (error, result) => {
-      if (error) {
-        logger.error("Box Start got failed!");
-        throw new Meteor.Error(555, error);
-      } else {
-        callback();
-      }
-    });
-    return { type: "BOX_CREATE"}
+  shutdown: _id => ({ dispatch }) => {
+    MeteorObservable.call('box.shutdown', _id)
+      .subscribe(result =>
+      dispatch({
+        type: BOX_SHUTDOWN_DONE,
+        payload: { result },
+      })
+    , error => dispatch({
+      type: BOX_SHUTDOWN_FAIL,
+      payload: { error },
+    }));
+    return { type: BOX_SHUTDOWN_PROGRESS };
   },
-});
+  remove: id => ({ dispatch }) => {
+    MeteorObservable.call('box.remove', id)
+      .subscribe(result => dispatch({
+        type: BOX_REMOVE_DONE,
+        payload: { result },
+      }), error =>
+        dispatch({
+          type: BOX_REMOVE_FAIL,
+          payload: { error },
+        }),
+      );
+    return { type: BOX_REMOVE_PROGRESS };
+  },
+  create: (data, callback) => ({ dispatch }) => {
+    MeteorObservable.call('box.create', data).subscribe((result) => {
+      callback();
+      return dispatch({
+        type: BOX_CREATE_DONE,
+        payload: { result },
+      });
+    }, error => dispatch({
+      type: BOX_CREATE_FAIL,
+      payload: { error },
+    }));
+    return { type: BOX_CREATE_PROGRESS };
+  },
+})
+  ;
 
 
 /**

@@ -101,6 +101,7 @@ reactive-var@1.0.11
 reactrouter:react-router-ssr@3.1.6
 reload@1.1.11
 retry@1.0.9
+reywood:publish-composite@1.4.2
 routepolicy@1.0.12
 service-configuration@1.0.11
 session@1.1.7

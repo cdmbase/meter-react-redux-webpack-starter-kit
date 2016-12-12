@@ -1,7 +1,6 @@
 export * as FSEvents from 'fs_events';
 
 
-
 export const ACTION_EDITOR_OPEN_FILE = 'ACTION_EDITOR_OPEN_FILE';
 export const ACTION_EDITOR_CLOSE_FILE = 'ACTION_EDITOR_CLOSE_FILE';
 export const ACTION_EDITOR_TOGGLE_TERM = 'ACTION_EDITOR_TOGGLE_TERM';

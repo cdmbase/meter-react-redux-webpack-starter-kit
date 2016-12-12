@@ -8,12 +8,12 @@ import { Meteor } from 'meteor/meteor';
 export default class Profile extends Tracker.Component {
 
 
-    render () {
-        return (
+  render() {
+    return (
             <div className="container">
-                <Accounts.ui.LoginForm  fromState={ STATES.PROFILE }/>
+                <Accounts.ui.LoginForm fromState={STATES.PROFILE} />
             </div>
-        )
-    }
+    );
+  }
 
-};
+}

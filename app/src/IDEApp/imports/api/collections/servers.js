@@ -1,5 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { MongoObservable } from 'meteor-rxjs';
+
 
 const Servers = new Mongo.Collection('servers');
 
@@ -22,7 +24,7 @@ Servers.schema = new SimpleSchema({
   },
   createdAt: {
     type: Date,
-    autoValue: function() {
+    autoValue() {
       if (this.isInsert) {
         return new Date();
       }
@@ -30,6 +32,16 @@ Servers.schema = new SimpleSchema({
         return { $setOnInsert: new Date() };
       }
     },
+  },
+  updatedAt: {
+    type: Date,
+    autoValue() {
+      if (this.isUpdate) {
+        return new Date();
+      }
+    },
+    denyInsert: true,
+    optional: true,
   },
 });
 
@@ -50,4 +62,4 @@ Servers.deny({
   remove: () => false,
 });
 
-export default Servers;
+export default new MongoObservable.Collection(Servers);

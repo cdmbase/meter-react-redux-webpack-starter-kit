@@ -1,9 +1,10 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { MongoObservable } from 'meteor-rxjs';
 
-const Boxes = new Mongo.Collection('boxes');
+const boxes = new Mongo.Collection('boxes');
 
-Boxes.schema = new SimpleSchema({
+boxes.schema = new SimpleSchema({
   _id: {
     type: String,
   },
@@ -12,6 +13,7 @@ Boxes.schema = new SimpleSchema({
   },
   description: {
     type: String,
+    optional: true,
   },
   lang: {
     type: String,
@@ -23,43 +25,64 @@ Boxes.schema = new SimpleSchema({
   completed: {
     type: Boolean,
   },
+  server: {
+    type: String,
+  },
+  workspace: {
+    type: String,
+  },
   info: {
     type: Object,
+    optional: true,
   },
   status: {
     type: String,
   },
   createdAt: {
     type: Date,
-    autoValue: () => {
+    autoValue() {
       if (this.isInsert) {
         return new Date();
-      }
-      if (this.isUpsert) {
+      } else if (this.isUpsert) {
         return { $setOnInsert: new Date() };
+      } else {
+        this.unset();  // Prevent user from supplying their own value
       }
     },
   },
+  updatedAt: {
+    type: Date,
+    autoValue() {
+      if (this.isUpdate) {
+        return new Date();
+      }
+    },
+    denyInsert: true,
+    optional: true,
+  },
 });
 
-// Boxes.attachSchema(Box.schema);
+boxes.attachSchema(boxes.schema);
 
-Boxes.consts = {
-  STATUS_SHUTDOWN: 'STATUS_SHUTDOWN',
-  STATUS_ACTIVE: 'STATUS_ACTIVE',
-  STATUS_PROCESS: 'STATUS_PROCESS',
-};
 
-Boxes.allow({
+boxes.allow({
   insert: () => false,
   update: () => false,
   remove: () => false,
 });
 
-Boxes.deny({
+boxes.deny({
   insert: () => true,
   update: () => true,
   remove: () => true,
 });
+
+
+const Boxes = new MongoObservable.Collection(boxes);
+Boxes.consts = {
+  STATUS_SHUTDOWN: 'STATUS_SHUTDOWN',
+  STATUS_ACTIVE: 'STATUS_ACTIVE',
+  STATUS_PROCESS: 'STATUS_PROCESS',
+};
 
 export default Boxes;
