@@ -10,12 +10,30 @@ import localforage from 'localforage';
 import { Random } from 'meteor/random';
 import config from './MainApp/imports/config/config';
 import ReactGA from 'react-ga';
+import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import { injectReducer } from './common/configureReducer';
+import { createClient } from './common/configureApollo';
 
+
+let url;
+const opts = {};
+if (Meteor.isServer) {
+  opts.ssrMode = true;
+  url = `http://${config.host}:${config.port}/graphql`;
+} else {
+  opts.ssrForceFetchDelay = 100;
+  url = '/graphql';
+}
+
+
+let client;
+let headers;
 
 // createInitialState loads files, so it must be called once.
 let initialState = createInitialState();
 let history;
 let configureReporting;
+
 
 const routes = new Routes();
 
@@ -73,7 +91,15 @@ const historyHook = (newHistory) => {
 
 
 // Pass the state of the store as the object to be dehydrated server side
-const dehydrateHook = () => store.getState();
+const dehydrateHook = () => Object.assign({},
+  store.getState(),
+  {
+    apollo: {
+      data: store.getState().apollo.data,
+    },
+  },
+
+);
 
 
 // Take the rehydrated state and use it as initial state client side
@@ -87,21 +113,27 @@ const rehydrateHook = (state) => {
 };
 
 
+const htmlHook = (html) => {
+  const head = ReactHelmet.rewind();
+  return html.replace('<head>', `<head>${head.title}${head.base}${head.meta}${head.link}${head.script}`);
+};
+
 // Pass additional props to give to the <Router /> component on the client
 const clientProps = {
-  htmlHook(html) {
-    const head = ReactHelmet.rewind();
-    return html.replace('<head>', `<head>${head.title}${head.base}${head.meta}${head.link}${head.script}`);
-  },
+  htmlHook,
 };
+
 
 // Create a redux store and pass into the redux Provider wrapper
 const wrapperHook = (app) => {
   routes.injectStore(store);
-
-  return (<Provider store={store}>{app}</Provider>);
+  client = createClient(url, opts);
+  injectReducer(store, { apollo: client.reducer() });
+  return (<ApolloProvider client={client} store={store}>{app}</ApolloProvider>);
 };
 
+// the preRender: Executed just before the renderToString
+const preRender = (req, res) => (headers = req.headers);
 
 const clientOptions = {
   props: clientProps,
@@ -113,10 +145,9 @@ const clientOptions = {
 const serverOptions = {
   historyHook,
   dehydrateHook,
-  htmlHook(html) {
-    const head = ReactHelmet.rewind();
-    return html.replace('<head>', `<head>${head.title}${head.base}${head.meta}${head.link}${head.script}`);
-  } };
+  preRender,
+  htmlHook,
+};
+
 
 ReactRouterSSR.Run(routes.configure(), clientOptions, serverOptions);
-

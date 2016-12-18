@@ -6,7 +6,7 @@
   "devtool": "eval",
   "resolve": {
     "alias": {
-      "App": "src/IDEApp/client/app",
+      "Common": "src/common",
       "Main": "src/MainApp/client/app",
       "dtrace-provider": "empty-shim.js",
       "fs": "empty-shim.js",
@@ -25,7 +25,8 @@
     "react-dom": "ReactDOM",
     "react-router": "ReactRouter",
     "react/lib/ReactTransitionGroup": "React.addons.TransitionGroup",
-    "react/lib/ReactCSSTransitionGroup": "React.addons.CSSTransitionGroup"
+    "react/lib/ReactCSSTransitionGroup": "React.addons.CSSTransitionGroup",
+    "graphql": "graphql"
   },
   "noParse": ["node_modules/localforage/dist/localforage.js", "node_modules/xterm/dist/xterm.js"]
 }

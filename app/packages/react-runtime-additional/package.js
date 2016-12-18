@@ -16,5 +16,5 @@ Package.onUse(function(api) {
 
   api.mainModule('react-runtime-additional.js');
 
-  api.export('ReactRouter');
+  api.export(['ReactRouter', 'graphql']);
 });

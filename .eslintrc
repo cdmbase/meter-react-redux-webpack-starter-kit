@@ -5,12 +5,26 @@
     "jsx-a11y",
     "import",
     "meteor",
-    "fp"
+    "fp",
+    "graphql"
   ],
   "extends" : [
     "airbnb",
     "plugin:meteor/recommended"
   ],
+  "settings": {
+    "import/resolver": {
+      "meteor": {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ],
+        "moduleDirectory": [
+          "node_modules"
+        ]
+      }
+    }
+  },
   "rules": {
     // Soft some rules.
     "global-require": 0, // Used by webpack-isomorphic-tools and React Native.

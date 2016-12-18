@@ -1,4 +1,4 @@
 bin/**
 build/**
-app/.meteor/**
 app/node_modules/**
+packages/**
