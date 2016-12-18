@@ -63,6 +63,10 @@ cd app && npm install
 cd app
 meteor run --settings ../config/development/settings.json
 ```
+
+>App url: http://localhost:3000               
+>Graphiql url: http://localhost:3000/graphiql
+
 ### To Do
 
 - Fix Graphql issues
