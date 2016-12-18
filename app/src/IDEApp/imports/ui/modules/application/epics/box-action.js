@@ -43,13 +43,29 @@ import logger from 'cdm-logger';
 //     }))
 // .map(() => ({ type: ACTION_WORKSPACES_METEOR_SYNCED, workspaces: Boxes.find().fetch() }));
 
+// const work = (workspace) => {
+//   const w = [];
+//   w.push(workspace.forEach((work) => {
+//     work.server = Servers.findOne({ _id: work.server });
+//     console.log(work);
+//     return work;
+//   }));
+//   console.log("workspqace");
+//   console.log(w);
+//   return w;
+// };
+
+const work = workspace => {
+  console.log("Work func")
+  console.log(workspace);
+}
 
 export const meteorySyncWorkspace = action$ =>
   action$.ofType(ACTION_WORKSPACES_METEOR_SYNC)
-    .debounceTime(500)
     .mergeMap(() =>
-      Boxes.find()
-        .map(workspaces => ({ type: ACTION_WORKSPACES_METEOR_SYNCED, workspaces }))
-        .takeUntil(action$.ofType('ACTION_WORKSPCES_METEOR_SYNC_CANCEL')),
+    Boxes.find()
+      .map(workspace => work(workspace)),
 
-    );
+    )
+    .map(workspaces => ({ type: ACTION_WORKSPACES_METEOR_SYNCED, workspaces }));
+
