@@ -15,6 +15,7 @@
 - [formatjs](http://formatjs.io/)
 - [raven-js](https://github.com/getsentry/raven-js) Crash reporting client for [Sentry](https://getsentry.com).
 - [rebass](https://github.com/jxnblk/rebass) Configurable React Stateless Functional UI Components
+- [apollo](https://github.com/apollostack)
 - And much more. Explore the repository.
 
 
@@ -57,6 +58,13 @@ cd app && npm install
     }
 ```
 
+### Start
+```
+cd app
+meteor run --settings ../config/development/settings.json
+```
 ### To Do
 
+- Fix Graphql issues
 - Add mobile
+

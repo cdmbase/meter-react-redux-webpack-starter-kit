@@ -31,11 +31,13 @@ if (Meteor.isServer && process.env.NODE_ENV === 'development') {
   BrowserPolicy.content.setPolicy(`${constructedCsp} media-src blob:;`);
   BrowserPolicy.content.setPolicy(`${constructedCsp} font-src localhost:3500 blob:;`);
   BrowserPolicy.content.setPolicy(`${constructedCsp} default-src blob:;`);
+  BrowserPolicy.content.allowOriginForAll("http://cdn.jsdelivr.net");
   logger.trace(`Tracing  browser policy: ${BrowserPolicy.content._constructCsp()}`);
 } else {
   BrowserPolicy.content.allowEval('localhost');
   BrowserPolicy.content.allowFontDataUrl('http://localhost');
   BrowserPolicy.content.allowOriginForAll("www.google-analytics.com");
+  BrowserPolicy.content.allowOriginForAll("http://cdn.jsdelivr.net");
 }
 
 

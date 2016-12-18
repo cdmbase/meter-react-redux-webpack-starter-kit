@@ -29,6 +29,8 @@ const config = {
   // stackoverflow.com/questions/3132105
   remoteHotReload: false,
   sentryUrl: Meteor.settings.public.sentryUrl,
+  apiHost: process.env.APIHOST || 'localhost',
+  apiPort: process.env.APIPORT || 3002,
 };
 
 export default config;
