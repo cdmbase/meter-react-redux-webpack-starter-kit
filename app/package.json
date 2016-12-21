@@ -13,7 +13,7 @@
     "prestart": "npm run generate-graphql-documents; npm run generate-graphql-types"
   },
   "dependencies": {
-    "@creditkarma/graphql-loader": "^0.2.1",
+    "graphql-schema-collector": "0.2.4",
     "apollo-client": "^0.5.0",
     "apollo-client-rxjs": "^0.2.4",
     "apollo-server": "^0.3.2",
