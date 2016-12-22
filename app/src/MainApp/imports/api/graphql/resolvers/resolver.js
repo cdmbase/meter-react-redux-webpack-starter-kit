@@ -1,4 +1,5 @@
 import { Random } from 'meteor/random';
+import { Meteor } from 'meteor/meteor';
 
 const resolvers = {
   Query: {
@@ -7,6 +8,9 @@ const resolvers = {
       if (context.userId === args.id) {
         return context.user;
       }
+    },
+    async users(root, args) {
+      return await Meteor.users.find().fetch();
     },
   },
   User: {

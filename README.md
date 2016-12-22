@@ -79,6 +79,13 @@ meteor run --settings ../config/development/settings.json
 >App url: http://localhost:3000               
 >Graphiql url: http://localhost:3000/graphiql
 
+
+## Grahpql Usage
+- Create schema in format schema/**.graphql and it is loaded automatically based on glob pattern set in src/server.js
+- Supports splitting the schema into modules
+- Resolvers, Connectors etc. need to be configured in src/server.js file. 
+
+
 ### To Do
 
 - Fix Graphql issues
