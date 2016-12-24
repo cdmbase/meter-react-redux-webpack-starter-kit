@@ -2,9 +2,9 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { MongoObservable } from 'meteor-rxjs';
 
-const boxes = new Mongo.Collection('boxes');
+const Boxes = new Mongo.Collection('boxes');
 
-boxes.schema = new SimpleSchema({
+Boxes.schema = new SimpleSchema({
   _id: {
     type: String,
   },
@@ -62,23 +62,23 @@ boxes.schema = new SimpleSchema({
   },
 });
 
-boxes.attachSchema(boxes.schema);
+Boxes.attachSchema(Boxes.schema);
 
 
-boxes.allow({
+Boxes.allow({
   insert: () => false,
   update: () => false,
   remove: () => false,
 });
 
-boxes.deny({
+Boxes.deny({
   insert: () => true,
   update: () => true,
   remove: () => true,
 });
 
 
-const Boxes = new MongoObservable.Collection(boxes);
+//const Boxes = new MongoObservable.Collection(boxes);
 Boxes.consts = {
   STATUS_SHUTDOWN: 'STATUS_SHUTDOWN',
   STATUS_ACTIVE: 'STATUS_ACTIVE',

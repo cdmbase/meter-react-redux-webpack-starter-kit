@@ -10,9 +10,3 @@ type User {
   randomString: String
   _id: String
 }
-
-type Query {
-  user(id: String!): User,
-  users: [User]
-}
-

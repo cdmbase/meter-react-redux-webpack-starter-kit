@@ -62,4 +62,5 @@ Servers.deny({
   remove: () => false,
 });
 
-export default new MongoObservable.Collection(Servers);
+//export default new MongoObservable.Collection(Servers);
+export default Servers;

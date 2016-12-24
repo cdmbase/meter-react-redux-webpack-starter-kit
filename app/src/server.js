@@ -6,6 +6,7 @@ import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 
 import logger from 'cdm-logger';
 import resolvers from './MainApp/imports/api/graphql/resolvers/resolver';
+import dashboardResolvers from './IDEApp/imports/api/graphql/resolvers/dashboardResovers';
 
 const loader = require('graphql-schema-collector');
 // Do server-rendering only in production
@@ -29,7 +30,7 @@ loader.loadSchema(`${process.env.PWD}/src/**/schema/*.graphql`, (err, schema) =>
   createApolloServer({
     schema: makeExecutableSchema({
       typeDefs: [schema],
-      resolvers,
+      resolvers: Object.assign({}, resolvers, dashboardResolvers),
     }),
   });
 });

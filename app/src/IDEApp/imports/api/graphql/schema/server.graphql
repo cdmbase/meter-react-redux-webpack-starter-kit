@@ -1,0 +1,12 @@
+scalar Url
+
+type Server {
+  name: String,
+  url: Url,
+  status: String
+
+}
+
+extend type Query {
+  server(id: String): Server
+}

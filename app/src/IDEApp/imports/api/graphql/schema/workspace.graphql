@@ -1,0 +1,31 @@
+type Ports {
+  socket: Int,
+  application: Int,
+}
+
+type Info {
+  container: String,
+  ports: Ports
+}
+
+enum Status {
+  STATUS_SHUTDOWN,
+  STATUS_ACTIVE,
+  STATUS_PROCESS,
+}
+
+type Workspace {
+  _id: ID,
+  name: String,
+  lang: String,
+  creator: String,
+  completed: Boolean,
+  server: Server,
+  info: Info,
+  workspace: String,
+  status: Status
+}
+
+extend type Query {
+  workspace: [Workspace]
+}
