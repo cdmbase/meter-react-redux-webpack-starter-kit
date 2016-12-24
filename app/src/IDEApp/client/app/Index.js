@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
 import Dashboard from '../../imports/ui/modules/application/containers/DashboardContainer';
@@ -12,17 +12,17 @@ class App extends Component {
   }
 
   render() {
-    const {ui, children, currentLocale, location} = this.props;
+    const { ui, children, currentLocale, location } = this.props;
     return (
       <div >
         {this.props.children || <Dashboard /> }
       </div>
-    )
+    );
   }
 
 }
 
 export default connect(state => ({
-  ui: state.ui
+  ui: state.ui,
 }))(App);
 

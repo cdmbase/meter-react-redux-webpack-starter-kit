@@ -13,6 +13,14 @@ const resolvers = {
       return await Meteor.users.find().fetch();
     },
   },
+  Mutation: {
+    updateUsername(_, { username }) {
+      if (context.userId === args.id) {
+        // TODO
+        console.log('Change username is in pending');
+      }
+    },
+  },
   User: {
     emails: ({ emails }) => emails,
     randomString: () => Random.id(),
