@@ -3,7 +3,7 @@ import 'MainApp/server';
 import { createApolloServer } from 'meteor/apollo';
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 
-import logger from 'cdm-logger';
+import cdmLogger from 'cdm-logger';
 import resolvers from './MainApp/imports/api/graphql/resolvers/resolver';
 
 const loader = require('graphql-schema-collector');
@@ -17,6 +17,7 @@ if (process.env.NODE_ENV === 'production') {
   require('./routes').default;
 }
 
+const logger = { log: (e) => cdmLogger.error(e.stack) };
 // Load graphql schema and resolvers. Schemas are automatically loaded
 // Resolvers must be manually loaded by adding the import
 loader.loadSchema(`${process.env.PWD}/src/**/schema/*.graphql`, (err, schema) => {
@@ -29,6 +30,7 @@ loader.loadSchema(`${process.env.PWD}/src/**/schema/*.graphql`, (err, schema) =>
     schema: makeExecutableSchema({
       typeDefs: [schema],
       resolvers,
+      logger,
     }),
   });
 });
