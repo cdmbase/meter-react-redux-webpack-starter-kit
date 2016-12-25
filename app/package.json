@@ -19,7 +19,7 @@
     "bluebird": "^3.4.1",
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
-    "cdm-logger": "cdmbase/logger",
+    "cdm-logger": "1.0.7",
     "cheerio": "^0.20.0",
     "classnames": "^2.2.5",
     "codemirror": "^5.16.0",
