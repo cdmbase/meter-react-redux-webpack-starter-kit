@@ -12,8 +12,7 @@ Package.onUse(function(api) {
            'accounts-base',
            'tmeasday:check-npm-versions@0.3.1']);
 
-  api.mainModule('main-client.js', 'client');
-  api.mainModule('main-server.js', 'server');
+  api.mainModule('main.js');
 });
 
 Package.onTest(function(api) {
@@ -22,6 +21,6 @@ Package.onTest(function(api) {
            'practicalmeteor:chai',
            'apollo']);
 
-  api.mainModule('tests/client.js', 'client');
-  api.mainModule('tests/server.js', 'server');
+  api.mainModule('main.js');
+  api.mainModule('tests/main.js');
 });

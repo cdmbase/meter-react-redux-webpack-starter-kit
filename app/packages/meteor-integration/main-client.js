@@ -3,6 +3,7 @@ import './check-npm.js';
 import { createNetworkInterface } from 'apollo-client';
 import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/underscore';
+import { Client, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 
 const defaultNetworkInterfaceConfig = {
   path: '/graphql',
@@ -57,7 +58,7 @@ export const meteorClientConfig = (networkInterfaceConfig) => {
         const dataId = result.__typename + result._id;
         return dataId;
       }
-      
+
       return null;
     },
   };
