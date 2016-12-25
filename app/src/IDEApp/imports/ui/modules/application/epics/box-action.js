@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/debounce';
+import { graphql } from 'react-apollo';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Boxes, Servers } from '../../../../api/collections';
 import SocketMap, { ConnectionsMap } from '../../../../api/socket-map';
@@ -13,6 +14,7 @@ import {
   ACTION_DELETE_WORKSPACE,
 } from '../action-types';
 import logger from 'cdm-logger';
+import gql from 'graphql-tag';
 
 //
 // export const meteorySyncWorkspace = action$ =>
@@ -55,17 +57,25 @@ import logger from 'cdm-logger';
 //   return w;
 // };
 
-const work = workspace => {
-  console.log("Work func")
+const work = (workspace) => {
+  console.log('Work func');
   console.log(workspace);
-}
+};
 
+const GET_WORKSPACE_DATA = gql`
+    {
+  workspace {
+    _id
+  }
+}`;
 export const meteorySyncWorkspace = action$ =>
   action$.ofType(ACTION_WORKSPACES_METEOR_SYNC)
     .mergeMap(() =>
-    Boxes.find()
-      .map(workspace => work(workspace)),
-
+    graphql(GET_WORKSPACE_DATA, {
+      props: (data) => {
+        console.log(data);
+      },
+    }),
     )
     .map(workspaces => ({ type: ACTION_WORKSPACES_METEOR_SYNCED, workspaces }));
 
