@@ -1,6 +1,6 @@
 
 if (Meteor.isClient) {
-  require('./main-client').default;
+  require('./main-client.js').default;
 } else {
-  require('./main-server').default;
+  require('./main-server.js').default;
 }
