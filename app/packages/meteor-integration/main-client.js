@@ -62,18 +62,7 @@ export const createMeteorNetworkInterface = (givenConfig) => {
   }
   return networkInterface;
 };
-// const configureSubscription = (wsClientProvided) => {
-//   const wsClient = wsClientProvided ? wsClientProvided : getDefaultWsClient();
-//   return {
-//     subscribe: (request, handler) => wsClient.subscribe({
-//       query: print(request.query),
-//       variables: request.variables,
-//     }, handler),
-//     unsubscribe: (id) => {
-//       wsClient.unsubscribe(id);
-//     },
-//   };
-// }
+
 export const meteorClientConfig = (networkInterfaceConfig) => {
   const networkInterface = createMeteorNetworkInterface(networkInterfaceConfig);
   let { initialState } = networkInterface;

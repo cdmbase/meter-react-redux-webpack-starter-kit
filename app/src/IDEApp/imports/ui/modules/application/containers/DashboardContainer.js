@@ -15,8 +15,8 @@ import R from 'ramda';
 import { sync as syncBoxes } from '../actions/box-action';
 
 
-const mapStateToProps = ({ workspaces: { list } }) => ({
-  workspaces: Object.keys(list).map(id => list[id]),
+const mapStateToProps = ({ workspaces }) => ({
+  workspaces: Object.keys(workspaces).map(id => workspaces[id]),
 });
 const WORKSPACE_LIST = gql`
   query workspaceList {
@@ -44,28 +44,28 @@ const WORKSPACE_LIST = gql`
 `;
 const mapDispatchToActions = { routeTo, ...boxAction, syncBoxes };
 const withWorkspaceList = graphql(WORKSPACE_LIST, {
-  props: ({ ownProps, data}) => ({ test : data }),
+  props: ({ ownProps, data: { workspaces } }) => workspaces,
 });
-// const enhance = R.compose(
-//   connect(mapStateToProps, mapDispatchToActions),
-//   lifecycle({
-//     componentDidMount() {
-//       logger.debug('Dashboard Component mounted');
-//       // this.tracker = Tracker.autorun(() => {
-//       //   if (Meteor.subscribe('boxes.list').ready()) {
-//       logger.debug('Props inside component mount', this.props);
-//       //this.props.syncBoxes(this.props.workspaceList());
-//           // this.props.syncBoxes();
-//         // }
-//       // });
-//     },
-//     componentWillUnMount() {
-//       // this.tracker.stop();
-//     },
-//   }),
-// );
+const enhance = R.compose(
+  connect(mapStateToProps, mapDispatchToActions),
+  lifecycle({
+    componentWillReceiveProps(nextProps) {
+      logger.debug('Dashboard Component mounted');
+      // this.tracker = Tracker.autorun(() => {
+      //   if (Meteor.subscribe('boxes.list').ready()) {
+      logger.debug('Props inside component mount', this.props);
+      //this.props.syncBoxes(this.props.workspaceList());
+          // this.props.syncBoxes();
+        // }
+      // });
+    },
+    componentWillUnMount() {
+      // this.tracker.stop();
+    },
+  }),
+);
 
 const DashboardWithData = withWorkspaceList(Dashboard);
-//export default enhance(Dashboard);
+// export default enhance(Dashboard);
 
 export default connect(mapStateToProps, mapDispatchToActions)(DashboardWithData);
