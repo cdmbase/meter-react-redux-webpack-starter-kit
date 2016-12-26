@@ -16,6 +16,7 @@ import { fieldsReducer as fields } from './lib/redux-fields';
  routerReducer is also used which don't exist in original version
  injectReducer is custom one added for asyncReducers
  Added custom changes
+ Added apollo to resetStateOnSignOutReducer
  */
 
 // stackoverflow.com/q/35622588/233902
@@ -40,6 +41,7 @@ const resetStateOnSignOutReducer = (reducer, initialState) => (
     device: initialState.device,
     intl: initialState.intl,
     routing: state.routing, // Routing sstate has to be reused
+    apollo: state.apollo,
   }, action);
 };
 

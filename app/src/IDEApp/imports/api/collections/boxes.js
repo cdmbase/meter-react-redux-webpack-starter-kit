@@ -62,20 +62,20 @@ Boxes.schema = new SimpleSchema({
   },
 });
 
-Boxes.attachSchema(Boxes.schema);
+//Boxes.attachSchema(Boxes.schema);
 
 
-Boxes.allow({
-  insert: () => false,
-  update: () => false,
-  remove: () => false,
-});
-
-Boxes.deny({
-  insert: () => true,
-  update: () => true,
-  remove: () => true,
-});
+// Boxes.allow({
+//   insert: () => false,
+//   update: () => false,
+//   remove: () => false,
+// });
+//
+// Boxes.deny({
+//   insert: () => true,
+//   update: () => true,
+//   remove: () => true,
+// });
 
 
 //const Boxes = new MongoObservable.Collection(boxes);

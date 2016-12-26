@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router';
 import { injectReducer } from '../../common/configureReducer';
-import { registerEpic } from '../../common/configureEpics';
+//import { registerEpic } from '../../common/configureEpics';
 import logger from 'cdm-logger';
 
 export const getRoutes = (store) => {
@@ -26,8 +26,8 @@ export const getRoutes = (store) => {
         });
 
         /* Add Epics */
-        const appEpic = require('../imports/ui/epics');
-        registerEpic(appEpic);
+        // const appEpic = require('../imports/ui/epics');
+        // registerEpic(appEpic);
 
         cb(null, require('IDEApp/client/app'));
       });

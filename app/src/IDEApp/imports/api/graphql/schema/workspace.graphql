@@ -26,6 +26,19 @@ type Workspace {
   status: Status
 }
 
+extend type Mutation {
+  addWorkspace(
+  name: String!,
+  description: String,
+  lang: String
+  ): Workspace
+}
+
+type Subscription {
+  # Subscription fires on every comment added
+  workspaceAdded(name: String!): Workspace
+}
+
 extend type Query {
   workspace: [Workspace]
 }

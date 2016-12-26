@@ -57,25 +57,25 @@ import gql from 'graphql-tag';
 //   return w;
 // };
 
-const work = (workspace) => {
-  console.log('Work func');
-  console.log(workspace);
-};
-
-const GET_WORKSPACE_DATA = gql`
-    {
-  workspace {
-    _id
-  }
-}`;
-export const meteorySyncWorkspace = action$ =>
-  action$.ofType(ACTION_WORKSPACES_METEOR_SYNC)
-    .mergeMap(() =>
-    graphql(GET_WORKSPACE_DATA, {
-      props: (data) => {
-        console.log(data);
-      },
-    }),
-    )
-    .map(workspaces => ({ type: ACTION_WORKSPACES_METEOR_SYNCED, workspaces }));
+// const work = (workspace) => {
+//   console.log('Work func');
+//   console.log(workspace);
+// };
+//
+// const GET_WORKSPACE_DATA = gql`
+//     {
+//   workspace {
+//     _id
+//   }
+// }`;
+// export const meteorySyncWorkspace = action$ =>
+//   action$.ofType(ACTION_WORKSPACES_METEOR_SYNC)
+//     .mergeMap(() =>
+//     graphql(GET_WORKSPACE_DATA, {
+//       props: (data) => {
+//         console.log(data);
+//       },
+//     }),
+//     )
+//     .map(workspaces => ({ type: ACTION_WORKSPACES_METEOR_SYNCED, workspaces }));
 

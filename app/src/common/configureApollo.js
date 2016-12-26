@@ -1,7 +1,5 @@
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
-
 import {  meteorClientConfig } from 'meteor/apollo';
-
 
 // export const configureApolloClient = (headers = {}, url = '/graphql', options = {}) => new ApolloClient({
 //   networkInterface: createNetworkInterface({
@@ -16,6 +14,8 @@ import {  meteorClientConfig } from 'meteor/apollo';
 
 
 
+export const createClient = () => {
 
-export const createClient = () => new ApolloClient(meteorClientConfig());
+  return new ApolloClient(meteorClientConfig());
+}
 

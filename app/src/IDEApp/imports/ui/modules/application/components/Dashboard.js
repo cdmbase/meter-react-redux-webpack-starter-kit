@@ -5,41 +5,45 @@ import BoxForm from './box/BoxForm';
 
 import '../stylesheets/dashboard.less';
 
-const MODAL_CREATION = "MODAL_CREATION";
+const MODAL_CREATION = 'MODAL_CREATION';
 
 export default class Dashboard extends Component {
 
-    constructor() {
-        super(...arguments);
+  constructor() {
+    super(...arguments);
 
-        this.state = {}
-    }
+    this.state = {};
+  }
 
-    close() {
-        this.setState({ modal: false })
-    }
+  close() {
+    this.setState({ modal: false });
+  }
 
-    render() {
-        let { workspaces, start, create, shutdown, remove , routeTo } = this.props;
-        return (
+  render() {
+    console.log(this.props);
+    let { workspaces, start, create, shutdown, remove, routeTo, workspaceList } = this.props;
+    return (
             <div>
                 <Panel className="page-toolbar">
                     <div className="page-title pull-left">Dashboard</div>
-                    <Button style={{ margin: 0 }} onClick={e => this.setState({ modal: MODAL_CREATION })} bsStyle="primary" bsSize="xsmall"
-                            className="pull-right">Create Workspace
+                    <Button
+                      style={{ margin: 0 }} onClick={e => this.setState({ modal: MODAL_CREATION })} bsStyle="primary" bsSize="xsmall"
+                      className="pull-right"
+                    >Create Workspace
                     </Button>
                 </Panel>
                 <div className="container boxes-list">
                     {workspaces.map((box, index) => <Box key={index} box={box} start={start} shutdown={shutdown} remove={remove} routeTo={routeTo} />)}
                 </div>
-                <BoxForm onHide={this.close.bind(this)} close={this.close.bind(this)}
-                         show={[MODAL_CREATION].includes(this.state.modal)} create={create} box={this.state.box || {}}/>
+                <BoxForm
+                  onHide={this.close.bind(this)} close={this.close.bind(this)}
+                  show={[MODAL_CREATION].includes(this.state.modal)} create={create} box={this.state.box || {}}
+                />
             </div>
-        );
-
-    }
+    );
+  }
 }
 
 Dashboard.propTypes = {
-    workspaces: PropTypes.array.isRequired
-}
+  workspaces: PropTypes.array.isRequired,
+};

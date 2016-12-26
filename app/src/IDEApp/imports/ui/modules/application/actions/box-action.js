@@ -38,9 +38,12 @@ import { MeteorObservable } from 'meteor-rxjs';
  * creates socket connection with FServer
  *
  */
-export const sync = () => ({
-  type: ACTION_WORKSPACES_METEOR_SYNC,
-});
+export const sync = (data) => {
+  logger.debug(data);
+  return {
+    type: ACTION_WORKSPACES_METEOR_SYNC,
+  };
+};
 
 
 /**

@@ -1,6 +1,7 @@
 import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
+import { merge } from 'lodash';
 import ReactHelmet from 'react-helmet';
 import Routes from './MainApp/client/routes';
 import configureStore from './common/configureStore';
@@ -11,7 +12,6 @@ import { Random } from 'meteor/random';
 import config from './MainApp/imports/config/config';
 import ReactGA from 'react-ga';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
-import { injectReducer } from './common/configureReducer';
 import { createClient } from './common/configureApollo';
 
 
@@ -25,9 +25,7 @@ if (Meteor.isServer) {
   url = '/graphql';
 }
 
-
-let client;
-let headers;
+const client = createClient();
 
 // createInitialState loads files, so it must be called once.
 let initialState = createInitialState();
@@ -53,8 +51,10 @@ const getStore = () => {
     logger.debug('Configuring store at client side.');
     return configureStore({
       initialState,
+      extraArguments: client,
+      asyncReducers: { apollo: client.reducer() },
       platformDeps: { uuid: Random, storageEngine: localforage },
-      platformMiddleware: [reportingMiddleware()],
+      platformMiddleware: [client.middleware(), reportingMiddleware()],
     });
   }
   return configureStore({
@@ -127,8 +127,9 @@ const clientProps = {
 // Create a redux store and pass into the redux Provider wrapper
 const wrapperHook = (app) => {
   routes.injectStore(store);
-  client = createClient(url, opts);
-  injectReducer(store, { apollo: client.reducer() });
+//  client = createClient(url, opts);
+//  injectReducer(store, { apollo: client.reducer() });
+  logger.debug("WrapperHook", store);
   return (<ApolloProvider client={client} store={store}>{app}</ApolloProvider>);
 };
 

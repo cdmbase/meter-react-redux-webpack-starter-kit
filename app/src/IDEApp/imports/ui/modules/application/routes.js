@@ -1,4 +1,4 @@
-import { registerEpic } from '../../../../../common/configureEpics';
+//import { registerEpic } from '../../../../../common/configureEpics';
 import logger from 'cdm-logger';
 
 module.exports = {
@@ -11,9 +11,9 @@ module.exports = {
                 /*  Add the reducer to the store on key 'counter'  */
 
                 /* Add Epics */
-        const epic = require('./epics').meteorySyncWorkspace;
-        logger("epic code ", epic);
-        registerEpic(epic);
+        // const epic = require('./epics').meteorySyncWorkspace;
+        // logger("epic code ", epic);
+        // registerEpic(epic);
                 /*  Return getComponent   */
         cb(null, require('./containers/DashboardContainer'));
 

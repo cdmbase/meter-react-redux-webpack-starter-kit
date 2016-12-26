@@ -72,7 +72,6 @@ Meteor.methods({
       throw new Meteor.Error('no server registered');
     }
     const id = Boxes
-      .collection
       .insert({
         name,
         description,

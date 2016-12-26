@@ -5,6 +5,7 @@ import configureStorage from './configureStorage';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
+import ReduxThunk from 'redux-thunk';
 
 import logger from 'cdm-logger';
 /*
@@ -19,10 +20,12 @@ type Options = {
 const configureStore = (options: Options) => {
   const {
         initialState,
+        asyncReducers,
+        extraArguments,
         platformDeps = {},
         platformMiddleware = [],
         } = options;
-  const reducer = configureReducer(initialState);
+  const reducer = configureReducer(initialState, asyncReducers);
 
     // ======================================================
     // Middleware Configuration
@@ -44,12 +47,11 @@ const configureStore = (options: Options) => {
     }
   }
 
-
   const store = createStore(
         reducer,
         initialState,
         compose(
-          applyMiddleware(...middleware),
+          applyMiddleware(...middleware, ReduxThunk.withExtraArgument(extraArguments)),
           autoRehydrate(),
             ...enhancers,
         ),
@@ -65,7 +67,7 @@ const configureStore = (options: Options) => {
   }
 
     // to inject reducers in future
-  store.asyncReducers = {};
+  store.asyncReducers = { ...asyncReducers };
 
 
   // Enable hot reloading for reducers.
