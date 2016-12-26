@@ -40,7 +40,11 @@ const resetStateOnSignOutReducer = (reducer, initialState) => (
     config: initialState.config,
     device: initialState.device,
     intl: initialState.intl,
+<<<<<<< HEAD
     routing: state.routing, // Routing state has to be reused
+=======
+    routing: state.routing, // Routing sstate has to be reused
+>>>>>>> fe75b6f... with apollo subscription
     apollo: state.apollo,
   }, action);
 };

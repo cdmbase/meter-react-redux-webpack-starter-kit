@@ -3,7 +3,10 @@ import './check-npm.js';
 import { createNetworkInterface } from 'apollo-client';
 import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/underscore';
+<<<<<<< HEAD
 import { Meteor } from 'meteor/meteor';
+=======
+>>>>>>> fe75b6f... with apollo subscription
 import { print } from 'graphql-tag/printer';
 import { Client } from 'subscriptions-transport-ws';
 
@@ -32,8 +35,12 @@ export const createMeteorNetworkInterface = (givenConfig) => {
   if (config.useMeteorAccounts) {
     networkInterface.use([{
       applyMiddleware(request, next) {
+<<<<<<< HEAD
         // Accounts._storedLoginToken refers to local storage existing only client-side
         const currentUserToken = config.loginToken ? config.loginToken : Meteor.isClient ? Accounts._storedLoginToken() : null;
+=======
+        const currentUserToken = Accounts._storedLoginToken() ? Accounts._storedLoginToken() : null;
+>>>>>>> fe75b6f... with apollo subscription
 
         if (!currentUserToken) {
           next();
@@ -64,11 +71,36 @@ export const createMeteorNetworkInterface = (givenConfig) => {
   }
   return networkInterface;
 };
-
+// const configureSubscription = (wsClientProvided) => {
+//   const wsClient = wsClientProvided ? wsClientProvided : getDefaultWsClient();
+//   return {
+//     subscribe: (request, handler) => wsClient.subscribe({
+//       query: print(request.query),
+//       variables: request.variables,
+//     }, handler),
+//     unsubscribe: (id) => {
+//       wsClient.unsubscribe(id);
+//     },
+//   };
+// }
 export const meteorClientConfig = (networkInterfaceConfig) => {
+<<<<<<< HEAD
   return {
     ssrMode: Meteor.isServer,
     networkInterface: createMeteorNetworkInterface(networkInterfaceConfig),
+=======
+  const networkInterface = createMeteorNetworkInterface(networkInterfaceConfig);
+  let { initialState } = networkInterface;
+  if(initialState){
+    // Temporary workaround for bug in AC@0.5.0: https://github.com/apollostack/apollo-client/issues/845
+    delete initialState.apollo.queries;
+    delete initialState.apollo.mutations;
+  }
+
+  return {
+    networkInterface,
+    initialState,
+>>>>>>> fe75b6f... with apollo subscription
     // Default to using Mongo _id, must use _id for queries.
     dataIdFromObject: (result) => {
       if (result._id && result.__typename) {

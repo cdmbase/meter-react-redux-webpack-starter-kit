@@ -19,6 +19,13 @@ import { createClient } from './common/configureApollo';
 
 let initialReduxState;
 
+<<<<<<< HEAD
+=======
+const client = createClient();
+
+// createInitialState loads files, so it must be called once.
+let initialState = createInitialState();
+>>>>>>> fe75b6f... with apollo subscription
 let history;
 
 let store;
@@ -43,8 +50,15 @@ const getStore = (initialState, client) => {
 
     return configureStore({
       initialState,
+<<<<<<< HEAD
       platformDeps: { uuid: Random, storageEngine: localforage, apolloClient: client },
       platformMiddleware: [reportingMiddleware],
+=======
+      extraArguments: client,
+      asyncReducers: { apollo: client.reducer() },
+      platformDeps: { uuid: Random, storageEngine: localforage },
+      platformMiddleware: [client.middleware(), reportingMiddleware()],
+>>>>>>> fe75b6f... with apollo subscription
     });
   }
 
@@ -101,6 +115,7 @@ const wrapperHook = (app) => {
   const client = createClient();
   store = getStore(initialReduxState || createInitialState(), client);
   routes.injectStore(store);
+<<<<<<< HEAD
   history = syncHistoryWithStore(history, store);
   if (Meteor.isClient) {
     // Setup Google Analytics page tracking
@@ -114,6 +129,12 @@ const wrapperHook = (app) => {
   }
 
   return (<ApolloProvider client={client} store={store}>{app({ history })}</ApolloProvider>);
+=======
+//  client = createClient(url, opts);
+//  injectReducer(store, { apollo: client.reducer() });
+  logger.debug("WrapperHook", store);
+  return (<ApolloProvider client={client} store={store}>{app}</ApolloProvider>);
+>>>>>>> fe75b6f... with apollo subscription
 };
 
 // the preRender: Executed just before the renderToString

@@ -1,4 +1,5 @@
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
+<<<<<<< HEAD
 import { meteorClientConfig } from 'meteor/apollo';
 
 
@@ -18,6 +19,9 @@ if (Meteor.isServer) {
 } else {
   opts.ssrForceFetchDelay = 100;
 }
+=======
+import {  meteorClientConfig } from 'meteor/apollo';
+>>>>>>> fe75b6f... with apollo subscription
 
 // export const configureApolloClient = (headers = {}, url = '/graphql', options = {}) => new ApolloClient({
 //   networkInterface: createNetworkInterface({
@@ -31,4 +35,13 @@ if (Meteor.isServer) {
 // });
 
 
+<<<<<<< HEAD
 export const createClient = () => new ApolloClient(meteorClientConfig(opts));
+=======
+
+export const createClient = () => {
+
+  return new ApolloClient(meteorClientConfig());
+}
+
+>>>>>>> fe75b6f... with apollo subscription

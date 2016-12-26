@@ -6,6 +6,7 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import { Meteor } from 'meteor/meteor';
 import { persistStore, autoRehydrate } from 'redux-persist';
+import ReduxThunk from 'redux-thunk';
 
 import logger from 'cdm-logger';
 /*
@@ -20,10 +21,15 @@ type Options = {
 const configureStore = (options: Options) => {
   const {
         initialState,
+        asyncReducers,
+        extraArguments,
         platformDeps = {},
         platformMiddleware = [],
         } = options;
+<<<<<<< HEAD
   const asyncReducers = { apollo: platformDeps.apolloClient.reducer() };
+=======
+>>>>>>> fe75b6f... with apollo subscription
   const reducer = configureReducer(initialState, asyncReducers);
 
     // ======================================================
@@ -50,7 +56,7 @@ const configureStore = (options: Options) => {
         reducer,
         initialState,
         compose(
-          applyMiddleware(...middleware),
+          applyMiddleware(...middleware, ReduxThunk.withExtraArgument(extraArguments)),
           autoRehydrate(),
             ...enhancers,
         ),
