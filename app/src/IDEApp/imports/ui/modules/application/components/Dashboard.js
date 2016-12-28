@@ -21,7 +21,7 @@ export default class Dashboard extends Component {
 
   render() {
     console.log(this.props);
-    let { workspaces, start, create, shutdown, remove, routeTo, workspaceList } = this.props;
+    let { workspaces, start, create, shutdown, remove, routeTo, loading } = this.props;
     return (
             <div>
                 <Panel className="page-toolbar">
@@ -33,11 +33,17 @@ export default class Dashboard extends Component {
                     </Button>
                 </Panel>
                 <div className="container boxes-list">
-                    {workspaces.map((box, index) => <Box key={index} box={box} start={start} shutdown={shutdown} remove={remove} routeTo={routeTo} />)}
+                    {!loading && workspaces.map((box, index) =>
+                      <Box
+                        key={index} box={box} start={start}
+                        shutdown={shutdown} remove={remove} routeTo={routeTo}
+                      />)}
                 </div>
                 <BoxForm
-                  onHide={this.close.bind(this)} close={this.close.bind(this)}
-                  show={[MODAL_CREATION].includes(this.state.modal)} create={create} box={this.state.box || {}}
+                  onHide={this.close.bind(this)}
+                  close={this.close.bind(this)}
+                  show={[MODAL_CREATION].includes(this.state.modal)}
+                  create={create} box={this.state.box || {}}
                 />
             </div>
     );
@@ -45,5 +51,6 @@ export default class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  workspaces: PropTypes.array.isRequired,
+  workspaces: PropTypes.array,
+  loading: PropTypes.bool.isRequired,
 };

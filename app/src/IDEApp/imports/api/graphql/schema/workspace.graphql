@@ -24,12 +24,15 @@ type Workspace {
   info: Info,
   workspace: String,
   status: Status
+  createdAt: Date
+  updatedAt: Date
 }
 
 extend type Mutation {
   addWorkspace(
-  name: String!,
-  description: String,
+  name: String!
+  description: String
+  status: Status
   lang: String
   ): Workspace
 }

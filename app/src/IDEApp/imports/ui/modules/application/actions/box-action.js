@@ -26,12 +26,14 @@ import {
   BOX_REMOVE_FAIL,
 } from '../action-types';
 
+import { CREATE_WORKSPACE } from '../queries';
 import { Boxes, Servers } from '../../../../api/collections';
 import SocketMap, { ConnectionsMap } from '../../../../api/socket-map';
 import { create as connect, bindFServer } from '../../../../api/socket';
 
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/debounce';
+import 'rxjs/add/observable/fromPromise';
 import { MeteorObservable } from 'meteor-rxjs';
 /**
  * Sync the client with current data from database and
@@ -44,7 +46,6 @@ export const sync = (data) => {
     type: ACTION_WORKSPACES_METEOR_SYNC,
   };
 };
-
 
 /**
  * Has start and shutdown actions
@@ -88,8 +89,10 @@ export const box = ({
       );
     return { type: BOX_REMOVE_PROGRESS };
   },
-  create: (data, callback) => ({ dispatch }) => {
-    MeteorObservable.call('box.create', data).subscribe((result) => {
+  create: (data, callback) => ({ apolloClient, dispatch }) => {
+    Observable.fromPromise(apolloClient.mutate({ mutation: CREATE_WORKSPACE,
+      variables: { ...data },
+    })).subscribe((result) => {
       callback();
       return dispatch({
         type: BOX_CREATE_DONE,
@@ -101,8 +104,7 @@ export const box = ({
     }));
     return { type: BOX_CREATE_PROGRESS };
   },
-})
-  ;
+});
 
 
 /**

@@ -2,7 +2,7 @@ import { Route, IndexRoute } from 'react-router';
 import { Meteor } from 'meteor/meteor';
 import App from './app/App';
 import Main from './app/Main';
-import Index from './app/Index';
+import Index from './app/index';
 import NotFound from '../imports/ui/components/notfound/NotFoundPage';
 import SignIn from '../imports/ui/components/auth/SignIn';
 import SignUp from '../imports/ui/components/auth/SignUp';

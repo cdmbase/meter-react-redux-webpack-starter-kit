@@ -1,8 +1,8 @@
-import { makeExecutableSchema, addMockFunctionsToSchema, addErrorLoggingToSchema } from 'graphql-tools';
+import { makeExecutableSchema, addMockFunctionsToSchema, addResolveFunctionsToSchema } from 'graphql-tools';
 import logger from 'cdm-logger';
 import { merge } from 'lodash';
-import defaultResolvers from './MainApp/imports/api/graphql/resolvers/resolver';
-import ideResolvers from './IDEApp/imports/api/graphql/resolvers/';
+import defaultResolvers from '../MainApp/imports/api/graphql/resolvers/resolver';
+import ideResolvers from '../IDEApp/imports/api/graphql/resolvers/';
 import loader from 'graphql-schema-collector';
 
 
@@ -14,7 +14,7 @@ try {
   schemaString = loader.loadSchema.sync(`${process.env.PWD}/src/**/schema/*.graphql`);
   logger.debug('Graphql query loaded!', schemaString);
 } catch (err) {
-  logger.error(err);
+  logger.error('Schema Load failure:', err);
 }
 const resolvers = merge(defaultResolvers, ideResolvers);
 
@@ -22,8 +22,12 @@ const executableSchema = makeExecutableSchema({
   typeDefs: [schemaString],
   resolvers,
   logger: clientLogger,
+  allowUndefinedInResolve: true, // optional
+  resolverValidationOptions: {
+    requireResolversForNonNull: true,
+    requireResolversForArgs: true,
+    rejectExtraResolvers: true,
+  }, // optional
 });
-
-addErrorLoggingToSchema(executableSchema, clientLogger);
 
 export default executableSchema;

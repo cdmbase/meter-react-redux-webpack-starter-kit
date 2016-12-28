@@ -25,6 +25,7 @@ if (Meteor.isServer) {
   url = '/graphql';
 }
 
+//  client = createClient(url, opts);
 const client = createClient();
 
 // createInitialState loads files, so it must be called once.
@@ -53,7 +54,7 @@ const getStore = () => {
       initialState,
       extraArguments: client,
       asyncReducers: { apollo: client.reducer() },
-      platformDeps: { uuid: Random, storageEngine: localforage },
+      platformDeps: { uuid: Random, storageEngine: localforage, apolloClient: client },
       platformMiddleware: [client.middleware(), reportingMiddleware()],
     });
   }
@@ -127,9 +128,6 @@ const clientProps = {
 // Create a redux store and pass into the redux Provider wrapper
 const wrapperHook = (app) => {
   routes.injectStore(store);
-//  client = createClient(url, opts);
-//  injectReducer(store, { apollo: client.reducer() });
-  logger.debug("WrapperHook", store);
   return (<ApolloProvider client={client} store={store}>{app}</ApolloProvider>);
 };
 
