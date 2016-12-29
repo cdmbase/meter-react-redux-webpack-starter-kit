@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/debounce';
 import { graphql } from 'react-apollo';
+
 import { MeteorObservable } from 'meteor-rxjs';
 import { Boxes, Servers } from '../../../../api/collections';
 import SocketMap, { ConnectionsMap } from '../../../../api/socket-map';

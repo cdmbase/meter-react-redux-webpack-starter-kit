@@ -30,6 +30,7 @@ import { CREATE_WORKSPACE } from '../queries';
 import { Boxes, Servers } from '../../../../api/collections';
 import SocketMap, { ConnectionsMap } from '../../../../api/socket-map';
 import { create as connect, bindFServer } from '../../../../api/socket';
+import update from 'immutability-helper';
 
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/debounce';
@@ -89,9 +90,40 @@ export const box = ({
       );
     return { type: BOX_REMOVE_PROGRESS };
   },
-  create: (data, callback) => ({ apolloClient, dispatch }) => {
-    Observable.fromPromise(apolloClient.mutate({ mutation: CREATE_WORKSPACE,
+  create: (data, callback) => ({ apolloClient: { mutate }, dispatch, getUid }) => {
+    Observable.fromPromise(mutate({
+      mutation: CREATE_WORKSPACE,
       variables: { ...data },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        addWorkspace: {
+          __typename: 'Workspace',
+          lang: data.lang,
+          name: data.name,
+          _id: getUid(),
+          creator: "dfdfd",
+          status: 'STATUS_SHUTDOWN',
+          completed: false,
+          info: {
+            __typename: 'Info',
+            container: null,
+            ports: null,
+          },
+          server: {
+            __typename: 'Server',
+            name: 'Test',
+            status: "STATUS_DISCONNECTED"
+          },
+          workspace: 'jjj',
+        },
+      },
+      updateQueries: {
+        workspace: (prev, { mutationResult }) => {
+          const newWorkspace = mutationResult.data.addWorkspace;
+          const newValue = update(prev, { workspace: { $push: [newWorkspace] } });
+          return newValue;
+        },
+      },
     })).subscribe((result) => {
       callback();
       return dispatch({

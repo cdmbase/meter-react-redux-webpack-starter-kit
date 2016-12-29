@@ -13,7 +13,7 @@ import validate from './validate';
 
 const configureDeps = (initialState, platformDeps) => ({
   ...platformDeps,
-  getUid: () => platformDeps.uuid.v4(),
+  getUid: () => platformDeps.uuid.id(),
   now: () => Date.now(),
   validate,
 });

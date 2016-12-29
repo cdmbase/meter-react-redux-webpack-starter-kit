@@ -4,55 +4,50 @@ import { Modal, FormControl, FormGroup, ControlLabel, Button, Alert } from 'reac
 
 
 export default class BoxForm extends Component {
-    constructor() {
-        super(...arguments);
+  constructor() {
+    super(...arguments);
 
-        this.state = {}
-    }
+    this.state = {};
+  }
 
-    submit() {
-        let { close, create } = this.props;
-        return e => {
-            e.preventDefault();
-            this.setState({error: false});
-            let data = {
-                name: findDOMNode(this.refs.name).value,
-                lang: findDOMNode(this.refs.lang).value,
-                description: findDOMNode(this.refs.description).value
-            };
+  submit() {
+    let { close, create } = this.props;
+    return (e) => {
+      e.preventDefault();
+      this.setState({ error: false });
+      const data = {
+        name: findDOMNode(this.refs.name).value,
+        lang: findDOMNode(this.refs.lang).value,
+        description: findDOMNode(this.refs.description).value,
+      };
 
-            try {
-                create(data, close);
-            } catch(error) {
-                this.setState({error});
-            }
-        };
+        create(data, close);
+    };
+  }
 
-    }
-
-    render() {
-        let { box={}, close, create, ...rest } = this.props;
-        let { name = '', lang = '', description = '' } = box;
-        let { error } = this.state;
-        return (
+  render() {
+    let { box = {}, close, create, ...rest } = this.props;
+    let { name = '', lang = '', description = '' } = box;
+    const { error } = this.state;
+    return (
             <Modal {...rest} >
                 <form onSubmit={this.submit()} action="">
                     <Modal.Header closeButton>
                         <Modal.Title>Box</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {!!error ? <Alert bsStyle="danger">Check your data!</Alert> : null}
+                        {error ? <Alert bsStyle="danger">Check your data!</Alert> : null}
                         <FormGroup>
                             <ControlLabel>Box Name:
                                 <sup>*</sup>
                             </ControlLabel>
-                            <FormControl ref="name" defaultValue={ name } type="text" required/>
+                            <FormControl ref="name" defaultValue={name} type="text" required />
                         </FormGroup>
                         <FormGroup>
                             <ControlLabel>Language:
                                 <sup>*</sup>
                             </ControlLabel>
-                            <FormControl ref="lang" defaultValue={ lang } componentClass="select" required>
+                            <FormControl ref="lang" defaultValue={lang} componentClass="select" required>
                                 <option value="js">Javascript</option>
                                 <option value="go">Go</option>
                                 <option value="python">Python</option>
@@ -61,7 +56,7 @@ export default class BoxForm extends Component {
                         </FormGroup>
                         <FormGroup>
                             <ControlLabel>Description:</ControlLabel>
-                            <FormControl ref="description" defaultValue={ description } componentClass="textarea"/>
+                            <FormControl ref="description" defaultValue={description} componentClass="textarea" />
                         </FormGroup>
                     </Modal.Body>
                     <Modal.Footer>
@@ -69,10 +64,10 @@ export default class BoxForm extends Component {
                     </Modal.Footer>
                 </form>
             </Modal>
-        );
-    }
+    );
+  }
 }
 
 BoxForm.propTypes = {
-    show: React.PropTypes.bool
+  show: React.PropTypes.bool,
 };

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const WORKSPACE_LIST = gql`
-  query workspaceList {
+  query workspace {
     workspace{
       _id
       name

@@ -38,7 +38,7 @@ extend type Mutation {
 }
 
 type Subscription {
-  # Subscription fires on every comment added
+  # Subscription fires on every workspace added
   workspaceAdded(name: String!): Workspace
 }
 
