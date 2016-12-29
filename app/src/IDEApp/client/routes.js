@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router';
 import { injectReducer } from '../../common/configureReducer';
-//import { registerEpic } from '../../common/configureEpics';
-import logger from 'cdm-logger';
+// import { registerEpic } from '../../common/configureEpics';
+// import logger from 'cdm-logger';
 
 export const getRoutes = (store) => {
   const getApp = (nextState, cb) => {
