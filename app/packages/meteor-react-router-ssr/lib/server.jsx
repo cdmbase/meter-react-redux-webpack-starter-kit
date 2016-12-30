@@ -206,19 +206,26 @@ function generateSSRData(clientOptions, serverOptions, req, res, renderProps) {
       // Instead of fetchComponentData we need to fetch from Apollo Data
       //fetchComponentData(serverOptions, renderProps);
 <<<<<<< HEAD
+<<<<<<< HEAD
       let appGenerator = (addProps) => <RouterContext {...renderProps} {...addProps} />;
 =======
       let app = <RouterContext {...renderProps} />;
 >>>>>>> 4dbaabf... fixed SSR
+=======
+      let appGenerator = (addProps) => <RouterContext {...renderProps} {...addProps} />;
+>>>>>>> 0f9faf8... to fix loading props in wrapperHook
 
       let app;
       if (typeof clientOptions.wrapperHook === 'function') {
         app = clientOptions.wrapperHook(appGenerator);
+<<<<<<< HEAD
       }
 
       // Adding new parameter dataLoader for loading data through Apollo
       if (serverOptions.dataLoader) {
         serverOptions.dataLoader(req, res, app);
+=======
+>>>>>>> 0f9faf8... to fix loading props in wrapperHook
       }
 
       // Adding new parameter dataLoader for loading data through Apollo

@@ -94,6 +94,7 @@ const getStore = (initialState, client) => {
 
 // Create an enhanced history that syncs navigation events with the store
 <<<<<<< HEAD
+<<<<<<< HEAD
 const historyHook = newHistory => history = newHistory;
 =======
 const historyHook = (newHistory) => {
@@ -110,6 +111,9 @@ const historyHook = (newHistory) => {
   return history;
 };
 >>>>>>> 4dbaabf... fixed SSR
+=======
+const historyHook = newHistory => history = newHistory;
+>>>>>>> 0f9faf8... to fix loading props in wrapperHook
 
 
 // Pass the state of the store as the object to be dehydrated server side
@@ -145,6 +149,9 @@ const wrapperHook = (app) => {
   routes.injectStore(store);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0f9faf8... to fix loading props in wrapperHook
   history = syncHistoryWithStore(history, store);
   if (Meteor.isClient) {
     // Setup Google Analytics page tracking
@@ -158,6 +165,7 @@ const wrapperHook = (app) => {
   }
 
   return (<ApolloProvider client={client} store={store}>{app({ history })}</ApolloProvider>);
+<<<<<<< HEAD
 =======
 //  client = createClient(url, opts);
 //  injectReducer(store, { apollo: client.reducer() });
@@ -166,16 +174,22 @@ const wrapperHook = (app) => {
 >>>>>>> e6aac71... changed to use graphql
   return (<ApolloProvider client={client} store={store}>{app}</ApolloProvider>);
 >>>>>>> fe75b6f... with apollo subscription
+=======
+>>>>>>> 0f9faf8... to fix loading props in wrapperHook
 };
 
 // the preRender: Executed just before the renderToString
 const preRender = (req, res) => {
+<<<<<<< HEAD
 <<<<<<< HEAD
   ReactCookie.plugToRequest(req, res);
 =======
   // const locale = getLocale(req);
   // logger.debug("logging local", locale);
 >>>>>>> 4dbaabf... fixed SSR
+=======
+  ReactCookie.plugToRequest(req, res);
+>>>>>>> 0f9faf8... to fix loading props in wrapperHook
 };
 
 const dataLoader = async (req, res, app) => await (getDataFromTree(app));
