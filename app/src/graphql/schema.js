@@ -2,7 +2,6 @@ import { makeExecutableSchema, addMockFunctionsToSchema, addResolveFunctionsToSc
 import logger from 'cdm-logger';
 import { merge } from 'lodash';
 import defaultResolvers from '../MainApp/imports/api/graphql/resolvers/resolver';
-import ideResolvers from '../IDEApp/imports/api/graphql/resolvers/';
 import loader from 'graphql-schema-collector';
 
 
@@ -16,7 +15,7 @@ try {
 } catch (err) {
   logger.error('Schema Load failure:', err);
 }
-const resolvers = merge(defaultResolvers, ideResolvers);
+const resolvers = merge(defaultResolvers);
 
 const executableSchema = makeExecutableSchema({
   typeDefs: [schemaString],

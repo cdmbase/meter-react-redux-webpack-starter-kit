@@ -11,7 +11,7 @@ import Docs from '../imports/ui/components/docs/Docs';
 import logger from 'cdm-logger';
 import Profile from 'Main/Profile';
 
-import { getRoutes } from 'IDEApp/client/routes';
+import { getRoutes } from '../../AdminApp/client/routes';
 
 const checkAuth = to => (nextState, transition) => {
   if (!Meteor.loggingIn() && !Meteor.userId()) {
