@@ -34,7 +34,11 @@ Your main `<Route />` node of your application.<br />
 - `dehydrateHook` [function() : data]: Supply data that should be dehydrated and sent to client.
 - `fetchDataHook` [function(components) : Array<Promise>]: Trigger the fetchData on your components that have it
 - `preRender` [function(req, res)]: Executed just before the renderToString
+<<<<<<< HEAD
 - `dataLoader` [function(req, res, app)]: Executed just after the wrapperHook to populate any data.
+=======
+- `dataLoader` [function(req, res)]: Executed just after the wrapperHook to populate any data.
+>>>>>>> cb1ed95... updated readme
 - `postRender` [function(req, res)]: Executed just after the renderToString
 - `dontMoveScripts` [bool]: Keep the script inside the head tag instead of moving it at the end of the body
 - `disableSSR` [bool]: Disable server-side rendering, in case the application depends on code which doesn't work on the server.
