@@ -1,6 +1,23 @@
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
-import {  meteorClientConfig } from 'meteor/apollo';
-import { RxApolloClient } from 'apollo-client-rxjs';
+import { meteorClientConfig } from 'meteor/apollo';
+
+
+// let url;
+// const opts = {};
+// if (Meteor.isServer) {
+//   opts.ssrMode = true;
+//   url = `http://${config.host}:${config.port}/graphql`;
+// } else {
+//   opts.ssrForceFetchDelay = 100;
+//   url = '/graphql';
+// }
+
+const opts = {};
+if (Meteor.isServer) {
+  opts.ssrMode = true;
+} else {
+  opts.ssrForceFetchDelay = 100;
+}
 
 // export const configureApolloClient = (headers = {}, url = '/graphql', options = {}) => new ApolloClient({
 //   networkInterface: createNetworkInterface({
@@ -14,9 +31,4 @@ import { RxApolloClient } from 'apollo-client-rxjs';
 // });
 
 
-
-export const createClient = () => {
-
-  return new ApolloClient(meteorClientConfig());
-}
-
+export const createClient = () => new ApolloClient(meteorClientConfig(opts));

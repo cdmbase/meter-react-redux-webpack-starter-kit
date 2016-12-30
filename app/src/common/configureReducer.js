@@ -40,12 +40,12 @@ const resetStateOnSignOutReducer = (reducer, initialState) => (
     config: initialState.config,
     device: initialState.device,
     intl: initialState.intl,
-    routing: state.routing, // Routing sstate has to be reused
+    routing: state.routing, // Routing state has to be reused
     apollo: state.apollo,
   }, action);
 };
 
-const configureReducer = (initialState: Object, asyncReducers) => {
+const configureReducer = (initialState: Object, asyncReducers: Object) => {
   let reducer = combineReducers({
     app,
     config,

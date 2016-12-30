@@ -20,10 +20,13 @@ const configureMiddleware = (initialState, platformDeps, platformMiddleware) => 
   const deps = configureDeps(initialState, platformDeps);
   const rootEpic = configureEpics(deps);
   const epicMiddleware = createEpicMiddleware(rootEpic);
+  const { apolloClient } = platformDeps;
+  const apolloMiddleware = apolloClient.middleware();
 
   const middleware = [
     injectMiddleware(deps),
     epicMiddleware,
+    apolloMiddleware,
     ...platformMiddleware,
   ];
 

@@ -203,11 +203,17 @@ function generateSSRData(clientOptions, serverOptions, req, res, renderProps) {
         ...serverOptions.props
       };
 
-      fetchComponentData(serverOptions, renderProps);
+      // Instead of fetchComponentData we need to fetch from Apollo Data
+      //fetchComponentData(serverOptions, renderProps);
       let app = <RouterContext {...renderProps} />;
 
       if (typeof clientOptions.wrapperHook === 'function') {
         app = clientOptions.wrapperHook(app);
+      }
+
+      // Adding new parameter dataLoader for loading data through Apollo
+      if (serverOptions.dataLoader) {
+        serverOptions.dataLoader(req, res, app);
       }
 
       if (!serverOptions.disableSSR){

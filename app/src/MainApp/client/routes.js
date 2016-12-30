@@ -29,7 +29,7 @@ class routes {
    * Only need to inject this on the CLIENT side for lazy loading
    */
   injectStore(store) {
-    logger.debug('Injecting Store', store);
+    logger.debug('Injecting Store and available states are ', store.getState());
     this.store = store;
   }
 

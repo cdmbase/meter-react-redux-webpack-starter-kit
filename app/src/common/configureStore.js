@@ -4,8 +4,8 @@ import configureReducer from './configureReducer';
 import configureStorage from './configureStorage';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
+import { Meteor } from 'meteor/meteor';
 import { persistStore, autoRehydrate } from 'redux-persist';
-import ReduxThunk from 'redux-thunk';
 
 import logger from 'cdm-logger';
 /*
@@ -20,11 +20,10 @@ type Options = {
 const configureStore = (options: Options) => {
   const {
         initialState,
-        asyncReducers,
-        extraArguments,
         platformDeps = {},
         platformMiddleware = [],
         } = options;
+  const asyncReducers = { apollo: platformDeps.apolloClient.reducer() };
   const reducer = configureReducer(initialState, asyncReducers);
 
     // ======================================================
@@ -51,7 +50,7 @@ const configureStore = (options: Options) => {
         reducer,
         initialState,
         compose(
-          applyMiddleware(...middleware, ReduxThunk.withExtraArgument(extraArguments)),
+          applyMiddleware(...middleware),
           autoRehydrate(),
             ...enhancers,
         ),
@@ -78,14 +77,14 @@ const configureStore = (options: Options) => {
       module.hot.accept(() => {
         const configureReducer = require('./configureReducer');
 
-        store.replaceReducer(configureReducer(initialState));
+        store.replaceReducer(configureReducer(initialState, asyncReducers));
       });
     } else {
       // Webpack for some reason needs accept with the explicit path.
       module.hot.accept('./configureReducer', () => {
         const configureReducer = require('./configureReducer');
 
-        store.replaceReducer(configureReducer(initialState));
+        store.replaceReducer(configureReducer(initialState, asyncReducers));
       });
     }
   }

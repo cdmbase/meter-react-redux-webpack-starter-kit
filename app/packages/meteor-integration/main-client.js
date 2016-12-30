@@ -3,6 +3,7 @@ import './check-npm.js';
 import { createNetworkInterface } from 'apollo-client';
 import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/underscore';
+import { Meteor } from 'meteor/meteor';
 import { print } from 'graphql-tag/printer';
 import { Client } from 'subscriptions-transport-ws';
 
@@ -65,17 +66,9 @@ export const createMeteorNetworkInterface = (givenConfig) => {
 };
 
 export const meteorClientConfig = (networkInterfaceConfig) => {
-  const networkInterface = createMeteorNetworkInterface(networkInterfaceConfig);
-  let { initialState } = networkInterface;
-  if(initialState){
-    // Temporary workaround for bug in AC@0.5.0: https://github.com/apollostack/apollo-client/issues/845
-    delete initialState.apollo.queries;
-    delete initialState.apollo.mutations;
-  }
-
   return {
-    networkInterface,
-    initialState,
+    ssrMode: Meteor.isServer,
+    networkInterface: createMeteorNetworkInterface(networkInterfaceConfig),
     // Default to using Mongo _id, must use _id for queries.
     dataIdFromObject: (result) => {
       if (result._id && result.__typename) {
