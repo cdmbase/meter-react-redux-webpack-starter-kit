@@ -10,5 +10,3 @@ type User {
   randomString: String
   _id: String
 }
-
-

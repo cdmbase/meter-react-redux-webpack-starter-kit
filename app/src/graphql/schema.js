@@ -1,0 +1,32 @@
+import { makeExecutableSchema, addMockFunctionsToSchema, addResolveFunctionsToSchema } from 'graphql-tools';
+import logger from 'cdm-logger';
+import { merge } from 'lodash';
+import defaultResolvers from '../MainApp/imports/api/graphql/resolvers/resolver';
+import loader from 'graphql-schema-collector';
+
+
+const clientLogger = { log: Meteor.bindEnvironment(e => logger.error(e.stack)) };
+// Load graphql schema and resolvers. Schemas are automatically loaded
+// Resolvers must be manually loaded by adding the import
+let schemaString;
+try {
+  schemaString = loader.loadSchema.sync(`${process.env.PWD}/src/**/schema/*.graphql`);
+  logger.debug('Graphql query loaded!', schemaString);
+} catch (err) {
+  logger.error('Schema Load failure:', err);
+}
+const resolvers = merge(defaultResolvers);
+
+const executableSchema = makeExecutableSchema({
+  typeDefs: [schemaString],
+  resolvers,
+  logger: clientLogger,
+  allowUndefinedInResolve: true, // optional
+  resolverValidationOptions: {
+    requireResolversForNonNull: true,
+    requireResolversForArgs: true,
+    rejectExtraResolvers: true,
+  }, // optional
+});
+
+export default executableSchema;

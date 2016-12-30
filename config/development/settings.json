@@ -1,10 +1,21 @@
 {
+  "MONGO_URL": "mongodb://localhost:3001/meteor",
   "public": {
     "sentryUrl": "https://0121f514fb4141eb8377845fb686d266@app.getsentry.com/90886",
     "googleAnalyticsId": "UA-XXXXXXX-X",
+    "io": "http://localhost:4000/bridge",
     "logLevel": "debug"
   },
   "private": {
-
+    "oAuth": {
+      "github": {
+        "clientId": "b723f6f3285e6c3d7ee7",
+        "secret": "a1a3cee0f077e2dff69b11c67d42ac0ed827ae3c"
+      },
+      "linkedin": {
+        "clientId": "78phbs7zohrfxk",
+        "secret": "3fJLgqUSf7l2aW7J"
+      }
+    }
   }
 }
