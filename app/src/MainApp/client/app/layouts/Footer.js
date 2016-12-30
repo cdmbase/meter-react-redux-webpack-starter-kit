@@ -15,7 +15,7 @@ const AppFooter = () => (
     <FormattedMessage {...messages.madeByHtml} />
     {'\u00a0'}
     <Link to="https://github.com/cdmbase/meter-react-redux-webpack-starter-kit">
-      Meteork Kit
+      Meteor Kit
     </Link>
   </Footer>
 );

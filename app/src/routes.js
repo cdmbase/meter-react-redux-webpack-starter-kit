@@ -3,6 +3,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import { merge } from 'lodash';
 import ReactHelmet from 'react-helmet';
+import ReactCookie from 'react-cookie';
 import Routes from './MainApp/client/routes';
 import configureStore from './common/configureStore';
 import createInitialState from './MainApp/imports/config/createInitialState';
@@ -66,19 +67,7 @@ const getStore = (initialState, client) => {
 
 
 // Create an enhanced history that syncs navigation events with the store
-const historyHook = (newHistory) => {
-  // history = syncHistoryWithStore(newHistory, store);
-  // Setup Google Analytics page tracking
-  // if (config.isProduction && Meteor.isClient && config.googleAnalyticsId !== 'UA-XXXXXXX-X') {
-  //   ReactGA.initialize(config.googleAnalyticsId);
-  //   history.listen((location) => {
-  //     ReactGA.set({ page: location.pathname });
-  //     ReactGA.pageview(location.pathname);
-  //   });
-  // }
-  history = newHistory;
-  return history;
-};
+const historyHook = newHistory => history = newHistory;
 
 
 // Pass the state of the store as the object to be dehydrated server side
@@ -112,13 +101,24 @@ const wrapperHook = (app) => {
   const client = createClient();
   store = getStore(initialReduxState || createInitialState(), client);
   routes.injectStore(store);
-  return (<ApolloProvider client={client} store={store}>{app}</ApolloProvider>);
+  history = syncHistoryWithStore(history, store);
+  if (Meteor.isClient) {
+    // Setup Google Analytics page tracking
+    if (config.isProduction && config.googleAnalyticsId !== 'UA-XXXXXXX-X') {
+      ReactGA.initialize(config.googleAnalyticsId);
+        history.listen((location) => {
+        ReactGA.set({ page: location.pathname });
+        ReactGA.pageview(location.pathname);
+      });
+    }
+  }
+
+  return (<ApolloProvider client={client} store={store}>{app({ history })}</ApolloProvider>);
 };
 
 // the preRender: Executed just before the renderToString
 const preRender = (req, res) => {
-  // const locale = getLocale(req);
-  // logger.debug("logging local", locale);
+  ReactCookie.plugToRequest(req, res);
 };
 
 const dataLoader = async (req, res, app) => await (getDataFromTree(app));

@@ -75,6 +75,7 @@
     "react-bootstrap": "^0.30.2",
     "react-codemirror": "^0.2.6",
     "react-contextmenu": "^1.6.3",
+    "react-cookie": "^1.0.4",
     "react-dom": "^15.2.0",
     "react-ga": "^2.1.2",
     "react-helmet": "^3.1.0",

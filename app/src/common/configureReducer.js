@@ -9,7 +9,7 @@ import todos from './todos/reducer';
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
 import { fieldsReducer as fields } from './lib/redux-fields';
-
+import logger from 'cdm-logger';
 
 /*
  users and auth are removed from original version
@@ -64,7 +64,11 @@ const configureReducer = (initialState: Object, asyncReducers: Object) => {
   return reducer;
 };
 
-export const injectReducer = (store, reducers) => {
+export const injectReducer = (store: Object, reducers: Object) => {
+  if (!store) {
+    logger.warn('Injecting reducer when store is null');
+    return;
+  }
   store.asyncReducers = { ...store.asyncReducers, ...reducers };
   store.replaceReducer(configureReducer(store.getState(), store.asyncReducers));
 };
