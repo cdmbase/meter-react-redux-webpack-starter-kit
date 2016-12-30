@@ -20,32 +20,32 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    console.log(this.props);
-    let { workspaces, start, create, shutdown, remove, routeTo, loading } = this.props;
+    const { workspaces, start, create, shutdown, remove, routeTo, loading } = this.props;
     return (
-            <div>
-                <Panel className="page-toolbar">
-                    <div className="page-title pull-left">Dashboard</div>
-                    <Button
-                      style={{ margin: 0 }} onClick={e => this.setState({ modal: MODAL_CREATION })} bsStyle="primary" bsSize="xsmall"
-                      className="pull-right"
-                    >Create Workspace
-                    </Button>
-                </Panel>
-                <div className="container boxes-list">
-                    {!loading && workspaces.map((box, index) =>
-                      <Box
-                        key={index} box={box} start={start}
-                        shutdown={shutdown} remove={remove} routeTo={routeTo}
-                      />)}
-                </div>
-                <BoxForm
-                  onHide={this.close.bind(this)}
-                  close={this.close.bind(this)}
-                  show={[MODAL_CREATION].includes(this.state.modal)}
-                  create={create} box={this.state.box || {}}
-                />
-            </div>
+      <div>
+        <Panel className="page-toolbar">
+          <div className="page-title pull-left">Dashboard</div>
+          <Button
+            style={{ margin: 0 }} onClick={e => this.setState({ modal: MODAL_CREATION })}
+            bsStyle="primary" bsSize="xsmall"
+            className="pull-right"
+          >Create Workspace
+          </Button>
+        </Panel>
+        <div className="container boxes-list">
+          {!loading && (workspaces || []).map((box, index) =>
+            <Box
+              key={index} box={box} start={start}
+              shutdown={shutdown} remove={remove} routeTo={routeTo}
+            />)}
+        </div>
+        <BoxForm
+          onHide={this.close.bind(this)}
+          close={this.close.bind(this)}
+          show={[MODAL_CREATION].includes(this.state.modal)}
+          create={create} box={this.state.box || {}}
+        />
+      </div>
     );
   }
 }
