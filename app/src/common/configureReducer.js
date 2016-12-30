@@ -9,13 +9,14 @@ import todos from './todos/reducer';
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
 import { fieldsReducer as fields } from './lib/redux-fields';
-
+import logger from 'cdm-logger';
 
 /*
  users and auth are removed from original version
  routerReducer is also used which don't exist in original version
  injectReducer is custom one added for asyncReducers
  Added custom changes
+ Added apollo to resetStateOnSignOutReducer
  */
 
 // stackoverflow.com/q/35622588/233902
@@ -39,11 +40,20 @@ const resetStateOnSignOutReducer = (reducer, initialState) => (
     config: initialState.config,
     device: initialState.device,
     intl: initialState.intl,
+<<<<<<< HEAD
+<<<<<<< HEAD
+    routing: state.routing, // Routing state has to be reused
+=======
     routing: state.routing, // Routing sstate has to be reused
+>>>>>>> fe75b6f... with apollo subscription
+=======
+    routing: state.routing, // Routing state has to be reused
+>>>>>>> 4dbaabf... fixed SSR
+    apollo: state.apollo,
   }, action);
 };
 
-const configureReducer = (initialState: Object, asyncReducers) => {
+const configureReducer = (initialState: Object, asyncReducers: Object) => {
   let reducer = combineReducers({
     app,
     config,
@@ -62,7 +72,11 @@ const configureReducer = (initialState: Object, asyncReducers) => {
   return reducer;
 };
 
-export const injectReducer = (store, reducers) => {
+export const injectReducer = (store: Object, reducers: Object) => {
+  if (!store) {
+    logger.warn('Injecting reducer when store is null');
+    return;
+  }
   store.asyncReducers = { ...store.asyncReducers, ...reducers };
   store.replaceReducer(configureReducer(store.getState(), store.asyncReducers));
 };

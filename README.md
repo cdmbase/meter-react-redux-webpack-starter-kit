@@ -1,8 +1,10 @@
-# Meteor  React Redux Webpack Starter Kit
+# IDE. Front-end side.
 
 
-> Starter kit for universal full–fledged React apps. One stack for browser, mobile, server.
+## Overview
+This part - front-end side of IDE that incapsulates all external services - Container Management, Workspace App, etc. This is Meteor.js application uses DB that shared with IOServer for sync containers and servers statuses.
 
+## Installation and start
 > You don't have to start with everything. MRRWS kit is perfect even for plain static pages. You can gracefully add any platform later. MRRWS kit mission is simple: **Help startups to deliver minimal valuable product asap with the state of the art real-time universal app stack with meteor**.
 
 
@@ -35,12 +37,14 @@ npm install
 cd app && npm install
 ```
 
-- Add config file - "***settings.json***" to development or production environment (./config/development or ./config/production).
+- Add config file - "***settings.json***" to development or prodction environment (./config/development or ./config/production).
+
 ```json
     {
       "public": {
         "sentryUrl": "https://********************@app.getsentry.com/***",
         "googleAnalyticsId": "UA-XXXXXXX-X",
+        "io": "http://localhost:4000/manager",
         "logLevel": "debug"
       },
       "private": {
@@ -56,6 +60,14 @@ cd app && npm install
         }
       }
     }
+```
+
+- Create database - "***ide***" in MongoDB.
+
+### Run Application
+Before application run check *start* script in ***./app/package.json*** file.
+```bash
+cd app && npm start
 ```
 
 ### Start

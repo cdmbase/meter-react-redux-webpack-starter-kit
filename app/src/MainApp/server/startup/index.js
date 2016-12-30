@@ -1,11 +1,14 @@
-import configureService from '../lib/configureService';
-import { Meteor } from 'meteor/meteor';
-import { BrowserPolicy } from 'meteor/browser-policy-common';
-import logger from 'cdm-logger';
+import { Meteor } from 'meteor/meteor'
+import {BrowserPolicy} from 'meteor/browser-policy-common'
+import configureService from '../lib/configureService'
+import configureAccountsMeld from '../lib/configureAccountsMeld'
+import logger from 'cdm-logger'
 
-const startup = () => {
-  logger.info('configuring login services');
-  configureService();
+let startup = () => {
+    logger.info("configuring login services");
+    configureService();
+    logger.info("configuring account meld");
+    configureAccountsMeld();
 };
 
 if (Meteor.isServer && process.env.NODE_ENV === 'development') {
