@@ -21,6 +21,7 @@ let initialReduxState;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 //  client = createClient(url, opts);
@@ -30,6 +31,8 @@ const client = createClient();
 // createInitialState loads files, so it must be called once.
 let initialState = createInitialState();
 >>>>>>> fe75b6f... with apollo subscription
+=======
+>>>>>>> 4dbaabf... fixed SSR
 let history;
 
 let store;
@@ -55,6 +58,7 @@ const getStore = (initialState, client) => {
     return configureStore({
       initialState,
 <<<<<<< HEAD
+<<<<<<< HEAD
       platformDeps: { uuid: Random, storageEngine: localforage, apolloClient: client },
       platformMiddleware: [reportingMiddleware],
 =======
@@ -63,6 +67,10 @@ const getStore = (initialState, client) => {
       platformDeps: { uuid: Random, storageEngine: localforage, apolloClient: client },
       platformMiddleware: [client.middleware(), reportingMiddleware()],
 >>>>>>> fe75b6f... with apollo subscription
+=======
+      platformDeps: { uuid: Random, storageEngine: localforage, apolloClient: client },
+      platformMiddleware: [reportingMiddleware],
+>>>>>>> 4dbaabf... fixed SSR
     });
   }
 
@@ -85,7 +93,23 @@ const getStore = (initialState, client) => {
 
 
 // Create an enhanced history that syncs navigation events with the store
+<<<<<<< HEAD
 const historyHook = newHistory => history = newHistory;
+=======
+const historyHook = (newHistory) => {
+  // history = syncHistoryWithStore(newHistory, store);
+  // Setup Google Analytics page tracking
+  // if (config.isProduction && Meteor.isClient && config.googleAnalyticsId !== 'UA-XXXXXXX-X') {
+  //   ReactGA.initialize(config.googleAnalyticsId);
+  //   history.listen((location) => {
+  //     ReactGA.set({ page: location.pathname });
+  //     ReactGA.pageview(location.pathname);
+  //   });
+  // }
+  history = newHistory;
+  return history;
+};
+>>>>>>> 4dbaabf... fixed SSR
 
 
 // Pass the state of the store as the object to be dehydrated server side
@@ -146,7 +170,12 @@ const wrapperHook = (app) => {
 
 // the preRender: Executed just before the renderToString
 const preRender = (req, res) => {
+<<<<<<< HEAD
   ReactCookie.plugToRequest(req, res);
+=======
+  // const locale = getLocale(req);
+  // logger.debug("logging local", locale);
+>>>>>>> 4dbaabf... fixed SSR
 };
 
 const dataLoader = async (req, res, app) => await (getDataFromTree(app));

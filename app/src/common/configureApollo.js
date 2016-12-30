@@ -1,5 +1,8 @@
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 4dbaabf... fixed SSR
 import { meteorClientConfig } from 'meteor/apollo';
 
 
@@ -19,6 +22,7 @@ if (Meteor.isServer) {
 } else {
   opts.ssrForceFetchDelay = 100;
 }
+<<<<<<< HEAD
 =======
 import {  meteorClientConfig } from 'meteor/apollo';
 <<<<<<< HEAD
@@ -26,6 +30,8 @@ import {  meteorClientConfig } from 'meteor/apollo';
 =======
 import { RxApolloClient } from 'apollo-client-rxjs';
 >>>>>>> e6aac71... changed to use graphql
+=======
+>>>>>>> 4dbaabf... fixed SSR
 
 // export const configureApolloClient = (headers = {}, url = '/graphql', options = {}) => new ApolloClient({
 //   networkInterface: createNetworkInterface({
@@ -40,6 +46,7 @@ import { RxApolloClient } from 'apollo-client-rxjs';
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export const createClient = () => new ApolloClient(meteorClientConfig(opts));
 =======
 
@@ -49,3 +56,6 @@ export const createClient = () => {
 }
 
 >>>>>>> fe75b6f... with apollo subscription
+=======
+export const createClient = () => new ApolloClient(meteorClientConfig(opts));
+>>>>>>> 4dbaabf... fixed SSR

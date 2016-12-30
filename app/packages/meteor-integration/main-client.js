@@ -4,9 +4,13 @@ import { createNetworkInterface } from 'apollo-client';
 import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/underscore';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Meteor } from 'meteor/meteor';
 =======
 >>>>>>> fe75b6f... with apollo subscription
+=======
+import { Meteor } from 'meteor/meteor';
+>>>>>>> 4dbaabf... fixed SSR
 import { print } from 'graphql-tag/printer';
 import { Client } from 'subscriptions-transport-ws';
 
@@ -79,6 +83,7 @@ export const createMeteorNetworkInterface = (givenConfig) => {
 
 export const meteorClientConfig = (networkInterfaceConfig) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
   return {
     ssrMode: Meteor.isServer,
     networkInterface: createMeteorNetworkInterface(networkInterfaceConfig),
@@ -95,6 +100,11 @@ export const meteorClientConfig = (networkInterfaceConfig) => {
     networkInterface,
     initialState,
 >>>>>>> fe75b6f... with apollo subscription
+=======
+  return {
+    ssrMode: Meteor.isServer,
+    networkInterface: createMeteorNetworkInterface(networkInterfaceConfig),
+>>>>>>> 4dbaabf... fixed SSR
     // Default to using Mongo _id, must use _id for queries.
     dataIdFromObject: (result) => {
       if (result._id && result.__typename) {
