@@ -36,11 +36,16 @@ export const createMeteorNetworkInterface = (givenConfig) => {
     networkInterface.use([{
       applyMiddleware(request, next) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Accounts._storedLoginToken refers to local storage existing only client-side
         const currentUserToken = config.loginToken ? config.loginToken : Meteor.isClient ? Accounts._storedLoginToken() : null;
 =======
         const currentUserToken = Accounts._storedLoginToken() ? Accounts._storedLoginToken() : null;
 >>>>>>> fe75b6f... with apollo subscription
+=======
+        // Accounts._storedLoginToken refers to local storage existing only client-side
+        const currentUserToken = config.loginToken ? config.loginToken : Meteor.isClient ? Accounts._storedLoginToken() : null;
+>>>>>>> e6aac71... changed to use graphql
 
         if (!currentUserToken) {
           next();

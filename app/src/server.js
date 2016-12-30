@@ -3,6 +3,7 @@ import 'MainApp/server';
 import 'IDEApp/server';
 import { createApolloServer } from 'meteor/apollo';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import schema from './graphql/schema';
 import { subscriptionManager } from './graphql/subscriptions';
 import models from './graphql/models';
@@ -10,6 +11,11 @@ import models from './graphql/models';
 import schema from './schema';
 import { subscriptionManager } from './subscriptions';
 >>>>>>> fe75b6f... with apollo subscription
+=======
+import schema from './graphql/schema';
+import { subscriptionManager } from './graphql/subscriptions';
+import models from './graphql/models';
+>>>>>>> e6aac71... changed to use graphql
 import logger from 'cdm-logger';
 
 // Do server-rendering only in production
@@ -21,12 +27,15 @@ if (process.env.NODE_ENV === 'production') {
 
   require('./routes').default;
 }
-logger.debug('Subscription is ', subscriptionManager);
 
 createApolloServer({
   schema,
 <<<<<<< HEAD
+<<<<<<< HEAD
   context: models,
 =======
 >>>>>>> fe75b6f... with apollo subscription
+=======
+  context: models,
+>>>>>>> e6aac71... changed to use graphql
 }, { subscriptionManager });

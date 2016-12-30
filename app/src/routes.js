@@ -20,7 +20,11 @@ import { createClient } from './common/configureApollo';
 let initialReduxState;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+//  client = createClient(url, opts);
+>>>>>>> e6aac71... changed to use graphql
 const client = createClient();
 
 // createInitialState loads files, so it must be called once.
@@ -56,7 +60,7 @@ const getStore = (initialState, client) => {
 =======
       extraArguments: client,
       asyncReducers: { apollo: client.reducer() },
-      platformDeps: { uuid: Random, storageEngine: localforage },
+      platformDeps: { uuid: Random, storageEngine: localforage, apolloClient: client },
       platformMiddleware: [client.middleware(), reportingMiddleware()],
 >>>>>>> fe75b6f... with apollo subscription
     });
@@ -116,6 +120,7 @@ const wrapperHook = (app) => {
   store = getStore(initialReduxState || createInitialState(), client);
   routes.injectStore(store);
 <<<<<<< HEAD
+<<<<<<< HEAD
   history = syncHistoryWithStore(history, store);
   if (Meteor.isClient) {
     // Setup Google Analytics page tracking
@@ -133,6 +138,8 @@ const wrapperHook = (app) => {
 //  client = createClient(url, opts);
 //  injectReducer(store, { apollo: client.reducer() });
   logger.debug("WrapperHook", store);
+=======
+>>>>>>> e6aac71... changed to use graphql
   return (<ApolloProvider client={client} store={store}>{app}</ApolloProvider>);
 >>>>>>> fe75b6f... with apollo subscription
 };

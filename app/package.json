@@ -41,7 +41,10 @@
     "graphql-tools": "^0.8.4",
     "graphql-typings": "0.0.1-beta-2",
     "immutability-helper": "^2.0.0",
+<<<<<<< HEAD
     "immutable": "^3.8.1",
+=======
+>>>>>>> e6aac71... changed to use graphql
     "intl-locales-supported": "^1.0.0",
     "intl-messageformat": "^1.3.0",
     "intl-relativeformat": "^1.3.0",

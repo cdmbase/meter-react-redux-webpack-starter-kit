@@ -21,7 +21,11 @@ if (Meteor.isServer) {
 }
 =======
 import {  meteorClientConfig } from 'meteor/apollo';
+<<<<<<< HEAD
 >>>>>>> fe75b6f... with apollo subscription
+=======
+import { RxApolloClient } from 'apollo-client-rxjs';
+>>>>>>> e6aac71... changed to use graphql
 
 // export const configureApolloClient = (headers = {}, url = '/graphql', options = {}) => new ApolloClient({
 //   networkInterface: createNetworkInterface({
