@@ -1,7 +1,9 @@
 import { ReactRouterSSR } from 'meteor/reactrouter:react-router-ssr';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
+import { merge } from 'lodash';
 import ReactHelmet from 'react-helmet';
+import ReactCookie from 'react-cookie';
 import Routes from './MainApp/client/routes';
 import configureStore from './common/configureStore';
 import createInitialState from './MainApp/imports/config/createInitialState';
@@ -10,53 +12,69 @@ import localforage from 'localforage';
 import { Random } from 'meteor/random';
 import config from './MainApp/imports/config/config';
 import ReactGA from 'react-ga';
+import { Meteor } from 'meteor/meteor';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
-import { injectReducer } from './common/configureReducer';
 import { createClient } from './common/configureApollo';
 
 
-let url;
-const opts = {};
-if (Meteor.isServer) {
-  opts.ssrMode = true;
-  url = `http://${config.host}:${config.port}/graphql`;
-} else {
-  opts.ssrForceFetchDelay = 100;
-  url = '/graphql';
-}
+let initialReduxState;
 
-
-let client;
-let headers;
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+//  client = createClient(url, opts);
+>>>>>>> e6aac71... changed to use graphql
+const client = createClient();
 
 // createInitialState loads files, so it must be called once.
 let initialState = createInitialState();
+>>>>>>> fe75b6f... with apollo subscription
+=======
+>>>>>>> 4dbaabf... fixed SSR
 let history;
-let configureReporting;
 
+let store;
 
 const routes = new Routes();
 
-const reportingMiddleware = () => configureReporting({
-  appVersion: initialState.config.appVersion,
-  sentryUrl: initialState.config.sentryUrl,
-  unhandledRejection: fn => window.addEventListener('unhandledrejection', fn),
-});
 
 const getLocale = req => process.env.IS_SERVERLESS
   ? config.defaultLocale
   : req.acceptsLanguages(config.locales) || config.defaultLocale;
 // TODO: need to get the locale from browser
-const getStore = () => {
+
+const getStore = (initialState, client) => {
   if (Meteor.isClient) {
-    configureReporting = require('./common/configureReporting');
-    logger.debug('Configuring store at client side.');
+    const configureReporting = require('./common/configureReporting');
+
+    const reportingMiddleware = configureReporting({
+      appVersion: initialState.config.appVersion,
+      sentryUrl: initialState.config.sentryUrl,
+      unhandledRejection: fn => window.addEventListener('unhandledrejection', fn),
+    });
+
     return configureStore({
       initialState,
-      platformDeps: { uuid: Random, storageEngine: localforage },
-      platformMiddleware: [reportingMiddleware()],
+<<<<<<< HEAD
+<<<<<<< HEAD
+      platformDeps: { uuid: Random, storageEngine: localforage, apolloClient: client },
+      platformMiddleware: [reportingMiddleware],
+=======
+      extraArguments: client,
+      asyncReducers: { apollo: client.reducer() },
+      platformDeps: { uuid: Random, storageEngine: localforage, apolloClient: client },
+      platformMiddleware: [client.middleware(), reportingMiddleware()],
+>>>>>>> fe75b6f... with apollo subscription
+=======
+      platformDeps: { uuid: Random, storageEngine: localforage, apolloClient: client },
+      platformMiddleware: [reportingMiddleware],
+>>>>>>> 4dbaabf... fixed SSR
     });
   }
+
+  // this should run on server (SSR)
   return configureStore({
     initialState: {
       ...initialState,
@@ -68,45 +86,45 @@ const getStore = () => {
         currentLocale: 'en',
         initialNow: Date.now(),
       },
-    } });
+    },
+    platformDeps: { apolloClient: client },
+  });
 };
-
-
-const store = getStore();
 
 
 // Create an enhanced history that syncs navigation events with the store
+<<<<<<< HEAD
+<<<<<<< HEAD
+const historyHook = newHistory => history = newHistory;
+=======
 const historyHook = (newHistory) => {
-  history = syncHistoryWithStore(newHistory, store);
+  // history = syncHistoryWithStore(newHistory, store);
   // Setup Google Analytics page tracking
-  if (config.isProduction && Meteor.isClient && config.googleAnalyticsId !== 'UA-XXXXXXX-X') {
-    ReactGA.initialize(config.googleAnalyticsId);
-    history.listen((location) => {
-      ReactGA.set({ page: location.pathname });
-      ReactGA.pageview(location.pathname);
-    });
-  }
+  // if (config.isProduction && Meteor.isClient && config.googleAnalyticsId !== 'UA-XXXXXXX-X') {
+  //   ReactGA.initialize(config.googleAnalyticsId);
+  //   history.listen((location) => {
+  //     ReactGA.set({ page: location.pathname });
+  //     ReactGA.pageview(location.pathname);
+  //   });
+  // }
+  history = newHistory;
   return history;
 };
+>>>>>>> 4dbaabf... fixed SSR
+=======
+const historyHook = newHistory => history = newHistory;
+>>>>>>> 0f9faf8... to fix loading props in wrapperHook
 
 
 // Pass the state of the store as the object to be dehydrated server side
-const dehydrateHook = () => Object.assign({},
-  store.getState(),
-  {
-    apollo: {
-      data: store.getState().apollo.data,
-    },
-  },
-
-);
+const dehydrateHook = () => store.getState();
 
 
 // Take the rehydrated state and use it as initial state client side
 const rehydrateHook = (state) => {
+  logger.debug('Rehydrate state from server state.', state);
   if (state) {
-    logger.debug('Rehydrate state from server state.');
-    initialState = state;
+    initialReduxState = state;
     return state;
   }
   return null;
@@ -126,15 +144,55 @@ const clientProps = {
 
 // Create a redux store and pass into the redux Provider wrapper
 const wrapperHook = (app) => {
+  const client = createClient();
+  store = getStore(initialReduxState || createInitialState(), client);
   routes.injectStore(store);
-  client = createClient(url, opts);
-  injectReducer(store, { apollo: client.reducer() });
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0f9faf8... to fix loading props in wrapperHook
+  history = syncHistoryWithStore(history, store);
+  if (Meteor.isClient) {
+    // Setup Google Analytics page tracking
+    if (config.isProduction && config.googleAnalyticsId !== 'UA-XXXXXXX-X') {
+      ReactGA.initialize(config.googleAnalyticsId);
+        history.listen((location) => {
+        ReactGA.set({ page: location.pathname });
+        ReactGA.pageview(location.pathname);
+      });
+    }
+  }
+
+  return (<ApolloProvider client={client} store={store}>{app({ history })}</ApolloProvider>);
+<<<<<<< HEAD
+=======
+//  client = createClient(url, opts);
+//  injectReducer(store, { apollo: client.reducer() });
+  logger.debug("WrapperHook", store);
+=======
+>>>>>>> e6aac71... changed to use graphql
   return (<ApolloProvider client={client} store={store}>{app}</ApolloProvider>);
+>>>>>>> fe75b6f... with apollo subscription
+=======
+>>>>>>> 0f9faf8... to fix loading props in wrapperHook
 };
 
 // the preRender: Executed just before the renderToString
-const preRender = (req, res) => (headers = req.headers);
+const preRender = (req, res) => {
+<<<<<<< HEAD
+<<<<<<< HEAD
+  ReactCookie.plugToRequest(req, res);
+=======
+  // const locale = getLocale(req);
+  // logger.debug("logging local", locale);
+>>>>>>> 4dbaabf... fixed SSR
+=======
+  ReactCookie.plugToRequest(req, res);
+>>>>>>> 0f9faf8... to fix loading props in wrapperHook
+};
 
+const dataLoader = async (req, res, app) => await (getDataFromTree(app));
 
 const clientOptions = {
   props: clientProps,
@@ -147,6 +205,7 @@ const serverOptions = {
   historyHook,
   dehydrateHook,
   preRender,
+  dataLoader,
   htmlHook,
 };
 

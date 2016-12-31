@@ -2,15 +2,16 @@ import { Route, IndexRoute } from 'react-router';
 import { Meteor } from 'meteor/meteor';
 import App from './app/App';
 import Main from './app/Main';
-import Index from './app/Index';
+import Index from './app/index';
 import NotFound from '../imports/ui/components/notfound/NotFoundPage';
 import SignIn from '../imports/ui/components/auth/SignIn';
 import SignUp from '../imports/ui/components/auth/SignUp';
 import SignOut from '../imports/ui/components/auth/SignOut';
 import Docs from '../imports/ui/components/docs/Docs';
 import logger from 'cdm-logger';
+import Profile from 'Main/Profile';
 
-import { getRoutes } from '../../AdminApp/client/routes';
+import { getRoutes } from 'IDEApp/client/routes';
 
 const checkAuth = to => (nextState, transition) => {
   if (!Meteor.loggingIn() && !Meteor.userId()) {
@@ -28,7 +29,7 @@ class routes {
    * Only need to inject this on the CLIENT side for lazy loading
    */
   injectStore(store) {
-    logger.debug('Injecting Store', store);
+    logger.debug('Injecting Store and available states are ', store.getState());
     this.store = store;
   }
 
@@ -52,6 +53,7 @@ class routes {
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
           <Route path="/signout" component={SignOut} />
+          <Route path="/profile" component={ Profile } />
           <Route path="/docs" component={Docs} />
         </Route>
         {/* -- Protected Site here --*/}

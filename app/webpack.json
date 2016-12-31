@@ -28,5 +28,5 @@
     "react/lib/ReactCSSTransitionGroup": "React.addons.CSSTransitionGroup",
     "graphql": "graphql"
   },
-  "noParse": ["node_modules/localforage/dist/localforage.js"]
+  "noParse": ["node_modules/localforage/dist/localforage.js", "node_modules/xterm/dist/xterm.js"]
 }

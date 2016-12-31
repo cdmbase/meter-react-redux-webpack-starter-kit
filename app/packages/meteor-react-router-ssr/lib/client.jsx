@@ -46,15 +46,17 @@ const ReactRouterSSR = {
         });
       }
 
-      let app = (
+      let appGenerator = (addProps) => (
         <Router
           history={history}
           children={routes}
-          {...clientOptions.props} />
+          {...clientOptions.props}
+          {...addProps } />
       );
 
+      let app;
       if (typeof clientOptions.wrapperHook === 'function') {
-        app = clientOptions.wrapperHook(app);
+        app = clientOptions.wrapperHook(appGenerator);
       }
 
       if (typeof clientOptions.renderHook === 'function') {
