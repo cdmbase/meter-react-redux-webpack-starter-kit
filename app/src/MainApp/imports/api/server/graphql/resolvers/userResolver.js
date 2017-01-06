@@ -1,7 +1,7 @@
 import { Random } from 'meteor/random';
 import { Meteor } from 'meteor/meteor';
 
-const resolvers = {
+const userResolvers = {
   Query: {
     user(root, args, context) {
       // Only return the current user, for security
@@ -21,10 +21,14 @@ const resolvers = {
       }
     },
   },
+  Subscription: {
+    userAdded(){}
+  },
   User: {
     emails: ({ emails }) => emails,
     randomString: () => Random.id(),
   },
 };
 
-export default resolvers;
+
+export default userResolvers;
