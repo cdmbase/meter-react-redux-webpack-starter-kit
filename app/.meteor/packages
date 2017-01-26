@@ -49,5 +49,4 @@ browser-policy@1.0.9
 random
 apollo
 webpack:typescript
-iron:router
 splendido:accounts-meld
