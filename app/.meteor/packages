@@ -46,7 +46,7 @@ react-meteor-data
 std:accounts-ui
 std:accounts-bootstrap
 browser-policy@1.0.9
-random
+random@1.0.10
 apollo
 webpack:typescript
 splendido:accounts-meld

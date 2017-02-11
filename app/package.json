@@ -148,7 +148,7 @@
     "typescript": "^2.1.6",
     "typings": "^2.0.0",
     "url-loader": "^0.5.7",
-    "source-map-support": "^0.4.9",
+    "source-map-support": "0.4.3",
     "webpack": "^2.2.1",
     "webpack-hot-middleware": "^2.4.1"
   }
