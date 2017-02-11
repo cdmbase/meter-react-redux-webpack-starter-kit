@@ -16,14 +16,14 @@ export { createMeteorNetworkInterface, meteorClientConfig } from './main-client'
 const defaultConfig = {
   path: '/graphql',
   maxAccountsCacheSizeInMB: 1,
-  graphiql : Meteor.isDevelopment,
-  graphiqlPath : '/graphiql',
-  graphiqlOptions : {
-    passHeader : "'Authorization': localStorage['Meteor.loginToken']"
+  graphiql: Meteor.isDevelopment,
+  graphiqlPath: '/graphiql',
+  graphiqlOptions: {
+    passHeader: "'Authorization': localStorage['Meteor.loginToken']"
   },
   useSubscription: true,
   subscriptionPort: 8080,
-  configServer: (graphQLServer) => {},
+  configServer: (graphQLServer) => { },
 };
 
 const defaultOptions = {
@@ -51,7 +51,7 @@ export const createApolloServer = (givenOptions = {}, givenConfig = {}) => {
   // GraphQL endpoint
   graphQLServer.use(config.path, bodyParser.json(), graphqlExpress(async (req) => {
     let options,
-        user = null;
+      user = null;
 
     if (_.isFunction(givenOptions))
       options = givenOptions(req);
@@ -75,7 +75,7 @@ export const createApolloServer = (givenOptions = {}, givenConfig = {}) => {
 
       // Get the user from the database
       user = await Meteor.users.findOne(
-        {"services.resume.loginTokens.hashedToken": hashedToken}
+        { "services.resume.loginTokens.hashedToken": hashedToken }
       );
 
       if (user) {
@@ -95,11 +95,9 @@ export const createApolloServer = (givenOptions = {}, givenConfig = {}) => {
 
   // Start GraphiQL if enabled
   if (config.graphiql) {
-    graphQLServer.use(config.graphiqlPath, graphiqlExpress(_.extend(config.graphiqlOptions, {endpointURL : config.path})));
+    graphQLServer.use(config.graphiqlPath, graphiqlExpress(_.extend(config.graphiqlOptions, { endpointURL: config.path })));
   }
 
-  // create http server for subscription
-  const server = createServer(graphQLServer);
 
   // This binds the specified paths to the Express server running Apollo + GraphiQL
   WebApp.connectHandlers.use(Meteor.bindEnvironment(graphQLServer));
@@ -109,13 +107,23 @@ export const createApolloServer = (givenOptions = {}, givenConfig = {}) => {
     if (!subscriptionManager) {
       throw new Meteor.Error('SubscriptionManager which is mandatory missing.');
     }
-    new SubscriptionServer({
-      subscriptionManager,
-    }, server);
     try {
+      // create http server for subscription
+      // const server = createServer(graphQLServer);
+      // Create WebSocket listener server
+      const server = createServer((request, response) => {
+        response.writeHead(404);
+        response.end();
+      });
       server.listen(config.subscriptionPort, () => {
         console.log('Subscription manager running ' + config.subscriptionPort);
       });
+      const subscriptionServer = new SubscriptionServer({
+        subscriptionManager,
+      }, {
+          server,
+          path: '/'
+        });
     } catch (e) {
       console.log(e);
     }

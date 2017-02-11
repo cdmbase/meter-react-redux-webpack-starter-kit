@@ -5,7 +5,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 import { print } from 'graphql-tag/printer';
-import { Client } from 'subscriptions-transport-ws';
+import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 
 const defaultNetworkInterfaceConfig = {
   path: '/graphql', // default graphql server endpoint
@@ -13,13 +13,18 @@ const defaultNetworkInterfaceConfig = {
   useMeteorAccounts: true, // if true, send an eventual Meteor login token to identify the current user with every request
   batchingInterface: true, // use a BatchingNetworkInterface by default instead of a NetworkInterface
   batchInterval: 10, // default batch interval
+  useSubscription: true, // enable subscription by default
 };
 
-const getDefaultWsClient = () => new Client('ws://localhost:8080');
+const getDefaultWsClient = () => new SubscriptionClient('ws://localhost:8080', {
+  reconnect: true,
+  // connectionParams: {
+  //   // Pass any arguments you want for initialization
+  // },
+});
 
 export const createMeteorNetworkInterface = (givenConfig) => {
   const config = _.extend(defaultNetworkInterfaceConfig, givenConfig);
-  const wsClient = givenConfig && givenConfig.wsClient ? givenConfig.wsClient : getDefaultWsClient();
   // absoluteUrl adds a '/', so let's remove it first
   let path = config.path;
   if (path[0] === '/') {
@@ -30,17 +35,17 @@ export const createMeteorNetworkInterface = (givenConfig) => {
   const interfaceToUse = config.batchingInterface ? createBatchingNetworkInterface : createNetworkInterface;
 
   // default interface options
-  let interfaceOptions = {
+  const interfaceOptions = {
     uri: Meteor.absoluteUrl(path),
   };
 
   // if a BatchingNetworkInterface is used with a correct batch interval, add it to the options
-  if(config.batchingInterface && config.batchInterval) {
+  if (config.batchingInterface && config.batchInterval) {
     interfaceOptions.batchInterval = config.batchInterval;
   }
 
   // if 'fetch' has been configured to be called with specific opts, add it to the options
-  if(!_.isEmpty(config.opts)) {
+  if (!_.isEmpty(config.opts)) {
     interfaceOptions.opts = config.opts;
   }
 
@@ -49,7 +54,6 @@ export const createMeteorNetworkInterface = (givenConfig) => {
   if (config.useMeteorAccounts) {
     networkInterface.use([{
       applyMiddleware(request, next) {
-
         // cookie login token created by meteorhacks:fast-render and caught during server-side rendering by rr:react-router-ssr
         const { loginToken: cookieLoginToken } = config;
         // Meteor accounts-base login token stored in local storage, only exists client-side
@@ -82,31 +86,24 @@ export const createMeteorNetworkInterface = (givenConfig) => {
   }
 
   if (config.useSubscription) {
-    return _.extend(networkInterface, {
-      subscribe: (request, handler) => wsClient.subscribe({
-        query: print(request.query),
-        variables: request.variables,
-      }, handler),
-      unsubscribe: (id) => {
-        wsClient.unsubscribe(id);
-      },
-    });
+    const wsClient = givenConfig && givenConfig.wsClient ? givenConfig.wsClient : getDefaultWsClient();
+    return addGraphQLSubscriptions(networkInterface, wsClient);
+    // return _.extend(networkInterface, {
+    //   subscribe: (request, handler) => wsClient.subscribe({
+    //     query: print(request.query),
+    //     variables: request.variables,
+    //   }, handler),
+    //   unsubscribe: (id) => {
+    //     wsClient.unsubscribe(id);
+    //   },
+    // });
   }
   return networkInterface;
 };
 
 export const meteorClientConfig = (networkInterfaceConfig) => {
-  const networkInterface = createMeteorNetworkInterface(networkInterfaceConfig);
-  let { initialState } = networkInterface;
-  if(initialState){
-    // Temporary workaround for bug in AC@0.5.0: https://github.com/apollostack/apollo-client/issues/845
-    delete initialState.apollo.queries;
-    delete initialState.apollo.mutations;
-  }
-
   return {
-    networkInterface,
-    initialState,
+    networkInterface: createMeteorNetworkInterface(networkInterfaceConfig),
     ssrMode: Meteor.isServer,
 
     // Default to using Mongo _id, must use _id for queries.
