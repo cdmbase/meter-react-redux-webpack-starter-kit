@@ -38,15 +38,15 @@ const personResult = {
   },
 };
 
-describe('Network interface', function() {
+describe('Network interface without subscription enabled', function() {
   
   it('should create a network interface', function() {
-    assert.ok(createMeteorNetworkInterface({batchingInterface: false}));
+    assert.ok(createMeteorNetworkInterface({batchingInterface: false, useSubscription: false}));
   });
   
 });
 
-describe('Batching network interface', function() {
+describe('Batching network interface without subscription enabled', function() {
   
   // from apollo-client/src/transport/networkInterface
   const printRequest = request => ({...request, query: print(request.query)});
@@ -60,6 +60,7 @@ describe('Batching network interface', function() {
   }) => {
     const batchedNetworkInterface = createMeteorNetworkInterface({
       batchingInterface: true,
+      useSubscription: false,
       opts
     });
   

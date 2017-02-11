@@ -34,10 +34,10 @@ describe('Graphql Server', function() {
   
   const schema = makeExecutableSchema({ typeDefs, resolvers, });
   
-  it('should create an express graphql server accepting a test query', async function() {
+  it('should create an express graphql server accepting a test query (without subscription enabled)', async function() {
     
     // instantiate the apollo server
-    const apolloServer = createApolloServer({ schema, });
+    const apolloServer = createApolloServer({ schema,}, { useSubscription: false});
     
     // send a query to the server
     const { data: queryResult } = await HTTP.post(Meteor.absoluteUrl('/graphql'), {

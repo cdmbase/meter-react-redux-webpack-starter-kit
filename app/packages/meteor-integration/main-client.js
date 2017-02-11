@@ -88,16 +88,8 @@ export const createMeteorNetworkInterface = (givenConfig) => {
   if (config.useSubscription) {
     const wsClient = givenConfig && givenConfig.wsClient ? givenConfig.wsClient : getDefaultWsClient();
     return addGraphQLSubscriptions(networkInterface, wsClient);
-    // return _.extend(networkInterface, {
-    //   subscribe: (request, handler) => wsClient.subscribe({
-    //     query: print(request.query),
-    //     variables: request.variables,
-    //   }, handler),
-    //   unsubscribe: (id) => {
-    //     wsClient.unsubscribe(id);
-    //   },
-    // });
   }
+  
   return networkInterface;
 };
 
