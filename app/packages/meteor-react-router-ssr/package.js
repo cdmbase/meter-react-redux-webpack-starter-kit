@@ -9,7 +9,6 @@ Package.describe({
 Npm.depends({
   'cookie-parser': '1.4.1',
   'cheerio': '0.20.0',
-  'deepmerge': '0.2.10'
 });
 
 Package.onUse(function(api) {
