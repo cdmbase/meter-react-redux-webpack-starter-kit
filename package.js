@@ -1,6 +1,6 @@
 Package.describe({
   name: 'apollo',
-  version: '0.2.1',
+  version: '0.3.1',
   summary: ' 🚀 Add Apollo to your Meteor app',
   git: 'https://github.com/apollostack/meteor-integration'
 });
@@ -20,6 +20,7 @@ Package.onTest(function(api) {
   api.use(['ecmascript',
            'practicalmeteor:mocha',
            'practicalmeteor:chai',
+           'http',
            'apollo']);
 
   api.mainModule('tests/client.js', 'client');

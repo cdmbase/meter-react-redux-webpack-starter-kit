@@ -1,10 +1,8 @@
-Use the [Apollo Stack](http://dev.apollodata.com/) in your [Meteor](https://www.meteor.com/) app.
+Use the [Apollo GraphQL Client and Server](http://dev.apollodata.com/) in your [Meteor](https://www.meteor.com/) app.
 
 ```sh
 meteor add apollo
 ```
-
-# Docs
 
 **[The docs](http://dev.apollodata.com/core/meteor.html)**
 
@@ -12,14 +10,15 @@ meteor add apollo
 
 ## Tests
 
-TODO broken, see #3
-
 ```bash
 git clone git@github.com:apollostack/meteor-integration.git
 cd meteor-integration
-meteor test-packages ./ --driver-package practicalmeteor:mocha
-open localhost:3000
+npm install
+npm run test
+open http://localhost:3000
 ```
+
+Ignore the npm peer requirements warning that appears on client and server consoles.
 
 ## Credits
 
