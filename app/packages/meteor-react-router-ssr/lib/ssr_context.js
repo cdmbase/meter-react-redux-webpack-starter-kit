@@ -1,8 +1,6 @@
 // server/ssr_context.js
 // stolen from https://github.com/kadirahq/flow-router/blob/ssr/server/ssr_context.js
 
-import deepMerge from 'deepmerge';
-
 export default class SsrContext {
   constructor() {
     this._collections = {};
@@ -26,8 +24,8 @@ export default class SsrContext {
       );
     }
 
-    const args = [name].concat(params);
-    const data = fastRenderContext.subscribe(...args);
+
+    const data = fastRenderContext.subscribe(name, ...params);
     this.addData(data);
   }
 
@@ -38,9 +36,9 @@ export default class SsrContext {
         collData.forEach((item) => {
           const existingDoc = collection.findOne(item._id);
           if (existingDoc) {
-            const newDoc = deepMerge(existingDoc, item);
+            const newDoc = { ...existingDoc, ...item };
             delete newDoc._id;
-            collection.update(item._id, newDoc);
+            collection.update(item._id, { $set: newDoc });
           } else {
             collection.insert(item);
           }
