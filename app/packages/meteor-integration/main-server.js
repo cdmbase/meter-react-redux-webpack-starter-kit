@@ -11,7 +11,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/underscore';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 
-export { meteorClientConfig, createMeteorNetworkInterface } from './main-client';
+export { createMeteorNetworkInterface, meteorClientConfig } from './main-client';
 
 const defaultConfig = {
   path: '/graphql',
@@ -91,7 +91,6 @@ export const createApolloServer = (givenOptions = {}, givenConfig = {}) => {
     }
 
     return options;
-
   }));
 
   // Start GraphiQL if enabled
