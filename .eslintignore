@@ -1,0 +1,4 @@
+bin/**
+build/**
+app/node_modules/**
+packages/**
