@@ -1,0 +1,39 @@
+{
+  "name": "apollo-meteor-integration",
+  "version": "0.2.1",
+  "description": " 🚀 Add Apollo to your Meteor app",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "meteor test-packages ./ --driver-package practicalmeteor:mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apollostack/meteor-integration.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/apollostack/meteor-integration/issues"
+  },
+  "homepage": "https://github.com/apollostack/meteor-integration#readme",
+  "dependencies": {
+    "apollo-client": "^0.8.4",
+    "express": "^4.14.0",
+    "graphql": "^0.9.1",
+    "graphql-server-express": "^0.6.0",
+    "graphql-subscriptions": "^0.3.0",
+    "graphql-tools": "^0.10.0",
+    "subscriptions-transport-ws": "^0.5.1",
+    "whatwg-fetch": "^2.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-import-resolver-meteor": "^0.3.4",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.9.0"
+  }
+}
