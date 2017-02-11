@@ -43,10 +43,11 @@ ReactRouterSSR.LoadWebpackStats = function(stats) {
   webpackStats = stats;
 };
 
-ReactRouterSSR.Run = function(routes, clientOptions, serverOptions) {
-  // this line just patches Subscribe and find mechanisms
-  patchSubscribeData(ReactRouterSSR);
+// this line just patches Subscribe and find mechanisms
+patchSubscribeData(ReactRouterSSR);
 
+ReactRouterSSR.Run = function(routes, clientOptions, serverOptions) {
+  
   if (!clientOptions) {
     clientOptions = {};
   }
@@ -218,6 +219,11 @@ function generateSSRData(clientOptions, serverOptions, req, res, renderProps) {
       }
 
       if (!serverOptions.disableSSR){
+        // I'm pretty sure this could be avoided in a more elegant way?
+        ReactDOMServer.renderToString(app);
+        const context = FastRender.frContext.get();
+        const data = context.getData();
+        InjectData.pushData(res, 'fast-render-data', data);
         html = ReactDOMServer.renderToString(app);
       } else if (serverOptions.loadingScreen){
         html = serverOptions.loadingScreen;
