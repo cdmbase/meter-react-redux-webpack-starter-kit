@@ -11,8 +11,7 @@
       "dtrace-provider": "empty-shim.js",
       "fs": "empty-shim.js",
       "safe-json-stringify": "empty-shim.js",
-      "mv": "empty-shim.js",
-      "source-map-support": "empty-shim.js"
+      "mv": "empty-shim.js"
     },
     "modules": [
       "app",
